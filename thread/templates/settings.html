@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> {{user.username}} &nbsp; Profile Setting</title>
+</head>
+<body>
+    <div>
+        <a href="{% url 'home' %}">Home</a>
+    </div>
+    <div>
+        {% if user.is_authenticated %}
+        <form action="{% url 'settings_user' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="location_city" placeholder="location_city">
+            <input type="image" name="profile_pics">
+            <textarea name="bio" placeholder="Bio" id="" cols="30" rows="10"></textarea>
+            <input type="submit" value="Update Profile">
+        </form>
+        {% endif %}
+    </div>
+</body>
+</html>

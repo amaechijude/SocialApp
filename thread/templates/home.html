@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,10 +8,30 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'styles/home.css' %}">
 </head>
+
 <body>
     <h1 class="hello">Hello Social App</h1>
+    <br><br>
+    <div style="color: red;">
+        {% if messages %}
+        {% for message in messages %}
+        {{ message }}
+        {% endfor%}
+        {% endif %}
+    </div>
+    {% if user.is_authenticated %}
+    <div>
+        <p>
+            <a href="{% url 'logout_user' %}">Log out</a>
+        </p><br>
+        <a href="{% url 'settings_user' %}">Settings</a>
+    </div>
+    {% else %}
     <br>
     <a href="{% url 'login_user' %}">Login</a><br>
-    <br><a href="{% url 'sign_up' %}">Sign Up</a>
+    <br><a href="{% url 'sign_up' %}">Sign Up</a><br>
+    <br>
+    {% endif %}
 </body>
+
 </html>

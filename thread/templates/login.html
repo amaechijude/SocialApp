@@ -16,6 +16,13 @@
     <p>
     <h1>Login</h1>
     </p><br>
+    <div style="color: red;">
+        {% if messages %}
+        {% for message in messages %}
+        {{ message }}
+        {% endfor%}
+        {% endif %}
+    </div><br>
     <div>
         <form action="{% url 'login_user' %}" method="post">
             {% csrf_token %}

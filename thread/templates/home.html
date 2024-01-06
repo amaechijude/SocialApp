@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'styles/home.css' %}">
+</head>
+<body>
+    <h1 class="hello">Hello Social App</h1>
+    <br>
+    <a href="{% url 'login_user' %}">Login</a><br>
+    <br><a href="{% url 'sign_up' %}">Sign Up</a>
+</body>
+</html>

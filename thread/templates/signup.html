@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Social App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/signup.css' %}">
+</head>
+
+<body>
+    <p>
+        <a href="{% url 'home' %}">Home</a>
+    </p>
+    <p>
+    <h1>Sign Up</h1>
+    </p><br>
+    <div style="color: red;">
+        {% if messages %}
+        {% for message in messages %}
+        {{ message }}
+        {% endfor%}
+        {% endif %}
+    </div><br>
+    <div>
+        <form action="{% url 'sign_up' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="firstname" placeholder="firstname" required><br>
+            <input type="text" name="lastname" placeholder="lastname" required><br>
+            <input type="text" name="username" placeholder="username" required><br>
+            <input type="email" name="email" placeholder="email" required><br>
+            <input type="password" name="password1" placeholder="password" required><br>
+            <input type="password" name="password2" placeholder="confirm password" required><br>
+            <input class="submit" type="submit" value="Sign Up" name="Sign Up">
+        </form>
+    </div><br>
+    <hr>
+    <br>
+    <p>
+        Do you have an account? <a href="{% url 'login_user' %}"> Login</a>
+    </p>
+
+</body>
+
+</html>

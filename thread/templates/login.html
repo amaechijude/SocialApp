@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Social App</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style/signup.css' %}">
+</head>
+
+<body>
+    <p>
+        <a href="{% url 'home' %}">Home</a>
+    </p>
+    <p>
+    <h1>Login</h1>
+    </p><br>
+    <div>
+        <form action="{% url 'login_user' %}" method="post">
+            {% csrf_token %}
+            <input type="text" name="username" placeholder="username" required><br>
+            <input type="password" name="password1" placeholder="password" required><br>
+            <input class="submit" type="submit" value="Login" name="Login">
+        </form>
+    </div><br>
+    <hr>
+    <br>
+    <p>
+        Don't have an account? <a href="{% url 'sign_up' %}">Sign Up</a>
+    </p>
+
+</body>
+
+</html>

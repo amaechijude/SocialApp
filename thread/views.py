@@ -73,4 +73,9 @@ def logout_user(request):
 
 @login_required(login_url='login_user')
 def settings_user(request):
+    if request.method == 'POST':
+        bio = request.POST['bio']
+        profile_pics = request.POST['profile_pics']
+        location_city = request.POST['location_city']
+        
     return render(request, 'settings.html')

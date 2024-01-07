@@ -8,15 +8,15 @@
 <body>
     <div>
         <a href="{% url 'home' %}">Home</a>
-    </div>
+    </div><br><br>
     <div>
         {% if user.is_authenticated %}
         <form action="{% url 'settings_user' %}" method="post">
             {% csrf_token %}
-            <input type="text" name="location_city" placeholder="location_city">
-            <input type="image" name="profile_pics">
-            <textarea name="bio" placeholder="Bio" id="" cols="30" rows="10"></textarea>
-            <input type="submit" value="Update Profile">
+            <input type="text" name="location_city" placeholder="location_city"><br>
+            <br><input type="file" name="profile_pics"><br>
+            <br><textarea name="bio" placeholder="Bio" id="" cols="30" rows="10"></textarea><br>
+            <br><input type="submit" value="Update Profile">
         </form>
         {% endif %}
     </div>

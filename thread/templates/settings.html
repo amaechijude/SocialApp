@@ -3,20 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> {{user.username}} &nbsp; Profile Setting</title>
+    <title> {{user.username}}'s&nbsp; Profile Setting</title>
 </head>
 <body>
     <div>
         <a href="{% url 'home' %}">Home</a>
     </div><br><br>
+    <div style="color: red;">
+        {% if messages %}
+        {% for message in messages %}
+        {{ message }}
+        {% endfor%}
+        {% endif %}
+    </div><br><br>
     <div>
         {% if user.is_authenticated %}
-        <form action="{% url 'settings_user' %}" method="post">
+        <form action="{% url 'settings_user' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
-            <input type="text" name="location_city" placeholder="location_city"><br>
+            <input type="text" placeholder="location_city" name="location_city" value="{{ user_profile.location_city }}"><br>
             <br><input type="file" name="profile_pics"><br>
-            <br><textarea name="bio" placeholder="Bio" id="" cols="30" rows="10"></textarea><br>
+            <br><textarea name="bio" placeholder="bio" value="{{ user_profile.bio }}" id="" cols="30" rows="10"></textarea><br>
             <br><input type="submit" value="Update Profile">
+            <p>
+                <a href="{% url 'settings_user' %}">Cancel</a>
+            </p>
         </form>
         {% endif %}
     </div>

@@ -18,7 +18,11 @@
     </div><br><br>
     <div>
         {% if user.is_authenticated %}
+<<<<<<< HEAD
         <form action="{% url 'settings_user' %}" method="post" enctype="multipart/form-data">
+=======
+        <form action="{% url 'settings_user' %}" method="post" e>
+>>>>>>> 972020995609d902b69c604cbf5f8ac1c086b79e
             {% csrf_token %}
             <input type="text" placeholder="location_city" name="location_city" value="{{ user_profile.location_city }}"><br>
             <br><input type="file" name="profile_pics"><br>

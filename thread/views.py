@@ -85,7 +85,7 @@ def settings_user(request):
             user_profile.location_city = location_city
             user_profile.save()
 
-        elif request.FILES.get('image') != None:
+        elif request.FILES.get('profile_pics') != None:
             image = user_profile.profile_pics
             bio = request.POST['bio']
             location_city = request.POST['location_city']

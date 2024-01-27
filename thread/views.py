@@ -20,7 +20,6 @@ def sign_up(request):
         email =  request.POST['email']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-
         #confirm password match and unique username & email
         if password1 == password2:
             if User.objects.filter(email=email).exists():

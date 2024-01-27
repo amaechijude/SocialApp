@@ -72,7 +72,7 @@ def logout_user(request):
 
 
 @login_required(login_url='login_user')
-def settings_user(request):
+def settings_user(request, user=''):
     user_profile = Profile.objects.get(user=request.user)
     if request.method == 'POST':
         if request.FILES.get('profile_pics') == None:

@@ -26,12 +26,7 @@
     <div>
         <form action="{% url 'sign_up' %}" method="post">
             {% csrf_token %}
-            <input type="text" name="firstname" placeholder="firstname" required><br>
-            <input type="text" name="lastname" placeholder="lastname" required><br>
-            <input type="text" name="username" placeholder="username" required><br>
-            <input type="email" name="email" placeholder="email" required><br>
-            <input type="password" name="password1" placeholder="password" required><br>
-            <input type="password" name="password2" placeholder="confirm password" required><br>
+            {{ form.as_p }}
             <input class="submit" type="submit" value="Sign Up" name="Sign Up">
         </form>
     </div><br>

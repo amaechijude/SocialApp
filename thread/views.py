@@ -1,40 +1,43 @@
 from django.shortcuts import render, redirect
 
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile
-from .forms import ProfileForm
+from .forms import UserForm
 
 # Create your views here.
-
+User = get_user_model()
 #@login_required(login_url='login_user')
 def home(request):
     return render(request, 'home.html')
 
 def sign_up(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST)
+        form = UserForm(request.POST)
         if form.is_valid:
-            form.save
+            form.save()
             #Authenticate and login
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             
             new_user = authenticate(username=username, password=password)
             login(request, new_user)
+            user_model = User.objects.get(username=username)
+            new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
             return redirect('home')
         
-        form = ProfileForm()
+        form = UserForm()
         content = {"form":form}
         messages.info(request, "{Error: Could not sign up}")
         return render(request, 'signup.html', content)    
 
-    form = ProfileForm()
+    form = UserForm()
     content = {"form":form}
     return render(request, 'signup.html', content)
 
+#login view
 def login_user(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -58,7 +61,7 @@ def logout_user(request):
     logout(request)
     return redirect('login_user')
 
-
+"""
 @login_required(login_url='login_user')
 def settings_user(request, user=''):
     user_profile = Profile.objects.get(user=request.user)
@@ -84,4 +87,4 @@ def settings_user(request, user=''):
             user_profile.save()
         return redirect('settings_user')
         
-    return render(request, 'settings.html', {'user_profile': user_profile})
+    return render(request, 'settings.html', {'user_profile': user_profile})"""

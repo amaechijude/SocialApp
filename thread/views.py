@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile
-from .forms import UserForm
+from .forms import UserForm, UpdateProfile
 
 # Create your views here.
 User = get_user_model()
@@ -61,30 +61,15 @@ def logout_user(request):
     logout(request)
     return redirect('login_user')
 
-"""
+
 @login_required(login_url='login_user')
-def settings_user(request, user=''):
-    user_profile = Profile.objects.get(user=request.user)
-    if request.method == 'POST':
-        if request.FILES.get('profile_pics') == None:
-            profile_pics = user_profile.profile_pics
-            bio = request.POST['bio']
-            location_city = request.POST['location_city']
-
-            user_profile.profile_pics = profile_pics
-            user_profile.bio = bio
-            user_profile.location_city = location_city
-            user_profile.save()
-
-        elif request.FILES.get('profile_pics') != None:
-            image = user_profile.profile_pics
-            bio = request.POST['bio']
-            location_city = request.POST['location_city']
-
-            user_profile.profile_pics = image
-            user_profile.bio = bio
-            user_profile.location_city = location_city
-            user_profile.save()
-        return redirect('settings_user')
-        
-    return render(request, 'settings.html', {'user_profile': user_profile})"""
+def settings_user(request, user):
+    if request.user.is_authenticated:
+        current_user = Profile.objects.get(id_user=user)
+        form = UpdateProfile(request.POST or None, instance=current_user)
+        if form.is_valid():
+            form.save()
+            return redirect('home')
+        return render(request, 'settings.html', {"form":form})
+    messages.info(request, "You need to be logged in")
+    return redirect('home')

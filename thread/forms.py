@@ -9,7 +9,12 @@ class UserForm(UserCreationForm):
         fields = ('username', 'email','password1', 'password2')
 
 
-class UpdateProfile(forms.ModelForm):
+class UpdateProfile(UserCreationForm):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    bio = forms.CharField()
+    profile_pics = forms.ImageField()
+    location_city = forms.CharField()
     class Meta:
         model = Profile
         exclude = ('user', 'id_user')

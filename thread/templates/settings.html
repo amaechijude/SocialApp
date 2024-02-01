@@ -18,7 +18,7 @@
     </div><br><br>
     <div>
         {% if user.is_authenticated %}
-        <form action="{% url 'settings_user' %}" method="post" enctype="multipart/form-data">
+        <form method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Update Profile">

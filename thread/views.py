@@ -61,15 +61,18 @@ def logout_user(request):
     logout(request)
     return redirect('login_user')
 
+@login_required(login_url='login_user')
+def profile_details(request, pk):
+    current_user = Profile.objects.get(id_user=pk)
+    content = {"current_user": current_user}
+    return render(request, 'profile.html', content)
+
 
 @login_required(login_url='login_user')
-def settings_user(request, user):
-    if request.user.is_authenticated:
-        current_user = Profile.objects.get(id_user=user)
-        form = UpdateProfile(request.POST or None, instance=current_user)
-        if form.is_valid():
-            form.save()
-            return redirect('home')
-        return render(request, 'settings.html', {"form":form})
-    messages.info(request, "You need to be logged in")
-    return redirect('home')
+def setting(request, pk):
+    current_user = Profile.objects.get(id_user=pk)
+    form = UpdateProfile(request.POST or None, instance=current_user)
+    if form.is_valid():
+        form.save()
+        return redirect('home')
+    return render(request, 'settings.html', {"form":form})

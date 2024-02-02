@@ -73,8 +73,7 @@ def details(request):
         "profile_pics": profile.profile_pics,
         "location_city":profile.location_city
     }
-    image_object = profile.profile_pics
-    image_url = image_object.image.url
+    image_url = profile.profile_pics.url
     context ={"profile_data": profile_data, "image_url": image_url}
     return render(request, 'profile.html', context)
 

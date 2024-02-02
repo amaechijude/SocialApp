@@ -62,16 +62,18 @@ def logout_user(request):
     return redirect('login_user')
 
 @login_required(login_url='login_user')
-def profile_details(request, pk):
-    current_user = Profile.objects.get(id_user=pk)
-    content = {"current_user": current_user}
+def profile_details(request):
+    current_user = request.user
+    active_account = Profile.objects.get(user=current_user)
+    content = {"current_user": active_account}
     return render(request, 'profile.html', content)
 
 
 @login_required(login_url='login_user')
-def setting(request, pk):
-    current_user = Profile.objects.get(id_user=pk)
-    form = UpdateProfile(request.POST or None, instance=current_user)
+def setting(request):
+    current_user = request.user
+    active_account = Profile.objects.get(user=current_user)
+    form = UpdateProfile(request.POST or None, instance=active_account)
     if form.is_valid():
         form.save()
         return redirect('home')

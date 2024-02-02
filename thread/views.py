@@ -62,12 +62,20 @@ def logout_user(request):
     return redirect('login_user')
 
 @login_required(login_url='login_user')
-def details(request,):
-    current_user = request.user
-    active_account = Profile.objects.get(id_user=current_user.id)
-    print(active_account.first_name)
-    context = {"current_user": active_account}
-    print(current_user)
+def details(request):
+    user = request.user
+    print(user)
+    profile = user.profile
+    profile_data = {
+        "first_name": profile.first_name,
+        "last_name": profile.last_name,
+        "bio": profile.bio,
+        "profile_pics": profile.profile_pics,
+        "location_city":profile.location_city
+    }
+    image_object = profile.profile_pics
+    image_url = image_object.image.url
+    context ={"profile_data": profile_data, "image_url": image_url}
     return render(request, 'profile.html', context)
 
 

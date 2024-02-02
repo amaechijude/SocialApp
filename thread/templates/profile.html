@@ -6,14 +6,18 @@
     <title>Update Profile</title>
 </head>
 <body>
-    {{ active_account.first_name }} <br>
-    {{ active_account.last_name }} <br>
-    {{ active_account.bio }} <br>
-    {{ active_account.profile_pics }} <br>
+    <img src="{{ image_url }} " alt=""> <br>
+    {{ profile_data.first_name }} <br>
+    {{ profile_data.last_name }} <br>
+    {{ profile_data.bio }} <br>
+    {{ profile_data.profile_pics }} <br>
      <br>
     <hr><br>
     <p>
         {{ current_user }} 
+    </p>
+    <p>
+        {{ current_user.profile }} 
     </p>
     <p>
         <a href="{% url 'home' %}">Home</a>

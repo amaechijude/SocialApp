@@ -15,5 +15,7 @@ class Profile(models.Model):
     profile_pics = models.ImageField(upload_to='profile_images', default='anon.png')
     location_city = models.CharField(max_length=100, blank=True)
 
+    USERNAME_FIELD = 'user.username'
+
     def __str__(self):
         return (f"{self.user.username}")

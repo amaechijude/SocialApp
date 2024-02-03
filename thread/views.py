@@ -82,15 +82,10 @@ def details(request):
 def account_setting(request):
     user = request.user
     profile = user.profile
-    profile_data = {
-        "first_name": profile.first_name,
-        "last_name": profile.last_name,
-        "bio": profile.bio,
-        "profile_pics": profile.profile_pics,
-        "location_city":profile.location_city
-    }
-    form = UpdateProfile(request.POST or None, instance=profile_data)
-    if form.is_valid():
-        form.save()
+    if request.method == 'POST':
+        form = UpdateProfile(request.POST or None, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
         return redirect('details')
+    form = UpdateProfile(instance=profile)
     return render(request, 'settings.html', {"form":form})

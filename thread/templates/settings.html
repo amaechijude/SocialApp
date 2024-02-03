@@ -19,7 +19,7 @@
     <h2> {{user.username}}'s&nbsp; Profile Setting</h2>
     <br>    <div>
         {% if user.is_authenticated %}
-        <form enctype="multipart/form-data">
+        <form method="post" action="{% url 'account_setting' %}" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Update Profile">

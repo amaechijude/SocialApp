@@ -79,7 +79,7 @@ def details(request):
 
 
 @login_required(login_url='login_user')
-def setting(request):
+def account_setting(request):
     user = request.user
     profile = user.profile
     profile_data = {

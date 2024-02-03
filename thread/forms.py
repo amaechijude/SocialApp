@@ -13,7 +13,7 @@ class UpdateProfile(UserCreationForm):
     first_name = forms.CharField()
     last_name = forms.CharField()
     bio = forms.CharField()
-    profile_pics = forms.ImageField()
+    profile_pics = forms.FileField()
     location_city = forms.CharField()
     class Meta:
         model = Profile

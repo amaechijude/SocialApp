@@ -80,10 +80,17 @@ def details(request):
 
 @login_required(login_url='login_user')
 def setting(request):
-    current_user = request.user
-    active_account = Profile.objects.get(id_user=current_user.id)
-    form = UpdateProfile(request.POST or None, instance=active_account)
+    user = request.user
+    profile = user.profile
+    profile_data = {
+        "first_name": profile.first_name,
+        "last_name": profile.last_name,
+        "bio": profile.bio,
+        "profile_pics": profile.profile_pics,
+        "location_city":profile.location_city
+    }
+    form = UpdateProfile(request.POST or None, instance=profile_data)
     if form.is_valid():
         form.save()
-        return redirect('home')
+        return redirect('details')
     return render(request, 'settings.html', {"form":form})

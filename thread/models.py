@@ -26,7 +26,7 @@ class Post(models.Model):
     #author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True, default="Post something")
-    image = models.ImageField(upload_to='profile_posts', blank=True)
+    image = models.ImageField(upload_to='profile_posts')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

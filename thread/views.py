@@ -13,7 +13,8 @@ User = get_user_model()
 def home(request):
     if request.user.is_authenticated:
         all_post = Post.objects.all()
-        context = {"all_post": all_post}
+        user = request.user
+        context = {"all_post": all_post, "user": user}
         return render(request, 'home.html', context)
     else:
         return redirect('login_user')

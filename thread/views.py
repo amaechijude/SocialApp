@@ -4,10 +4,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile
-from .forms import UserForm, UpdateProfile
+from .models import Profile, PostModel
+from .forms import UserForm, UpdateProfile, PostForm
 
-# Create your views here.
+# Create your views here
 User = get_user_model()
 #@login_required(login_url='login_user')
 def home(request):

@@ -21,7 +21,7 @@ class Profile(models.Model):
         return (f"{self.user.username}")
     
 
-    class Post(models.Model):
+    class PostModel(models.Model):
         postID = models.AutoField(primary_key=True)
         author = models.ForeignKey(User, on_delete=models.CASCADE)
         title = models.CharField(max_length=100)

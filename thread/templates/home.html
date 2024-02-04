@@ -23,9 +23,16 @@
     <div>
         <div>
             <p>
-                <h2>Welcome to our Home page</h2>
+            <h2>Welcome to our Home page</h2>
             </p>
+            <hr>
+            <div>
+                <p><h3>Posts</h3></p>
+            </div>
         </div>
+        <p>
+            <a href="{% url 'create_post' %}">Create new Post</a>
+        </p>
         <p>
             <a href="{% url 'logout_user' %}">Log out</a>
         </p>
@@ -33,9 +40,9 @@
             <a href="{% url 'details' %}">profile</a>
         </p>
         <p>
-            
-    <a href="{% url 'account_setting' %}">Settings</a><br>
-        </p><br><hr>
+            <a href="{% url 'account_setting' %}">Settings</a><br>
+        </p>
+        <hr>
     </div>
     {% else %}
     <br>

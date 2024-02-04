@@ -16,6 +16,9 @@ class UpdateProfile(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
+    title = forms.CharField(required=True)
+    content = forms.CharField(required=False)
+    image = forms.FileField(required=False)
     class Meta:
         model = PostModel
         exclude = ('postID', 'author', 'created_at',)

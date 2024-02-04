@@ -11,7 +11,13 @@ from .forms import UserForm, UpdateProfile, PostForm
 User = get_user_model()
 #@login_required(login_url='login_user')
 def home(request):
-    return render(request, 'home.html')
+    if request.user.is_authenticated:
+        all_post = PostModel.objects.all()
+        image_url = all_post.image.url
+        context = {"all_post": all_post, "image_url": image_url}
+        return render(request, 'home.html', context)
+    else:
+        return redirect('login_user')
 
 def sign_up(request):
     if request.method == 'POST':

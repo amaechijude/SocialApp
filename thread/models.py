@@ -19,3 +19,15 @@ class Profile(models.Model):
 
     def __str__(self):
         return (f"{self.user.username}")
+    
+
+    class Post(models.Model):
+        postID = models.AutoField(primary_key=True)
+        author = models.ForeignKey(User, on_delete=models.CASCADE)
+        title = models.CharField(max_length=100)
+        content = models.TextField(blank=True, default="Post something")
+        image = models.ImageField(upload_to='profile_posts', blank=True)
+        created_at = models.DateTimeField(auto_now_add=True)
+
+        def __str__(self):
+            return (f"{self.title}")

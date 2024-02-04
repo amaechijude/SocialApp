@@ -21,4 +21,4 @@ class PostForm(forms.ModelForm):
     image = forms.FileField(required=False)
     class Meta:
         model = Post
-        exclude = ('postID', 'author', 'created_at',)
+        exclude = ('postID', 'created_at',)

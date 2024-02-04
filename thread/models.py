@@ -23,7 +23,7 @@ class Profile(models.Model):
 
 class Post(models.Model):
     postID = models.AutoField(primary_key=True)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    #author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True, default="Post something")
     image = models.ImageField(upload_to='profile_posts', blank=True)

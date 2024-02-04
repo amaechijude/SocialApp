@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile, PostModel
+from .models import Profile, Post
 from .forms import UserForm, UpdateProfile, PostForm
 
 # Create your views here
@@ -12,7 +12,7 @@ User = get_user_model()
 #@login_required(login_url='login_user')
 def home(request):
     if request.user.is_authenticated:
-        all_post = PostModel.objects.all()
+        all_post = Post.objects.all()
         image_url = all_post.image.url
         context = {"all_post": all_post, "image_url": image_url}
         return render(request, 'home.html', context)

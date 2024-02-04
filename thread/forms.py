@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, PostModel
+from .models import Profile, Post
 from django.contrib.auth.models import User
 
 class UserForm(UserCreationForm):
@@ -20,5 +20,5 @@ class PostForm(forms.ModelForm):
     content = forms.CharField(required=False)
     image = forms.FileField(required=False)
     class Meta:
-        model = PostModel
+        model = Post
         exclude = ('postID', 'author', 'created_at',)

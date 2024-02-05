@@ -100,11 +100,12 @@ def account_setting(request):
 @login_required(login_url='login_user')
 def create_post(request):
     if request.method == 'POST':
-        form = PostForm(request.POST)
+        form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, "Post created")
             return redirect('home')
+        messages.info(request, "Post was not created")
     form = PostForm()
     context = {"form": form}
     return render(request, 'post.html', context)

@@ -16,7 +16,7 @@
         {% endif %}
     </div><br>
     <div>
-        <form action="{% url 'create_post' %}" method="post">
+        <form action="{% url 'create_post' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Create Post</button>

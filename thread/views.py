@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile, Post
+from .models import Profile, PostModel, LikeFilter
 from .forms import UserForm, UpdateProfile, PostForm
 
 # Create your views here
@@ -12,7 +12,7 @@ User = get_user_model()
 #@login_required(login_url='login_user')
 def home(request):
     if request.user.is_authenticated:
-        all_post = Post.objects.all()
+        all_post = PostModel.objects.all()
         user = request.user
         context = {"all_post": all_post, "user": user}
         return render(request, 'home.html', context)
@@ -109,3 +109,16 @@ def create_post(request):
     form = PostForm()
     context = {"form": form}
     return render(request, 'post.html', context)
+@login_required(login_url='login_user')    
+def likes(request):
+    username = request.user.username
+    postID = request.GET.get('postID')
+    
+    post = PostModel.objects.get(postID=postID)
+    like_check = LikeFilter.objects.filter(username=username, postID=postID)
+    if like_check == None:
+        new_like = LikeFilter.objects.create(username=username, postID=postID)
+        new_like.save()
+        post.num_of_likes =+ 1
+        post.save()
+        

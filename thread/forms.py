@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, Post
+from .models import Profile, PostModel
 from django.contrib.auth.models import User
 
 class UserForm(UserCreationForm):
@@ -17,5 +17,5 @@ class UpdateProfile(forms.ModelForm):
 
 class PostForm(forms.ModelForm):
     class Meta:
-        model = Post
+        model = PostModel
         exclude = ('postID', 'created_at')

@@ -1,4 +1,5 @@
 from django.db import models
+from datetime import datetime
 
 from django.contrib.auth import get_user_model
 # Create your models here
@@ -21,12 +22,18 @@ class Profile(models.Model):
         return (f"{self.user.username}")
     
 
-class Post(models.Model):
+class PostModel(models.Model):
     postID = models.AutoField(primary_key=True)
+    author = models.CharField(max_length=100, default='current_user')
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True, default="Post something")
     image = models.ImageField(upload_to='profile_posts')
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(default=datetime.now)
+    num_of_likes = models.IntegerField(default=0)
 
     def __str__(self):
         return (f"{self.title}")
+
+class LikeFilter(models.Model):
+    postID = models.CharField(max_length=100)
+    username = models.CharField(max_length=100)

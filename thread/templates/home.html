@@ -37,7 +37,7 @@
                         <img src="{{ post.image.url }}" alt="Post Image" width="100" height="100">
                         {% endif %}
                     </p>
-                    <p>Author: @{{ user.username }}</p>
+                    <p>Author: @{{ post.author }}</p>
                     <p>Title: {{ post.title }}</p>
                     <p>{{ post.content}}</p>
                     <p>Posted at: {{ post.created_at}} UTC</p>

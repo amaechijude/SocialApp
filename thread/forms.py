@@ -18,4 +18,4 @@ class UpdateProfile(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model = PostModel
-        exclude = ('postID', 'created_at')
+        exclude = ('postID', 'created_at', 'author', 'num_of_likes')

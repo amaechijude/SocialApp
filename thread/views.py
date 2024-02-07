@@ -102,7 +102,13 @@ def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            title = form.cleaned_data['title']
+            content = form.cleaned_data['content']
+            image = form.cleaned_data['image']
+            author = request.user.username
+
+            new_post = PostModel.objects.create(author=author, title=title, content=content, image=image)
+            new_post.save()
             messages.success(request, "Post created")
             return redirect('home')
         messages.info(request, "Post was not created")

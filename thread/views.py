@@ -14,7 +14,7 @@ def home(request):
     if request.user.is_authenticated:
         all_post = PostModel.objects.all()
         user = request.user
-        liked_by = LikePost.objects.all()
+        liked_by = set(LikePost.objects.all())
         context = {"all_post": all_post, "user": user, "liked_by": liked_by}
         return render(request, 'home.html', context)
     else:
@@ -129,6 +129,7 @@ def like_post(request):
         post.num_of_likes += 1
         post.save()
     elif like_check != None:
+        like_check.delete()
         post.num_of_likes -= 1
         post.save()
     return redirect('home')

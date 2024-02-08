@@ -54,31 +54,41 @@
                         <button class="like-button">
                             <i class="fas fa-thumbs-up"></i> Like
                         </button>
-                    </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes
-                    <hr style="color: aqua;">
-                </div>
-                {% endfor %}
-                {% endif %}
+                    </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes<br>
+		    <div class="dropdown">
+			    {% if liked_by %}
+			    <button>Liked By</button>
+			    <div class="dropdown-content">
+				    {% for like in liked_by %}
+				    <p> {{ like.username }}</p>
+				    {% endfor %}
+			    </div>
+			    {% endif %}
+		    </div>
+                <hr style="color: aqua;">
             </div>
+            {% endfor %}
+            {% endif %}
         </div>
-        <p>
-            <a href="{% url 'create_post' %}">Create new Post</a>
-        </p>
-        <p>
-            <a href="{% url 'logout_user' %}">Log out</a>
-        </p>
-        <p>
-            <a href="{% url 'details' %}">profile</a>
-        </p>
-        <p>
-            <a href="{% url 'account_setting' %}">Settings</a><br>
-        </p>
-        <hr>
     </div>
-    {% else %}
-    <a href="{% url 'login_user' %}">Login</a>
-    <br><a href="{% url 'sign_up' %}">Sign Up</a>
-    {% endif %}
+    <p>
+        <a href="{% url 'create_post' %}">Create new Post</a>
+    </p>
+    <p>
+        <a href="{% url 'logout_user' %}">Log out</a>
+    </p>
+    <p>
+        <a href="{% url 'details' %}">profile</a>
+    </p>
+    <p>
+        <a href="{% url 'account_setting' %}">Settings</a><br>
+    </p>
+    <hr>
+</div>
+{% else %}
+<a href="{% url 'login_user' %}">Login</a>
+<br><a href="{% url 'sign_up' %}">Sign Up</a>
+{% endif %}
 </body>
 
 </html>

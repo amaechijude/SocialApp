@@ -14,7 +14,7 @@ def home(request):
     if request.user.is_authenticated:
         all_post = PostModel.objects.all()
         user = request.user
-        liked_by = set(LikePost.objects.all())
+        liked_by = set()
         context = {"all_post": all_post, "user": user, "liked_by": liked_by}
         return render(request, 'home.html', context)
     else:

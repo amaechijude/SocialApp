@@ -11,7 +11,7 @@
 
 <body>
     <h1 class="hello">Hello Social App</h1>
-    <br><br>
+
     <div style="color: red;">
         {% if messages %}
         {% for message in messages %}
@@ -50,6 +50,11 @@
                     <p>
                         Posted at: {{ post.created_at}}
                     </p>
+                    <a href="{% url 'like_post' %}?postID={{ post.postID }}">
+                        <button class="like-button">
+                            <i class="fas fa-thumbs-up"></i> Like
+                        </button>
+                    </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes
                     <hr style="color: aqua;">
                 </div>
                 {% endfor %}
@@ -71,10 +76,8 @@
         <hr>
     </div>
     {% else %}
-    <br>
-    <a href="{% url 'login_user' %}">Login</a><br>
-    <br><a href="{% url 'sign_up' %}">Sign Up</a><br>
-    <br>
+    <a href="{% url 'login_user' %}">Login</a>
+    <br><a href="{% url 'sign_up' %}">Sign Up</a>
     {% endif %}
 </body>
 

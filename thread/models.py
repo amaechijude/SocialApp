@@ -34,6 +34,6 @@ class PostModel(models.Model):
     def __str__(self):
         return (f"{self.title}")
 
-class LikeFilter(models.Model):
-    postID = models.CharField(max_length=100)
+class LikePost(models.Model):
+    postID = models.IntegerField()
     username = models.CharField(max_length=100)

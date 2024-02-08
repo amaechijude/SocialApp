@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile, PostModel, LikeFilter
+from .models import Profile, PostModel, LikePost
 from .forms import UserForm, UpdateProfile, PostForm
 
 # Create your views here
@@ -116,15 +116,19 @@ def create_post(request):
     context = {"form": form}
     return render(request, 'post.html', context)
 @login_required(login_url='login_user')    
-def likes(request):
+def like_post(request):
     username = request.user.username
     postID = request.GET.get('postID')
     
     post = PostModel.objects.get(postID=postID)
-    like_check = LikeFilter.objects.filter(username=username, postID=postID)
+    like_check = LikePost.objects.filter(username=username, postID=postID)
     if like_check == None:
         new_like = LikeFilter.objects.create(username=username, postID=postID)
         new_like.save()
         post.num_of_likes =+ 1
         post.save()
-        
+    else:
+        like_check.delete()
+        post.num_of_likes =- 1
+        post.save()
+    return redirect('home')

@@ -14,7 +14,8 @@ def home(request):
     if request.user.is_authenticated:
         all_post = PostModel.objects.all()
         user = request.user
-        context = {"all_post": all_post, "user": user}
+        liked_by = LikePost.objects.all()
+        context = {"all_post": all_post, "user": user, "liked_by": liked_by}
         return render(request, 'home.html', context)
     else:
         return redirect('login_user')
@@ -121,14 +122,13 @@ def like_post(request):
     postID = request.GET.get('postID')
     
     post = PostModel.objects.get(postID=postID)
-    like_check = LikePost.objects.filter(username=username, postID=postID)
+    like_check = LikePost.objects.filter(username=username, postID=postID).first()
     if like_check == None:
-        new_like = LikeFilter.objects.create(username=username, postID=postID)
+        new_like = LikePost.objects.create(username=username, postID=postID)
         new_like.save()
-        post.num_of_likes =+ 1
+        post.num_of_likes += 1
         post.save()
-    else:
-        like_check.delete()
-        post.num_of_likes =- 1
+    elif like_check != None:
+        post.num_of_likes -= 1
         post.save()
     return redirect('home')

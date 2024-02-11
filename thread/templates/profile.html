@@ -3,30 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Profile</title>
+    <title>{{ user_profile.user.username }}</title>
 </head>
 <body>
-    <img src="{{ image_url }}" alt="Profile Picture" width="100" height="100"> <br>
     <p>
-        Username: {{ user.username }}
-        <p>
-            Firstname: {{ profile_data.first_name }}
-        </p>
-        <p>
-            Last name {{ profile_data.last_name }}
-        </p>
-        <p>
-            Bio: {{ profile_data.bio }}
-        </p>
-        <p>
-            Location: {{ profile_data.location_city }}
-        </p>
-
-        <p>
-            <a href="{% url 'home' %}">Home</a>
-        </p>
-        <p>
-            <a href="{% url 'account_setting' %}">Update Profile</a><br>
-        </p>
-    </body>
+        <img src="{{ image_url }}" alt="Profile Image" width="100" height="100">
+    </p>
+    <p>
+      Username  @{{ user_profile.user.username}}
+    </p>
+    <p>
+      {{ user_post_len }}&nbsp;Posts 
+    </p>
+    <p>
+        {% for post in user_post %}
+        <div>
+        <p>Title: {{ post.title }}</p>
+        <a href="{{ post.image.url }}">
+            <img src="{{ post.image.url }}" alt="pics" height="100" width="100">
+        </a>
+        <hr style="color: green;">
+        </div>
+        {% endfor %}
+    </p>
+    <hr style="color: aqua;">
+    <p>
+        <a href="{% url 'home' %}">Home</a>
+    </p>
+</body>
 </html>

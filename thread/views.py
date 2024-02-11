@@ -90,7 +90,7 @@ def details(request):
     }
     image_url = profile.profile_pics.url
     context ={"profile_data": profile_data, "image_url": image_url}
-    return render(request, 'profile.html', context)
+    return render(request, 'details.html', context)
 
 
 @login_required(login_url='login_user')
@@ -124,6 +124,8 @@ def create_post(request):
     form = PostForm()
     context = {"form": form}
     return render(request, 'post.html', context)
+
+
 @login_required(login_url='login_user')    
 def like_post(request):
     username = request.user.username
@@ -143,3 +145,21 @@ def like_post(request):
         post.num_of_likes -= 1
         post.save()
     return redirect('home')
+
+
+def profile(request, pk):
+    user_object = User.objects.get(username=pk)
+    user_profile = Profile.objects.get(user=user_object)
+    user_post = PostModel.objects.filter(author=pk)
+    user_post_len = len(user_post)
+    image_url = user_profile.profile_pics.url
+
+    context = {
+        "user_object": user_object,
+        "user_profile": user_profile,
+        "user_post": user_post,
+        "user_post_len": user_post_len,
+        "image_url": image_url
+    }
+
+    return render(request, 'profile.html', context)

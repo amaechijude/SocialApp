@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile, PostModel, LikePost
+from .models import Profile, PostModel, LikePost, FollowerModel
 from .forms import UserForm, UpdateProfile, PostForm
 
 # Create your views here
@@ -154,12 +154,35 @@ def profile(request, pk):
     user_post_len = len(user_post)
     image_url = user_profile.profile_pics.url
 
+    follower = request.user.username
+    user = pk
+    if FollowerModel.objects.filter(follower=follower, user=user):
+        follow_check = "Unfollow"
+    else:
+        follow_check = "Follow"
+
     context = {
         "user_object": user_object,
         "user_profile": user_profile,
         "user_post": user_post,
         "user_post_len": user_post_len,
-        "image_url": image_url
+        "image_url": image_url,
+        "follow_check": follow_check,
     }
-
     return render(request, 'profile.html', context)
+
+def follow(request):
+    if request.method == 'POST':
+        follower = request.POST['follower']
+        user = request.POST['user']
+
+        if FollowerModel.objects.filter(follower=follower, user=user).first():
+            delete_follower = FollowerModel.objects.get(follower=follower, user=user)
+            delete_follower.delete()
+            return redirect('profile/'+user)
+        else:
+            new_follower = FollowerModel.objects.create(follower=follower, user=user)
+            new_follower.save()
+            return redirect('profile/'+user)
+    else:
+        return redirect('home')

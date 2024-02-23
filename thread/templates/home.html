@@ -55,7 +55,13 @@
                         <button class="like-button">
                             <i class="fas fa-thumbs-up"></i> Like
                         </button>
-                    </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes</p>
+                    </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes. &nbsp;&nbsp; Liked_by
+		    {% for u in unique_likes reversed %}
+		    {% if post.postID == u.postID %}
+		    @{{ u.username}}.&nbsp;
+		    {% endif %}
+		    {% endfor %}
+		    </p>
                   
                     <hr style="color: aqua;">
                 </div>

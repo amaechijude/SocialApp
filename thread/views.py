@@ -14,16 +14,13 @@ def home(request):
     if request.user.is_authenticated:
         all_post = PostModel.objects.all()
         user = request.user
-
-        liked_by = LikePost.objects.all()
-        liked_list = []
-        for items in liked_by:
-            liked_list.append(str(items))
-
-        liked_set = set(liked_list)
-        unique_likes = list(liked_set)
-        context = {"all_post": all_post, "user": user, "unique_likes": unique_likes}
-        print(liked_set)
+        #postID = all_post.postID
+        unique_likes = LikePost.objects.all()
+        context = {"all_post": all_post,
+                   "user": user,
+                   "unique_likes": unique_likes,
+                   }
+        print(unique_likes)
         return render(request, 'home.html', context)
     else:
         return redirect('login_user')

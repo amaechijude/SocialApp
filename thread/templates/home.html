@@ -21,96 +21,14 @@
     </div>
     {% if user.is_authenticated %}
     <div>
-        <!-- HTML -->
-        <div class="dropdown">
-            <button class="dropbtn">Choose a topic</button>
-            <div class="dropdown-content">
-                <div id="html">
-                    HTML is the standard markup language for creating web pages.
-                </div>
-                <div id="css">
-                    CSS is the language that describes the style of an HTML document.
-                </div>
-                <div id="js">
-                    JavaScript is the programming language that makes web pages dynamic and interactive.
-                </div>
-            </div>
-        </div>
-
-        <!-- CSS -->
-        <style>
-            .dropdown {
-                position: relative;
-                display: inline-block;
-            }
-
-            .dropbtn {
-                background-color: #4CAF50;
-                color: white;
-                padding: 16px;
-                font-size: 16px;
-                border: none;
-                cursor: pointer;
-            }
-
-            .dropdown-content {
-                display: none;
-                position: absolute;
-                background-color: #f1f1f1;
-                min-width: 160px;
-                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-                z-index: 1;
-            }
-
-            .dropdown-content div {
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
-                cursor: pointer;
-            }
-
-            .dropdown-content div:hover {
-                background-color: #ddd;
-            }
-
-            .show {
-                display: block;
-            }
-        </style>
-
-        <!-- JavaScript -->
-        <script>
-            // Get the button and the dropdown content
-            var btn = document.getElementsByClassName("dropbtn")[0];
-            var content = document.getElementsByClassName("dropdown-content")[0];
-
-            // Add a click event listener to the button
-            btn.addEventListener("click", function() {
-                // Toggle the "show" class on the content
-                content.classList.toggle("show");
-            });
-
-            // Add a click event listener to each option in the content
-            var options = content.getElementsByTagName("div");
-            for (var i = 0; i < options.length; i++) {
-                options[i].addEventListener("click", function() {
-                    // Hide the content
-                    content.classList.remove("show");
-                    // Show an alert with the option text
-                    alert(this.innerHTML);
-                });
-            }
-        </script>
-
         <div>
             <p>
-                <h2>Welcome to our Home page</h2>
+            <h2>Welcome to our Home page</h2>
             </p>
             <hr>
             <div>
                 <p>
-                    <h3>Posts</h3>
+                <h3>Posts</h3>
                 </p>
                 {% if all_post %}
                 {% for post in all_post reversed %}
@@ -137,11 +55,11 @@
                             <button class="like-button">
                                 <i class="fas fa-thumbs-up"></i> Like
                             </button>
-                        </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes. &nbsp;&nbsp; Liked_by
+                        </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes. &nbsp;&nbsp;
                         {% for u in unique_likes reversed %}
                         {% if post.postID == u.postID %}
-			<a href="{% url 'profile' u.username %}">@{{ u.username}}</a>, &nbsp;
-			{% endif %}
+                        Liked_by &nbsp;&nbsp;<a href="{% url 'profile' u.username %}">@{{ u.username}}</a>, &nbsp;
+                        {% endif %}
                         {% endfor %}
                     </p>
 
@@ -169,6 +87,7 @@
     <a href="{% url 'login_user' %}">Login</a>
     <br><a href="{% url 'sign_up' %}">Sign Up</a>
     {% endif %}
+    
 </body>
 
 </html>

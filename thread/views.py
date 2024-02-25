@@ -16,11 +16,11 @@ def home(request):
         user = request.user
         #postID = all_post.postID
         unique_likes = LikePost.objects.all()
-        context = {"all_post": all_post,
-                   "user": user,
-                   "unique_likes": unique_likes,
-                   }
-        print(unique_likes)
+        context = {
+            "all_post": all_post,
+            "user": user,
+            "unique_likes": unique_likes,
+            }
         return render(request, 'home.html', context)
     else:
         return redirect('login_user')

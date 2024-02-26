@@ -9,10 +9,17 @@
     <div>
         <form action="{% url 'follow' %}" method="post">
             {% csrf_token %}
-            <input type="hidden" value="{{ user.username }}" name="follower">
             <input type="hidden" value="{{ user_object.username }}" name="user">
             <input type="submit" value="{{ follow_check }}">
         </form>
+        {% if fans_count > 1 %}
+        {{ fans_count }} followers
+        {% else %}
+        {{ fans_count }} follower
+        {% endif %}
+        {% for fn in fans %}
+        <a href="{% url 'profile' fn.follower %}">@{{ fn.follower }}</a>,&nbsp;
+        {% endfor %}
     </div>
     <p>
         <img src="{{ image_url }}" alt="Profile Image" width="100" height="100">

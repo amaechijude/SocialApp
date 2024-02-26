@@ -47,4 +47,4 @@ class FollowerModel(models.Model):
     user = models.CharField(max_length=100)
 
     def __str__(self):
-        return self.user
+        return f"User: {self.user}, ---- follower : {self.follower}"

@@ -156,7 +156,9 @@ def profile(request, pk):
         follow_check = "Unfollow"
     else:
         follow_check = "Follow"
-
+        
+    fans = FollowerModel.objects.filter(user=pk)
+    fans_count = len(fans)
     context = {
         "user_object": user_object,
         "user_profile": user_profile,
@@ -164,12 +166,15 @@ def profile(request, pk):
         "user_post_len": user_post_len,
         "image_url": image_url,
         "follow_check": follow_check,
-    }
+        "fans_count": fans_count,
+        "fans": fans,
+
+        }
     return render(request, 'profile.html', context)
 
 def follow(request):
     if request.method == 'POST':
-        follower = request.POST['follower']
+        follower = request.user.username
         user = request.POST['user']
 
         if FollowerModel.objects.filter(follower=follower, user=user).first():

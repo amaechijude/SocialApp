@@ -124,16 +124,15 @@ def create_post(request):
 
 
 @login_required(login_url='login_user')    
-def like_post(request):
+def like_post(request, pk):
     username = request.user.username
-    postID = request.GET.get('postID')
     
-    post = PostModel.objects.get(postID=postID)
+    post = PostModel.objects.get(postID=pk)
     
-    like_check = LikePost.objects.filter(username=username, postID=postID).first()
+    like_check = LikePost.objects.filter(username=username, postID=pk).first()
 
     if like_check == None:
-        new_like = LikePost.objects.create(username=username, postID=postID)
+        new_like = LikePost.objects.create(username=username, postID=pk)
         new_like.save()
         post.num_of_likes += 1
         post.save()

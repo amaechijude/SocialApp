@@ -51,14 +51,14 @@
                         Posted at: {{ post.created_at}}
                     </p>
                     <p>
-                        <a href="{% url 'like_post' %}?postID={{ post.postID }}">
+                        <a href="{% url 'like_post' post.postID %}">
                             <button class="like-button">
                                 <i class="fas fa-thumbs-up"></i> Like
                             </button>
                         </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes. &nbsp;&nbsp;
                         {% for u in unique_likes reversed %}
                         {% if post.postID == u.postID %}
-                        Liked_by &nbsp;&nbsp;<a href="{% url 'profile' u.username %}">@{{ u.username}}</a>, &nbsp;
+                        <a href="{% url 'profile' u.username %}">@{{ u.username}}</a>,&nbsp;
                         {% endif %}
                         {% endfor %}
                     </p>

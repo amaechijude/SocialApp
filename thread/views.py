@@ -152,6 +152,7 @@ def profile(request, pk):
 
     follower = request.user.username
     user = pk
+
     if FollowerModel.objects.filter(follower=follower, user=user):
         follow_check = "Unfollow"
     else:
@@ -177,13 +178,16 @@ def follow(request):
         follower = request.user.username
         user = request.POST['user']
 
-        if FollowerModel.objects.filter(follower=follower, user=user).first():
-            delete_follower = FollowerModel.objects.get(follower=follower, user=user)
-            delete_follower.delete()
-            return redirect('profile/'+user)
+        if follower == user:
+            return redirect('details')
         else:
-            new_follower = FollowerModel.objects.create(follower=follower, user=user)
-            new_follower.save()
-            return redirect('profile/'+user)
+            if FollowerModel.objects.filter(follower=follower, user=user).first():
+                delete_follower = FollowerModel.objects.get(follower=follower, user=user)
+                delete_follower.delete()
+                return redirect('profile/'+user)
+            else:
+                new_follower = FollowerModel.objects.create(follower=follower, user=user)
+                new_follower.save()
+                return redirect('profile/'+user)
     else:
         return redirect('home')

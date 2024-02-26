@@ -10,7 +10,11 @@
         <form action="{% url 'follow' %}" method="post">
             {% csrf_token %}
             <input type="hidden" value="{{ user_object.username }}" name="user">
+            {% if request.user.username == user_profile.user.username %}
+            <input type="submit" value="Account Details">
+            {% else %}
             <input type="submit" value="{{ follow_check }}">
+            {% endif %}
         </form>
         {% if fans_count > 1 %}
         {{ fans_count }} followers

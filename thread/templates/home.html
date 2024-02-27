@@ -32,6 +32,8 @@
                 </p>
                 {% if all_post %}
                 {% for post in all_post reversed %}
+                {% for f in follow %}
+                {% if post.author == f.follower %}
                 <div>
                     <p>
                         Image: {% if post.image %}
@@ -65,6 +67,8 @@
 
                     <hr style="color: aqua;">
                 </div>
+                {% endif %}
+                {% endfor %}
                 {% endfor %}
                 {% endif %}
             </div>
@@ -87,7 +91,7 @@
     <a href="{% url 'login_user' %}">Login</a>
     <br><a href="{% url 'sign_up' %}">Sign Up</a>
     {% endif %}
-    
+
 </body>
 
 </html>

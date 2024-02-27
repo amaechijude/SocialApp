@@ -13,6 +13,7 @@ User = get_user_model()
 def home(request):
     if request.user.is_authenticated:
         all_post = PostModel.objects.all()
+        follow = FollowerModel.objects.all()
         user = request.user
         #postID = all_post.postID
         unique_likes = LikePost.objects.all()
@@ -20,6 +21,7 @@ def home(request):
             "all_post": all_post,
             "user": user,
             "unique_likes": unique_likes,
+            "follow": follow,
             }
         return render(request, 'home.html', context)
     else:

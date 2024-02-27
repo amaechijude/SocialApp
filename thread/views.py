@@ -12,16 +12,18 @@ User = get_user_model()
 #@login_required(login_url='login_user')
 def home(request):
     if request.user.is_authenticated:
-        all_post = PostModel.objects.all()
-        follow = FollowerModel.objects.all()
+        #all_post = PostModel.objects.all()
         user = request.user
-        #postID = all_post.postID
+        following = FollowerModel.objects.filter(follower=user)
+        all_post = PostModel.objects.all()
         unique_likes = LikePost.objects.all()
+        all_profile = Profile.objects.all()
         context = {
             "all_post": all_post,
             "user": user,
             "unique_likes": unique_likes,
-            "follow": follow,
+            "following": following,
+            "all_profile": all_profile,
             }
         return render(request, 'home.html', context)
     else:

@@ -25,6 +25,18 @@
             <p>
             <h2>Welcome to our Home page</h2>
             </p>
+            <div>
+            {% if all_profile %}
+            Registered users who you can follow to view their posts
+	    {% for p in all_profile %}
+	    {% if p.user.username != request.user.username %}
+	    <ul>
+		    <li><a href="{% url 'profile' p.user.username %}">@{{ p.user.username}}</a></li>
+	    </ul>
+	    {% endif %} 
+	    {% endfor %}
+	    {% endif %}
+	    </div>
             <hr>
             <div>
                 <p>
@@ -32,8 +44,8 @@
                 </p>
                 {% if all_post %}
                 {% for post in all_post reversed %}
-                {% for f in follow %}
-                {% if post.author == f.user %}
+		{% for follow in following reversed %}
+		{% if follow.user == post.author %}
                 <div>
                     <p>
                         Image: {% if post.image %}
@@ -67,9 +79,9 @@
 
                     <hr style="color: aqua;">
                 </div>
-                {% endif %}
+		{% endif %}
                 {% endfor %}
-                {% endfor %}
+		{% endfor %}
                 {% endif %}
             </div>
         </div>

@@ -45,7 +45,7 @@
                 {% if all_post %}
                 {% for post in all_post reversed %}
 		{% for follow in following reversed %}
-		{% if follow.user == post.author %}
+		{% if follow.user == post.author or request.user.username == post.author %}
                 <div>
                     <p>
                         Image: {% if post.image %}
@@ -63,6 +63,7 @@
                     </p>
                     <p>
                         Posted at: {{ post.created_at}}
+			<a href="{% url 'post_view' post.postID %}"> Post Details </a>
                     </p>
                     <p>
                         <a href="{% url 'like_post' post.postID %}">

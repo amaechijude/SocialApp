@@ -7,6 +7,8 @@ from django.contrib import messages
 from .models import Profile, PostModel, LikePost, FollowerModel
 from .forms import UserForm, UpdateProfile, PostForm
 
+from PIL import Image
+
 # Create your views here
 User = get_user_model()
 #@login_required(login_url='login_user')
@@ -112,13 +114,14 @@ def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
+            author = request.user.username
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
             image = form.cleaned_data['image']
-            author = request.user.username
 
-            new_post = PostModel.objects.create(author=author, title=title, content=content, image=image)
+            new_post = PostModel.objects.create(author=author,title=title,content=content,image=image)
             new_post.save()
+            
             messages.success(request, "Post created")
             return redirect('home')
         messages.info(request, "Post was not created")
@@ -126,6 +129,22 @@ def create_post(request):
     context = {"form": form}
     return render(request, 'post.html', context)
 
+@login_required(login_url='login_user')
+def post_view(request, pk):
+    post_object = PostModel.objects.get(postID=pk)
+    return render(request, 'post_detail.html', {"post_object": post_object})
+
+@login_required(login_url='login_user')
+def delete_post(request, pk):
+    user = request.user.username
+    post_object = PostModel.objects.get(postID=pk)
+    if user == post_object.author:
+        post_object.delete()
+        messages.info(request, "Post deleted successfully")
+        return redirect('home')
+    else:
+        messages.info(request, "Can't delete, You aren't the Author")
+        return redirect('home')
 
 @login_required(login_url='login_user')    
 def like_post(request, pk):

@@ -41,9 +41,10 @@
         {% for post in user_post %}
         <div>
         <p>Title: {{ post.title }}</p>
+        {% if post.image %} 
         <a href="{{ post.image.url }}">
             <img src="{{ post.image.url }}" alt="pics" height="100" width="100">
-        </a>
+        </a>{% endif %} 
         <hr style="color: green;">
         </div>
         {% endfor %}

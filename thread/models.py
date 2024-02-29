@@ -1,6 +1,8 @@
 from django.db import models
 from datetime import datetime
 
+from django_resized import ResizedImageField # Compreess image
+
 from django.contrib.auth import get_user_model
 # Create your models here
 
@@ -13,7 +15,8 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=100, blank=True)
     last_name = models.CharField(max_length=100, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
-    profile_pics = models.ImageField(upload_to='profile_images', default='anon.png')
+    profile_pics = ResizedImageField(size=[300, 300], quality=70, upload_to='profile_images', default='anon.png') 
+   #profile_pics = models.ImageFieldi(upload_to='profile_images', default='anon.png')
     location_city = models.CharField(max_length=100, blank=True)
 
     USERNAME_FIELD = 'user.username'
@@ -27,7 +30,7 @@ class PostModel(models.Model):
     author = models.CharField(max_length=100, default='current_user')
     title = models.CharField(max_length=100)
     content = models.TextField(blank=True, default="Post something")
-    image = models.ImageField(upload_to='profile_posts')
+    image = ResizedImageField(size=[300, 300], quality=70, upload_to='profile_posts')
     created_at = models.DateTimeField(default=datetime.now)
     num_of_likes = models.IntegerField(default=0)
 

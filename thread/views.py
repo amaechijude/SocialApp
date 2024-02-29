@@ -8,6 +8,7 @@ from .models import Profile, PostModel, LikePost, FollowerModel
 from .forms import UserForm, UpdateProfile, PostForm
 
 from PIL import Image
+from .img_comp import compress_image
 
 # Create your views here
 User = get_user_model()
@@ -118,6 +119,8 @@ def create_post(request):
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
             image = form.cleaned_data['image']
+            #compress image
+            #image = compress_image(img_upload)
 
             new_post = PostModel.objects.create(author=author,title=title,content=content,image=image)
             new_post.save()

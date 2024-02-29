@@ -1,0 +1,8 @@
+asgiref==3.7.2
+Django==5.0.2
+django-resized==1.0.2
+pillow==10.2.0
+python-decouple==3.8
+pytz==2024.1
+sqlparse==0.4.4
+tzdata==2024.1

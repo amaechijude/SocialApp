@@ -7,12 +7,13 @@ from django.contrib import messages
 from .models import Profile, PostModel, LikePost, FollowerModel
 from .forms import UserForm, UpdateProfile, PostForm
 
-from PIL import Image
-from .img_comp import compress_image
-
 # Create your views here
 User = get_user_model()
 #@login_required(login_url='login_user')
+
+def index(request):
+    return render(request, 'home.html')
+
 def home(request):
     if request.user.is_authenticated:
         #all_post = PostModel.objects.all()
@@ -28,7 +29,7 @@ def home(request):
             "following": following,
             "all_profile": all_profile,
             }
-        return render(request, 'home.html', context)
+        return render(request, 'index.html', context)
     else:
         return redirect('login_user')
 

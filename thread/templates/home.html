@@ -26,17 +26,17 @@
             <h2>Welcome to our Home page</h2>
             </p>
             <div>
-            {% if all_profile %}
-            Registered users who you can follow to view their posts
-	    {% for p in all_profile %}
-	    {% if p.user.username != request.user.username %}
-	    <ul>
-		    <li><a href="{% url 'profile' p.user.username %}">@{{ p.user.username}}</a></li>
-	    </ul>
-	    {% endif %} 
-	    {% endfor %}
-	    {% endif %}
-	    </div>
+                {% if all_profile %}
+                Registered users who you can follow to view their posts
+                {% for p in all_profile %}
+                {% if p.user.username != request.user.username %}
+                <ul>
+                    <li><a href="{% url 'profile' p.user.username %}">@{{ p.user.username}}</a></li>
+                </ul>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+            </div>
             <hr>
             <div>
                 <p>
@@ -44,8 +44,8 @@
                 </p>
                 {% if all_post %}
                 {% for post in all_post reversed %}
-		{% for follow in following reversed %}
-		{% if follow.user == post.author or request.user.username == post.author %}
+                {% for follow in following reversed %}
+                {% if follow.user == post.author or request.user.username == post.author %}
                 <div>
                     <p>
                         Image: {% if post.image %}
@@ -63,7 +63,7 @@
                     </p>
                     <p>
                         Posted at: {{ post.created_at}}
-			<a href="{% url 'post_view' post.postID %}"> Post Details </a>
+                        <a href="{% url 'post_view' post.postID %}"> Post Details </a>
                     </p>
                     <p>
                         <a href="{% url 'like_post' post.postID %}">
@@ -80,9 +80,9 @@
 
                     <hr style="color: aqua;">
                 </div>
-		{% endif %}
+                {% endif %}
                 {% endfor %}
-		{% endfor %}
+                {% endfor %}
                 {% endif %}
             </div>
         </div>

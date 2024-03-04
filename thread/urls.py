@@ -15,5 +15,4 @@ urlpatterns = [
     path('follow', views.follow, name='follow'),
     path('post_view/<int:pk>', views.post_view, name='post_view'),
     path('delete_post/<int:pk>', views.delete_post, name='delete_post'),
-    path('index', views.index, name='index'),
 ]

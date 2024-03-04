@@ -33,7 +33,7 @@ class PostModel(models.Model):
     image = ResizedImageField(blank=True, size=[400, 400], quality=70, upload_to='profile_posts')
     created_at = models.DateTimeField(default=datetime.now)
     num_of_likes = models.IntegerField(default=0)
-    #full_name = models.CharField(blank=True, max_length=302)
+    #full_name = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return (f"{self.title}")

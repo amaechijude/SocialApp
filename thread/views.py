@@ -113,14 +113,13 @@ def create_post(request):
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             current_user = request.user
-            profile_object = current_user.profile
-            #full_name = str(profile_object.first_name).title()+'  '+str(profile_object.last_name).title()
+            #full_name = current_user.profile
             author = request.user.username
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
             image = form.cleaned_data['image']
 
-            new_post = PostModel.objects.create(author=author,title=title,content=content,image=image)#full_name=full_name)
+            new_post = PostModel.objects.create(author=author,title=title,content=content,image=image,)#full_name=full_name)
             new_post.save()
             
             messages.success(request, "Post created")

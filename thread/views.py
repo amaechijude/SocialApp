@@ -8,11 +8,8 @@ from .models import Profile, PostModel, LikePost, FollowerModel
 from .forms import UserForm, UpdateProfile, PostForm
 
 # Create your views here
-User = get_user_model()
-#@login_required(login_url='login_user')
 
-def index(request):
-    return render(request, 'home.html')
+User = get_user_model()
 
 def home(request):
     if request.user.is_authenticated:
@@ -29,7 +26,7 @@ def home(request):
             "following": following,
             "all_profile": all_profile,
             }
-        return render(request, 'index.html', context)
+        return render(request, 'home.html', context)
     else:
         return redirect('login_user')
 
@@ -97,7 +94,6 @@ def details(request):
     context ={"profile_data": profile_data, "image_url": image_url}
     return render(request, 'details.html', context)
 
-
 @login_required(login_url='login_user')
 def account_setting(request):
     user = request.user
@@ -116,14 +112,15 @@ def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
+            current_user = request.user
+            profile_object = current_user.profile
+            #full_name = str(profile_object.first_name).title()+'  '+str(profile_object.last_name).title()
             author = request.user.username
             title = form.cleaned_data['title']
             content = form.cleaned_data['content']
             image = form.cleaned_data['image']
-            #compress image
-            #image = compress_image(img_upload)
 
-            new_post = PostModel.objects.create(author=author,title=title,content=content,image=image)
+            new_post = PostModel.objects.create(author=author,title=title,content=content,image=image)#full_name=full_name)
             new_post.save()
             
             messages.success(request, "Post created")

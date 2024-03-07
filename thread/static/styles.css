@@ -291,15 +291,11 @@ main .container .left .profle{
 }
 
 .middle .stories .story:nth-child(1){
-    background: url('images/story-1.jpg');
+    background: url('images/story.jpg');
     no-repeat center center/cover;
 }
 .middle .stories .story:nth-child(2){
     background: url('images/story-2.jpg');
-    no-repeat center center/cover;
-}
-.middle .stories .story:nth-child(3){
-    background: url('images/story-3.jpg');
     no-repeat center center/cover;
 }
 .middle .stories .story:nth-child(4){

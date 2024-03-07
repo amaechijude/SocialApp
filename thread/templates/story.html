@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<!-- Coding By CodingNepal - youtube.com/codingnepal -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Story</title>
+  <link rel="stylesheet" href="{% static 'story.css' %}">
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v3.0.6/css/line.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+</head>
+<body>
+  <div class="wrapper">
+      <form method="post" action="{% url 'story' %}" enctype="multipart/form-data">
+          {% csrf_token %}
+    <div class="input-box">
+      <div class="tweet-area">
+        <span class="placeholder">What's happening?</span>
+        <div class="input editable" contenteditable="true" spellcheck="false"></div>
+        <div class="input readonly" contenteditable="true" spellcheck="false"></div>
+      </div>
+      <!--<div class="privacy">
+        <i class="fas fa-globe-asia"></i>
+        <span>Everyone can reply</span>
+      </div>-->
+    </div>
+    <div class="bottom">
+      <ul class="icons">
+        <li><label for="image"><i class="far fa-file-image"></i><input type="file" name="image" id="image" style="display: none;"></label></li>
+        <!--<li><i class="fas fa-map-marker-alt"></i></li>
+        <li><i class="far fa-grin"></i></li>
+        <li><i class="far fa-user"></i></li>-->
+      </ul>
+      <div class="content">
+        <span class="counter">250</span>
+        <button type="submit" >Post</button>
+      </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="{% static 'story.js' %}"></script>
+
+</body>
+</html>

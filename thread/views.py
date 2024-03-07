@@ -4,13 +4,13 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile, PostModel, LikePost, FollowerModel
+from .models import Profile, PostModel, LikePost, FollowerModel, Story
 from .forms import UserForm, UpdateProfile, PostForm
 
 # Create your views here
 
 User = get_user_model()
- 
+
 def index(request):
     user = request.user
     following = FollowerModel.objects.filter(follower=user)
@@ -18,12 +18,14 @@ def index(request):
     likes = reversed(LikePost.objects.all())
     unique_likes = list(likes)
     all_profile = Profile.objects.all()
+    stories = Story.objects.all()
     context = {
             "all_post": all_post,
             "user": user,
             "unique_likes": unique_likes,
             "following": following,
             "all_profile": all_profile,
+            "stories": stories,
             }
     return render(request, 'index.html', context)
 def home(request):
@@ -177,7 +179,7 @@ def like_post(request, pk):
         like_check.delete()
         post.num_of_likes -= 1
         post.save()
-    return redirect('home')
+    return redirect('index')
 
 
 def profile(request, pk):
@@ -210,6 +212,8 @@ def profile(request, pk):
         }
     return render(request, 'profile.html', context)
 
+
+@login_required(login_url='login_user')
 def follow(request):
     if request.method == 'POST':
         follower = request.user.username
@@ -228,3 +232,19 @@ def follow(request):
                 return redirect('profile/'+user)
     else:
         return redirect('home')
+
+
+@login_required(login_url='login_user')
+def story(request):
+    if request.method == 'POST':
+        author = request.user.profile
+        caption = request.POST['caption']
+        image = request.FILES.get('image')
+
+        new_story = Story.objects.create(author=author,caption=caption,image=image,)
+        new_story.save()
+        messages.success(request, "Story created")
+
+        return redirect('index')
+    else:
+        return render(request, 'story.html')

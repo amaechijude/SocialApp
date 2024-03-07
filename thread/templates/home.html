@@ -48,7 +48,7 @@
                 {% if follow.user == post.author or request.user.username == post.author %}
                 <div>
                     <p>
-                        Image: {% if post.image %}
+                        {% if post.image %}
                         <img src="{{ post.image.url }}" alt="Post Image" width="200" height="200">
                         {% endif %}
                     </p>

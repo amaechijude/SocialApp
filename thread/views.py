@@ -15,7 +15,8 @@ def index(request):
     user = request.user
     following = FollowerModel.objects.filter(follower=user)
     all_post = PostModel.objects.all()
-    unique_likes = LikePost.objects.all()
+    likes = reversed(LikePost.objects.all())
+    unique_likes = list(likes)
     all_profile = Profile.objects.all()
     context = {
             "all_post": all_post,

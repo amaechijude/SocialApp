@@ -51,9 +51,9 @@
                         <span><i class="uil uil-home"></i></span>
                         <h3>Home</h3>
                     </a>
-                    <a class="menu-item " href="{% url 'story' %}">
+                    <a class="menu-item " href="{% url 'create_post' %}" target="_blank">
                         <span><i class="uil uil-compass"></i></span>
-                        <h3>Add Story</h3>
+                        <h3>Create Post</h3>
                     </a>
                     <a class="menu-item" id="notifications">
                         <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
@@ -105,13 +105,13 @@
                         <span><i class="uil uil-setting"></i></span>
                         <h3>Settings</h3>
                     </a>
-                    <label class="btn btn-primary" for="create-post">Create Post</label>
+                    <label class="btn btn-primary" for="create-post">Post</label>
                 </div>
             </div>
             <div class="middle">
                 <div class="stories">
                     {% if stories %}
-                    {% for story in stories%}
+                    {% for story in stories reversed %}
                     {% if story.image %}
                     <div class="story" style="background: url('{{ story.image.url }}');
                     no-repeat center center/cover;">
@@ -132,9 +132,9 @@
                     <div class="profile-pic">
                         <img src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
                     </div>
-                    <input type="text" name="caption" placeholder="What's on your mind {{ user.profile.first_name }}" id="create-post">
-                   <input type="file" id="imgupload" name="image">
-                    <input type="submit" value="Create Story" class="btn btn-primary">
+                    <input type="text" name="caption" placeholder="{{ user.profile.first_name }}'s Story" id="create-post">
+		    <label for="image"><img src="{% static 'images/icons8-upload-24.png' %}"><input type="file" name="image" id="image" style="display: none;"></label>
+                    <input type="submit" value="Create" class="btn btn-primary">
                 </form>
                 {% if all_post %}
                 {% for post in all_post reversed %}

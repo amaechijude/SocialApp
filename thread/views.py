@@ -151,7 +151,7 @@ def post_view(request, pk):
 
 @login_required(login_url='login_user')
 def delete_post(request, pk):
-    user = request.user.username
+    user = request.user.profile
     post_object = PostModel.objects.get(postID=pk)
     if user == post_object.author:
         post_object.delete()
@@ -164,11 +164,9 @@ def delete_post(request, pk):
 @login_required(login_url='login_user')    
 def like_post(request, pk):
     username = request.user.username
-    
     post = PostModel.objects.get(postID=pk)
-    
-    like_check = LikePost.objects.filter(username=username, postID=pk).first()
 
+    like_check = LikePost.objects.filter(username=username, postID=pk).first()
     if like_check == None:
         new_like = LikePost.objects.create(username=username, postID=pk)
         new_like.save()

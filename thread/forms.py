@@ -12,10 +12,17 @@ class UserForm(UserCreationForm):
 class UpdateProfile(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('first_name', 'last_name', 'bio', 'profile_pics', 'location_city')
+        fields = ('first_name',
+                  'last_name',
+                  'bio',
+                  'profile_pics',
+                  'location_city')
 
 
 class PostForm(forms.ModelForm):
     class Meta:
         model = PostModel
-        exclude = ('postID', 'created_at', 'author', 'num_of_likes', 'full_name')
+        exclude = ('postID',
+                   'created_at',
+                   'author',
+                   'num_of_likes')

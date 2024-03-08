@@ -58,7 +58,7 @@ class FollowerModel(models.Model):
 class Story(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     caption = models.CharField(blank=True, max_length=250)
-    image = ResizedImageField(blank=False, size=[200, 340], quality=70, upload_to='stories')
+    image = ResizedImageField(blank=False, size=[400, 400], quality=70, upload_to='stories')
 
     def __str__(self):
         return f"{self.author.user.username} ---  {self.caption}"

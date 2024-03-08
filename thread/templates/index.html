@@ -138,9 +138,6 @@
                 </form>
                 {% if all_post %}
                 {% for post in all_post reversed %}
-                {% for follow in following reversed %}
-                {% if follow.user == post.author or request.user.username == post.author %}
-
                 <div class="feeds">
                     <div class="feed">
                         <div class="head">
@@ -151,8 +148,8 @@
                                 <img src="{{ user.profile.profile_pics.url }}" alt="" width="50" height="50">
                             </div>
                             <div class="info">
-                                <a href="{% url 'profile' post.author %}" target="_blank">
-                                    <h3>@{{ post.author}}</h3>
+                                <a href="{% url 'profile' post.author.user.username %}" target="_blank">
+                                    <h3>@{{ post.author.user.username }}</h3>
                                 </a>
                                 <small>{{ post.created_at }}</small>
                             </div>
@@ -184,12 +181,10 @@
                             {% endif %}
                             {% endfor %} {% endif %}
                         </div>
-                        <div class="comments text-muted">
+                        <!--<div class="comments text-muted">
                             View all 130 comments
-                        </div>
+                        </div>-->
                     </div>
-                    {% endif %}
-                    {% endfor %}
                     {% endfor %}
                     {% endif %}
                 </div>

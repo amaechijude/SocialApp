@@ -25,7 +25,7 @@
             <p>
             <h2>Welcome to our Home page</h2>
             </p>
-            <div>
+            <!--<div>
                 {% if all_profile %}
                 Registered users who you can follow to view their posts
                 {% for p in all_profile %}
@@ -36,7 +36,7 @@
                 {% endif %}
                 {% endfor %}
                 {% endif %}
-            </div>
+            </div>-->
             <hr>
             <div>
                 <p>
@@ -44,7 +44,6 @@
                 </p>
                 {% if all_post %}
                 {% for post in all_post reversed %}
-                {% for follow in following reversed %}
                 <div>
                     <p>
                         {% if post.image %}
@@ -52,7 +51,8 @@
                         {% endif %}
                     </p>
                     <p>
-                        Author: <a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username }}</a>
+                        Author: <a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username
+                            }}</a>
                     </p>
                     <p>
                         {{ post.content}}
@@ -61,7 +61,7 @@
                         Posted at: {{ post.created_at}}
                         <a href="{% url 'post_view' post.postID %}"> Post Details </a>
                     </p>
-                    <p>
+                    <!--<p>
                         <a href="{% url 'like_post' post.postID %}">
                             <button class="like-button">
                                 <i class="fas fa-thumbs-up"></i> Like
@@ -71,12 +71,10 @@
                         {% if post.postID == u.postID %}
                         <a href="{% url 'profile' u.username %}">@{{ u.username}}</a>,&nbsp;
                         {% endif %}
-                        {% endfor %}
+                        {% endfor %}-->
                     </p>
-
                     <hr style="color: aqua;">
                 </div>
-                {% endfor %}
                 {% endfor %}
                 {% endif %}
             </div>

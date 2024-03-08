@@ -33,14 +33,14 @@ def home(request):
         #user = request.user
         #following = FollowerModel.objects.filter(follower=user)
         all_post = PostModel.objects.all()
-        unique_likes = LikePost.objects.all()
-        all_profile = Profile.objects.all()
+        #unique_likes = LikePost.objects.all()
+        #all_profile = Profile.objects.all()
         context = {
             "all_post": all_post,
             #"user": user,
-            "unique_likes": unique_likes,
+            #"unique_likes": unique_likes,
             #"following": following,
-            "all_profile": all_profile,
+            #"all_profile": all_profile,
             }
         return render(request, 'home.html', context)
     else:

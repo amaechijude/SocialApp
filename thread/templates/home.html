@@ -45,7 +45,6 @@
                 {% if all_post %}
                 {% for post in all_post reversed %}
                 {% for follow in following reversed %}
-                {% if follow.user == post.author or request.user.username == post.author %}
                 <div>
                     <p>
                         {% if post.image %}
@@ -53,10 +52,7 @@
                         {% endif %}
                     </p>
                     <p>
-                        Author: <a href="{% url 'profile' post.author %}">@{{ post.author }}</a>
-                    </p>
-                    <p>
-                        Title: {{ post.title }}
+                        Author: <a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username }}</a>
                     </p>
                     <p>
                         {{ post.content}}
@@ -80,7 +76,6 @@
 
                     <hr style="color: aqua;">
                 </div>
-                {% endif %}
                 {% endfor %}
                 {% endfor %}
                 {% endif %}

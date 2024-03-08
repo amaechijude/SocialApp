@@ -12,8 +12,8 @@ from .forms import UserForm, UpdateProfile, PostForm
 User = get_user_model()
 
 def index(request):
-    user = request.user
-    following = FollowerModel.objects.filter(follower=user)
+    #user = request.user
+    #following = FollowerModel.objects.filter(follower=user)
     all_post = PostModel.objects.all()
     likes = reversed(LikePost.objects.all())
     unique_likes = list(likes)
@@ -21,25 +21,25 @@ def index(request):
     stories = Story.objects.all()
     context = {
             "all_post": all_post,
-            "user": user,
-            "unique_likes": unique_likes,
-            "following": following,
-            "all_profile": all_profile,
+            #"user": user,
+            #"unique_likes": unique_likes,
+            #"following": following,
+            #"all_profile": all_profile,
             "stories": stories,
             }
     return render(request, 'index.html', context)
 def home(request):
     if request.user.is_authenticated:
-        user = request.user
-        following = FollowerModel.objects.filter(follower=user)
+        #user = request.user
+        #following = FollowerModel.objects.filter(follower=user)
         all_post = PostModel.objects.all()
         unique_likes = LikePost.objects.all()
         all_profile = Profile.objects.all()
         context = {
             "all_post": all_post,
-            "user": user,
+            #"user": user,
             "unique_likes": unique_likes,
-            "following": following,
+            #"following": following,
             "all_profile": all_profile,
             }
         return render(request, 'home.html', context)
@@ -128,12 +128,11 @@ def create_post(request):
     if request.method == 'POST':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
-            author = request.user
+            author = request.user.profile
             content = form.cleaned_data['content']
             image = form.cleaned_data['image']
 
             new_post = PostModel.objects.create(author=author,
-                                                title=title,
                                                 content=content,
                                                 image=image)
             new_post.save()

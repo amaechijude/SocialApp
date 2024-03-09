@@ -15,12 +15,12 @@
       <form method="post" action="{% url 'story' %}" enctype="multipart/form-data">
           {% csrf_token %}
     <div class="input-box">
-      <div class="tweet-area">
+      <label><div class="tweet-area">
         <span class="placeholder">What's happening?</span>
         <div class="input editable" contenteditable="true" spellcheck="false"></div>
-        <div class="input readonly" contenteditable="true" spellcheck="false"></div>
-      </div>
-      <!--<div class="privacy">
+        <div class="input readonly" contenteditable="true" spellcheck="false"></div></label><input type="text" name="">
+        
+        <!--<div class="privacy">
         <i class="fas fa-globe-asia"></i>
         <span>Everyone can reply</span>
       </div>-->

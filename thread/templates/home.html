@@ -57,7 +57,7 @@
                         {{ post.content}}
                     </p>
                     <p>
-                        Posted at: {{ post.created_at}}
+                        Posted at: {{ post.created_at|timezone }}
                         <a href="{% url 'post_view' post.postID %}"> Post Details </a>
                     </p>
                     <!--<p>

@@ -9,10 +9,10 @@
 
 <body>
     <div>
-        <form action="{% url 'follow' %}" method="post">
+        <form action="{% url 'follow' %}" method="POST">
             {% csrf_token %}
-            <input type="hidden" value="{{ user_object.username }}" name="user">
-            {% if request.user.username == user_profile.user.username %}
+            <input type="hidden" value="{{ user_profile.user.username }}" name="user">
+            {% if request.user.profile == user_profile %}
             <input type="submit" value="Account Details">
             {% else %}
             <input type="submit" value="{{ follow_check }}">

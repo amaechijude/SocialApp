@@ -51,7 +51,7 @@
                         {% endif %}
                     </p>
                     <p>
-                        Author: <a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username }}</a>
+                        Author: <a href="{% url 'profile' post.author.id_user %}">@{{ post.author.user.username }}</a>
                     </p>
                     <p>
                         {{ post.content}}

@@ -148,7 +148,7 @@
                                 <img src="{{ user.profile.profile_pics.url }}" alt="" width="50" height="50">
                             </div>
                             <div class="info">
-                                <a href="{% url 'profile' post.author.user.username %}" target="_blank">
+                                <a href="{% url 'profile' post.author.id_user %}" target="_blank">
                                     <h3>@{{ post.author.user.username }}</h3>
                                 </a>
                                 <small>

@@ -180,9 +180,9 @@ def like_post(request, pk):
 
 
 def profile(request, pk):
-    user_object = User.objects.get(username=pk)
-    user_profile = Profile.objects.get(user=user_object)
-    user_post = PostModel.objects.filter(author=pk)
+    #user_object = User.objects.get(username=pk)
+    user_profile = Profile.objects.get(id_user=pk)
+    user_post = PostModel.objects.filter(author=user_profile)
     user_post_len = len(user_post)
     image_url = user_profile.profile_pics.url
 
@@ -197,7 +197,7 @@ def profile(request, pk):
     fans = FollowerModel.objects.filter(user=pk)
     fans_count = len(fans)
     context = {
-        "user_object": user_object,
+        #"user_object": user_object,
         "user_profile": user_profile,
         "user_post": user_post,
         "user_post_len": user_post_len,

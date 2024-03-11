@@ -49,11 +49,11 @@ class LikePost(models.Model):
 
 
 class FollowerModel(models.Model):
-    follower = models.CharField(max_length=100)
-    user = models.CharField(max_length=100)
+    follower = models.CharField(max_length=150)
+    user = models.CharField(max_length=150)
 
     def __str__(self):
-        return f"User: {self.user}, ---- follower : {self.follower}"
+        return f"User: {self.user.first_name}, ---- follower : {self.follower.first_name}"
 
 class Story(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)

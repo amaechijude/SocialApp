@@ -24,9 +24,9 @@
                 <input type="search" placeholder="Search for creators, inspirations and projects" />
             </div>
             <div class="create">
-                <label class="btn btn-primary" for="create-post">Create</label>
+                <label class="btn btn-primary" for="create-post"><a href="{% url 'create_post' %}">Create</a></label>
                 <div class="profile-pic">
-                    <img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50" />
+                    <a href="{% url 'details' %}"><img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50" /></a>
                 </div>
             </div>
         </div>
@@ -35,7 +35,7 @@
     <main>
         <div class="container">
             <div class="left">
-                <a class="profile">
+                <a class="profile" href="{% url 'details' %}">
                     <div class="profile-pic">
                         <img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50">
                     </div>
@@ -101,7 +101,7 @@
                         <i class="uil uil-envelope"><small class="notification-count">6</small></i></span>
                         <h3>Messages</h3>
                     </a>
-                    <a class="menu-item " href="{% url 'details' %}" target="_blank">
+                    <a class="menu-item " href="{% url 'details' %}">
                         <span><i class="uil uil-setting"></i></span>
                         <h3>Settings</h3>
                     </a>
@@ -148,7 +148,7 @@
                                 <img src="{{ user.profile.profile_pics.url }}" alt="" width="50" height="50">
                             </div>
                             <div class="info">
-                                <a href="{% url 'profile' post.author.id_user %}" target="_blank">
+                                <a href="{% url 'profile' post.author.user.username %}" target="_blank">
                                     <h3>@{{ post.author.user.username }}</h3>
                                 </a>
                                 <small>

@@ -53,7 +53,7 @@ class FollowerModel(models.Model):
     user = models.CharField(max_length=150)
 
     def __str__(self):
-        return f"User: {self.user.first_name}, ---- follower : {self.follower.first_name}"
+        return f"User: {self.user}, ---- follower : {self.follower}"
 
 class Story(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)

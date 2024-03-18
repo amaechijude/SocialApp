@@ -24,7 +24,7 @@
                 <input type="search" placeholder="Search for creators, inspirations and projects" />
             </div>
             <div class="create">
-                <label class="btn btn-primary" for="create-post"><a href="{% url 'create_post' %}">Create</a></label>
+                <label class="btn btn-primary" for="create-post"><a href="{% url 'create_post' %}">Add Post</a></label>
                 <div class="profile-pic">
                     <a href="{% url 'details' %}"><img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50" /></a>
                 </div>
@@ -51,10 +51,10 @@
                         <span><i class="uil uil-home"></i></span>
                         <h3>Home</h3>
                     </a>
-                    <a class="menu-item " href="{% url 'create_post' %}" target="_blank">
+                    <!--<a class="menu-item " href="{% url 'create_post' %}" target="_blank">
                         <span><i class="uil uil-compass"></i></span>
                         <h3>Create Post</h3>
-                    </a>
+                    </a>-->
                     <a class="menu-item" id="notifications">
                         <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
                         <h3>Notifications</h3>
@@ -68,7 +68,7 @@
                                     <small class="text-muted">2 DAYS AGO</small>
                                 </div>
                             </div>
-                            <div>
+                            <!--<div>
                                 <div class="profile-pic">
                                     <img src="{% static './images/profile-11.jpg' %}">
                                 </div>
@@ -94,7 +94,7 @@
                                     <b>Wilson Fisk</b> started following you
                                     <small class="text-muted"> 11 HOURS AGO</small>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </a>
                     <a class="menu-item" id="messages-notifications">

@@ -97,17 +97,9 @@ def logout_user(request):
 @login_required(login_url='login_user')
 def details(request):
     user = request.user
-    print(user)
     profile = user.profile
-    profile_data = {
-        "first_name": profile.first_name,
-        "last_name": profile.last_name,
-        "bio": profile.bio,
-        "profile_pics": profile.profile_pics,
-        "location_city":profile.location_city
-    }
     image_url = profile.profile_pics.url
-    context ={"profile_data": profile_data, "image_url": image_url}
+    context ={"profile": profile, "image_url": image_url}
     return render(request, 'details.html', context)
 
 @login_required(login_url='login_user')

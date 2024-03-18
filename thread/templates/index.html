@@ -24,9 +24,13 @@
                 <input type="search" placeholder="Search for creators, inspirations and projects" />
             </div>
             <div class="create">
+<<<<<<< HEAD
                 <label class="btn btn-primary" for="create-post"><a href="{% url 'create_post' %}">Add Post</a></label>
+=======
+                <label class="btn btn-primary" for="create-post">Create</label>
+>>>>>>> e9daf27590e8913ec233e24eb49331947c4950bb
                 <div class="profile-pic">
-                    <a href="{% url 'details' %}"><img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50" /></a>
+                    <img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50" />
                 </div>
             </div>
         </div>
@@ -35,7 +39,7 @@
     <main>
         <div class="container">
             <div class="left">
-                <a class="profile" href="{% url 'details' %}">
+                <a class="profile">
                     <div class="profile-pic">
                         <img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50">
                     </div>
@@ -56,7 +60,7 @@
                         <h3>Create Post</h3>
                     </a>-->
                     <a class="menu-item" id="notifications">
-                        <span><i class="uil uil-bell"><small class="notification-count">9+</small></i></span>
+                        <span><i class="uil uil-bell"><small class="notification-count"></small></i></span>
                         <h3>Notifications</h3>
                         <div class="notifications-popup">
                             <div>
@@ -97,11 +101,11 @@
                             </div>-->
                         </div>
                     </a>
-                    <a class="menu-item" id="messages-notifications">
+                    <!--<a class="menu-item" id="messages-notifications">
                         <i class="uil uil-envelope"><small class="notification-count">6</small></i></span>
                         <h3>Messages</h3>
-                    </a>
-                    <a class="menu-item " href="{% url 'details' %}">
+                    </a>-->
+                    <a class="menu-item " href="{% url 'details' %}" target="_blank">
                         <span><i class="uil uil-setting"></i></span>
                         <h3>Settings</h3>
                     </a>
@@ -151,8 +155,7 @@
                                 <a href="{% url 'profile' post.author.user.username %}" target="_blank">
                                     <h3>@{{ post.author.user.username }}</h3>
                                 </a>
-                                <small>
-					{{ post.created_at }} <strong> utc</strong></small>
+                                <small>{{ post.created_at }}</small>
                             </div>
                             <SPAN class="edit"><i class="uil uil-ellipsis-h"></i></SPAN>
                         </div>
@@ -172,7 +175,7 @@
                                 <span>{{ post.num_of_likes }} Likes</span>
                             </div>
                             <div class="bookmark">
-                                <span><i class="uil uil-bookmark"></i></span>
+                                <a href="{% url 'post_view' post.postID %}"><span><i class="uil uil-bookmark"></i></span></a>
                             </div>
                         </div>
                         <div class="liked-by">
@@ -193,7 +196,7 @@
             </div>
 
             <div class="right">
-                <div class="messages">
+                <!--<div class="messages">
                     <div class="heading">
                         <h4>Messages</h4>
                         <span><i class="uil uil-edit"></i></span>
@@ -278,7 +281,7 @@
                             </p>
                         </div>
                     </div>
-                </div>
+                </div>-->
                 <div class="friend-requests">
                     <h4>Requests</h4>
                     <div class="request">
@@ -296,7 +299,6 @@
                         </div>
                         <div class="action">
                             <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
                         </div>
                     </div>
                     <div class="request">
@@ -311,28 +313,6 @@
                                 </p>
 
                             </div>
-                        </div>
-                        <div class="action">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
-                        </div>
-                    </div>
-                    <div class="request">
-                        <div class="info">
-                            <div class="profile-pic">
-                                <img src="{% static 'images/profile-5.jpg' %}">
-                            </div>
-                            <div>
-                                <h5>Christ Kahea</h5>
-                                <p class="text-muted">
-                                    1 mutual friend
-                                </p>
-
-                            </div>
-                        </div>
-                        <div class="action">
-                            <button class="btn btn-primary">Accept</button>
-                            <button class="btn">Decline</button>
                         </div>
                     </div>
 

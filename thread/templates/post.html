@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+{% load static %}
+<!--<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -24,7 +25,33 @@
         <p>
             <a href="{% url 'home' %}">Home</a>
         </p>
+        
     </div>
 </body>
 
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twitter Text Box with Image</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="tweet-box">
+        <textarea id="tweet-text" maxlength="280" placeholder="What's happening?"></textarea>
+        <div class="image-upload">
+            <label for="image-input">Add Image</label>
+            <input type="file" id="image-input" accept="image/*">
+            <img id="image-preview" src="" alt="Uploaded Image Preview">
+        </div>
+        <div class="char-count">
+            <span id="char-remaining">280</span> characters remaining
+        </div>
+        <button id="tweet-btn">Tweet</button>
+    </div>
+    <script src="{% static 'script.js' %}"></script>
+</body>
 </html>

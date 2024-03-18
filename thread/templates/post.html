@@ -6,6 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Post</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 
 <body>
@@ -20,17 +21,17 @@
         <form action="{% url 'create_post' %}" method="post" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
-            <button type="submit">Create Post</button>
+            <button id="tweet-btn" type="submit">Create Post</button>
         </form>
         <p>
             <a href="{% url 'home' %}">Home</a>
         </p>
         
     </div>
+    <script src="{% static 'script.js' %}"></script>
 </body>
 
-</html>
--->
+</html>-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,17 +41,19 @@
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
+    <form action="{% url 'create_post' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
     <div class="tweet-box">
-        <textarea id="tweet-text" maxlength="280" placeholder="What's happening?"></textarea>
+        <textarea name="content" id="tweet-text" maxlength="280" placeholder="What's happening?"></textarea>
         <div class="image-upload">
-            <label for="image-input">Add Image</label>
-            <input type="file" id="image-input" accept="image/*">
-            <img id="image-preview" src="" alt="Uploaded Image Preview">
+            <label for="image-input"><img src="{% static 'images/icons8-upload-24.png' %}"></label>
+            <input name="image" type="file" id="image-input" accept="image/*">
+            <img id="image-preview" src="">
         </div>
         <div class="char-count">
             <span id="char-remaining">280</span> characters remaining
         </div>
-        <button id="tweet-btn">Tweet</button>
+        <button type="submit" id="tweet-btn">Tweet</button>
     </div>
     <script src="{% static 'script.js' %}"></script>
 </body>

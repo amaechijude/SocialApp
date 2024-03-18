@@ -122,7 +122,7 @@ def account_setting(request):
     form = UpdateProfile(instance=profile)
     return render(request, 'settings.html', {"form":form})
 
-
+"""
 @login_required(login_url='login_user')
 def create_post(request):
     if request.method == 'POST':
@@ -132,9 +132,7 @@ def create_post(request):
             content = form.cleaned_data['content']
             image = form.cleaned_data['image']
 
-            new_post = PostModel.objects.create(author=author,
-                                                content=content,
-                                                image=image)
+            new_post = PostModel.objects.create(author=author, content=content, image=image)
             new_post.save()
             
             messages.success(request, "Post created")
@@ -143,6 +141,25 @@ def create_post(request):
     form = PostForm()
     context = {"form": form}
     return render(request, 'post.html', context)
+"""
+
+@login_required(login_url='login_user')
+def create_post(request):
+    if request.method == 'POST':
+        author = request.user.profile
+        content = request.POST['content']
+        image = request.FILES.get('image')
+
+        if image != None:
+            new_post = PostModel.objects.create(author=author, content=content, image=image)
+            new_post.save()
+            
+            messages.success(request, "Post created")
+            return redirect('index')
+        messages.info(request, "Post was not created")
+        return redirect('index')
+    return render(request, 'post.html')
+    
 
 @login_required(login_url='login_user')
 def post_view(request, pk):

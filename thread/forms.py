@@ -21,8 +21,7 @@ class UpdateProfile(forms.ModelForm):
 
 class PostForm(forms.ModelForm):
     class Meta:
+        content = forms.CharField(required=False, widget=forms.widgets.Textarea(attrs={"id":"teet-text", "placeholder":"What's Happening"}), label="")
+        image = forms.FileField(required=True, widget=forms.widgets.Textarea(attrs={"id":"image-input"}), label="image-input")
         model = PostModel
-        exclude = ('postID',
-                   'created_at',
-                   'author',
-                   'num_of_likes')
+        exclude = ('postID','created_at', 'author', 'num_of_likes')

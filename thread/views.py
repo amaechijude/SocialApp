@@ -11,6 +11,9 @@ from .forms import UserForm, UpdateProfile, PostForm
 
 User = get_user_model()
 
+def foot(request):
+    return render(request, 'footnote.html')
+
 def index(request):
     #user = request.user
     #following = FollowerModel.objects.filter(follower=user)

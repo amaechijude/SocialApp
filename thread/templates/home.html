@@ -1,102 +1,94 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Social App</title>
-    <link rel="stylesheet" href="{% static 'styles/home.css' %}">
-</head>
+{% block title %} Social App {% endblock %}
 
-<body>
-    <h1 class="hello">David is a noise maker</h1>
+{% block content %}
 
-    <div style="color: red;">
-        {% if messages %}
-        {% for message in messages %}
-        {{ message }}
-        {% endfor%}
-        {% endif %}
-    </div>
-    {% if user.is_authenticated %}
+<h1 class="hello">David is a noise maker</h1>
+
+<div style="color: red;">
+    {% if messages %}
+    {% for message in messages %}
+    {{ message }}
+    {% endfor%}
+    {% endif %}
+</div>
+{% if user.is_authenticated %}
+<div>
     <div>
+        <p>
+            <h2>Welcome to our Home page</h2>
+        </p>
+        <!--<div>
+                                            {% if all_profile %}
+                                            Registered users who you can follow to view their posts
+                                            {% for p in all_profile %}
+                                            {% if p.user.username != request.user.username %}
+                                            <ul>
+                                                <li><a href="{% url 'profile' p.user.username %}">@{{ p.user.username}}</a></li>
+                                            </ul>
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endif %}
+                                        </div>-->
+        <hr>
         <div>
             <p>
-                <h2>Welcome to our Home page</h2>
+                <h3>Posts</h3>
             </p>
-            <!--<div>
-                            {% if all_profile %}
-                            Registered users who you can follow to view their posts
-                            {% for p in all_profile %}
-                            {% if p.user.username != request.user.username %}
-                            <ul>
-                                <li><a href="{% url 'profile' p.user.username %}">@{{ p.user.username}}</a></li>
-                            </ul>
-                            {% endif %}
-                            {% endfor %}
-                            {% endif %}
-                        </div>-->
-            <hr>
+            {% if all_post %}
+            {% for post in all_post reversed %}
             <div>
                 <p>
-                    <h3>Posts</h3>
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Post Image" width="200" height="200">
+                    {% endif %}
                 </p>
-                {% if all_post %}
-                {% for post in all_post reversed %}
-                <div>
-                    <p>
-                        {% if post.image %}
-                        <img src="{{ post.image.url }}" alt="Post Image" width="200" height="200">
-                        {% endif %}
-                    </p>
-                    <p>
-                        Author: <a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username }}</a>
-                    </p>
-                    <p>
-                        {{ post.content}}
-                    </p>
-                    <p>
-                        Posted at: <small>{{ post.created_at }} <strong> UTC</strong></small>
-                        <a href="{% url 'post_view' post.postID %}"> Post Details </a>
-                    </p>
-                    <!--<p>
-                                            <a href="{% url 'like_post' post.postID %}">
-                                                <button class="like-button">
-                                                    <i class="fas fa-thumbs-up"></i> Like
-                                                </button>
-                                            </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes. &nbsp;&nbsp;
-                                            {% for u in unique_likes reversed %}
-                                            {% if post.postID == u.postID %}
-                                            <a href="{% url 'profile' u.username %}">@{{ u.username}}</a>,&nbsp;
-                                            {% endif %}
-                                            {% endfor %}-->
+                <p>
+                    Author: <a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username }}</a>
                 </p>
-                <hr style="color: aqua;">
-            </div>
-            {% endfor %}
-            {% endif %}
+                <p>
+                    {{ post.content}}
+                </p>
+                <p>
+                    Posted at: <small>{{ post.created_at }} <strong> UTC</strong></small>
+                    <a href="{% url 'post_view' post.postID %}"> Post Details </a>
+                </p>
+
+                <a href="{% url 'like_post' post.postID %}">
+                    <button class="like-button">
+                        <i class="fas fa-thumbs-up"></i> Like
+                    </button>
+                </a> &nbsp;&nbsp; {{post.num_of_likes }} Likes. &nbsp;&nbsp;
+                {% for u in unique_likes reversed %}
+                {% if post.postID == u.postID %}
+                <a href="{% url 'profile' u.username %}">@{{ u.username}}</a>,&nbsp;
+                {% endif %}
+                {% endfor %}
+            </p>
+            <hr style="color: aqua;">
         </div>
+        {% endfor %}
+        {% endif %}
     </div>
-    <p>
-        <a href="{% url 'create_post' %}">Create new Post</a>
-    </p>
-    <p>
-        <a href="{% url 'logout_user' %}">Log out</a>
-    </p>
-    <p>
-        <a href="{% url 'details' %}">profile</a>
-    </p>
-    <p>
-        <a href="{% url 'account_setting' %}">Settings</a><br>
-    </p>
-    <hr>
+</div>
+<p>
+    <a href="{% url 'create_post' %}">Create new Post</a>
+</p>
+<p>
+    <a href="{% url 'logout_user' %}">Log out</a>
+</p>
+<p>
+    <a href="{% url 'details' %}">profile</a>
+</p>
+<p>
+    <a href="{% url 'account_setting' %}">Settings</a><br>
+</p>
+<hr>
 </div>
 {% else %}
 <a href="{% url 'login_user' %}">Login</a>
 <br><a href="{% url 'sign_up' %}">Sign Up</a>
 {% endif %}
 
-</body>
-
-</html>
+{% endblock %}

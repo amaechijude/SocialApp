@@ -10,27 +10,9 @@ from .forms import UserForm, UpdateProfile, PostForm
 # Create your views here
 
 User = get_user_model()
+def stories(request):
+    return render(request,'stories.html')
 
-def foot(request):
-    return render(request, 'footnote.html')
-
-def index(request):
-    #user = request.user
-    #following = FollowerModel.objects.filter(follower=user)
-    all_post = PostModel.objects.all()
-    likes = reversed(LikePost.objects.all())
-    unique_likes = list(likes)
-    all_profile = Profile.objects.all()
-    stories = Story.objects.all()
-    context = {
-            "all_post": all_post,
-            #"user": user,
-            #"unique_likes": unique_likes,
-            #"following": following,
-            #"all_profile": all_profile,
-            "stories": stories,
-            }
-    return render(request, 'index.html', context)
 def home(request):
     if request.user.is_authenticated:
         #user = request.user
@@ -38,8 +20,10 @@ def home(request):
         all_post = PostModel.objects.all()
         #unique_likes = LikePost.objects.all()
         #all_profile = Profile.objects.all()
+        stories = Story.objects.all()
         context = {
             "all_post": all_post,
+            "stories": stories,
             #"user": user,
             #"unique_likes": unique_likes,
             #"following": following,
@@ -150,9 +134,9 @@ def create_post(request):
             new_post.save()
             
             messages.success(request, "Post created")
-            return redirect('index')
+            return redirect('home')
         messages.info(request, "Post was not created")
-        return redirect('index')
+        return redirect('home')
     return render(request, 'post.html')
     
 
@@ -188,7 +172,7 @@ def like_post(request, pk):
         like_check.delete()
         post.num_of_likes -= 1
         post.save()
-    return redirect('index')
+    return redirect('home')
 
 
 def profile(request,pk):
@@ -255,6 +239,6 @@ def story(request):
         new_story.save()
         messages.success(request, "Story created")
 
-        return redirect('index')
+        return redirect('home')
     else:
         return render(request, 'story.html')

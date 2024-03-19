@@ -1,30 +1,14 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block title %} Social App {% endblock %}
 
 {% block content %}
 
 {% if user.is_authenticated %}
-<div class="stories">
-    {% if stories %}
-    {% for story in stories reversed %}
-    {% if story.image %}
-    <div class="story" style="background: url('{{ story.image.url }}');
-        no-repeat center center/cover;">
-        <div class="profile-pic">
-            <img src="{{ story.author.profile_pics.url }}" alt="">
-        </div>
-        <p class="name">
-            {{ story.caption }}
-        </p>
-    </div>
-    {% endif %}
-    {% endfor %}
-    {% endif %}
-</div>
-{% if all_post %}
-{% for post in all_post reversed %}
+<br>
 <div class="container">
+    {% if all_post %}
+    {% for post in all_post reversed %}
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="post-container">
@@ -55,26 +39,10 @@
             </div>
         </div>
     </div>
+    {% endfor %}
+    {% endif %}
 </div>
-{% endfor %}
+<br>
+<br>
 {% endif %}
-<p>
-    <a href="{% url 'create_post' %}">Create new Post</a>
-</p>
-<p>
-    <a href="{% url 'logout_user' %}">Log out</a>
-</p>
-<p>
-    <a href="{% url 'details' %}">profile</a>
-</p>
-<p>
-    <a href="{% url 'account_setting' %}">Settings</a><br>
-</p>
-<hr>
-</div>
-{% else %}
-<a href="{% url 'login_user' %}">Login</a>
-<br><a href="{% url 'sign_up' %}">Sign Up</a>
-{% endif %}
-
 {% endblock %}

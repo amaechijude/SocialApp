@@ -1,21 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block title %} Post Detail {% endblock %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Post</title>
-</head>
-
-<body>
-    <div style="color: red;">
-        {% if messages %}
-        {% for message in messages %}
-        {{ message }}
-        {% endfor%}
-        {% endif %}
-    </div><br>
-    <div>
+{% block content %}
+<div>
 	    {% if post_object.image %}
 	    <img src="{{ post_object.image.url }}" alt="Post Image" width="100" height="100">
 	    {% endif %}
@@ -29,6 +16,4 @@
 	    <a href="{% url 'delete_post' post_object.postID %}" >Delete Post</a>
         </p>
     </div>
-</body>
-
-</html>
+    {% endblock %}

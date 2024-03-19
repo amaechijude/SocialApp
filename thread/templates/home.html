@@ -14,12 +14,12 @@
     {% endif %}
 </div>
 {% if user.is_authenticated %}
-<div>
+<!--<div>
     <div>
         <p>
             <h2>Welcome to our Home page</h2>
         </p>
-        <!--<div>
+        <div>
                                             {% if all_profile %}
                                             Registered users who you can follow to view their posts
                                             {% for p in all_profile %}
@@ -30,7 +30,7 @@
                                             {% endif %}
                                             {% endfor %}
                                             {% endif %}
-                                        </div>-->
+                                        </div>
         <hr>
         <div>
             <p>
@@ -71,7 +71,43 @@
         {% endfor %}
         {% endif %}
     </div>
+</div>-->
+{% if all_post %}
+{% for post in all_post reversed %}
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="post-container">
+                <div class="post-header">
+                    <img src="{{ user.profile.profile_pics.url }}" alt="Avatar" class="post-avatar">
+                    <div>
+                        <p class="post-username">
+                            <a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username }}</a>
+                        </p>
+                        <p class="text-muted">
+                            {{ post.created_at }}
+                        </p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>
+                        {{ post.content }}
+                    </p>
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" alt="Image" class="img-fluid" style="max-width: 100%;">
+                    {% endif %}
+                </div>
+                <div class="post-actions">
+                    <a href="{% url 'like_post' post.postID %}"><button class="btn btn-primary">Like</button></a>
+                    <button class="btn btn-secondary">{{ post.num_of_likes }} Likes</button>
+                    <a href="{% url 'post_view' post.postID %}"><button class="btn btn-info">Post details</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endfor %}
+{% endif %}
 <p>
     <a href="{% url 'create_post' %}">Create new Post</a>
 </p>

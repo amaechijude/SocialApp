@@ -41,15 +41,17 @@
     </p>
     <p>
         {% for post in user_post %}
-    <div>
-        <p>Title: {{ post.title }}</p>
-        {% if post.image %}
-        <a href="{{ post.image.url }}">
-            <img src="{{ post.image.url }}" alt="pics" height="100" width="100">
-        </a>{% endif %}
-        <hr style="color: green;">
-    </div>
-    {% endfor %}
+        <div>
+            <p>
+                Title: {{ post.title }}
+            </p>
+            {% if post.image %}
+            <a href="{{ post.image.url }}">
+                <img src="{{ post.image.url }}" alt="pics" height="100" width="100">
+            </a>{% endif %}
+            <hr style="color: green;">
+        </div>
+        {% endfor %}
     </p>
     <hr style="color: aqua;">
     <p>
@@ -58,3 +60,111 @@
 </body>
 
 </html>
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<style>
+    #footer {
+                bottom: 0;
+        width: 100%;
+    }
+    .profile-cover {
+        height: 300px;
+        background-color: #007bff;
+        color: #fff;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .profile-avatar {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        border: 5px solid #fff;
+        margin-bottom: -75px;
+    }
+
+    .profile-info {
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .profile-info h1 {
+        font-size: 32px;
+        margin-bottom: 10px;
+    }
+
+    .profile-info p {
+        font-size: 18px;
+        color: #6c757d;
+    }
+
+    .profile-tabs {
+        margin-top: 30px;
+    }
+
+    .nav-tabs .nav-link {
+        color: #495057;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: #007bff;
+        border-bottom-color: #007bff;
+    }
+</style>
+
+<!-- Profile Cover -->
+<div class="profile-cover">
+    <!-- Profile Avatar -->
+    <img src="{{ profile.profile_pics.url }}" alt="Avatar" class="profile-avatar">
+</div>
+
+<div class="container">
+    <!-- Profile Information -->
+    <div class="profile-info">
+        <h1>@{{ profile.user.username }}</h1>
+        <p>{{ profile.user.email }}</p>
+        <p>{{ profile.first_name }} &nbsp;{{ profile.last_name }} </p>
+        <p>{{ profile.location_city }}</p>
+    </div>
+
+    <!-- Profile Tabs -->
+    <ul class="nav nav-tabs profile-tabs">
+        <!--<li class="nav-item">
+            <a class="nav-link active" href="#posts" data-bs-toggle="tab">Posts</a>
+        </li>-->
+        <li class="nav-item">
+            <a class="nav-link" href="#photos" data-bs-toggle="tab">Photos</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#friends" data-bs-toggle="tab">Friends</a>
+        </li>
+    </ul>
+
+    <!-- Tab Content -->
+    <div class="tab-content">
+       <!--<div class="tab-pane fade" id="posts">
+            <h3>Posts</h3>
+            <!-- Display user's posts here
+        </div>-->
+        <div class="tab-pane fade show active" id="photos">
+            <h3>Photos</h3>
+            {% for post in posts %} 
+            {% if post.image %}
+            <a href="{% url 'post_view' post.postID %}">
+            <img src="{{ post.image.url }}">
+            </a> <br /> 
+            <!-- Display user's photos here -->
+            {% endif %} 
+            {% endfor %}
+        </div>
+        <div class="tab-pane fade" id="friends">
+            <h3>Friends</h3>
+            <!-- Display user's friends here -->
+        </div>
+    </div>
+</div>
+
+{% endblock %}

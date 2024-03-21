@@ -1,29 +1,18 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Social App</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'style/signup.css' %}">
-</head>
-
-<body>
-    <p>
-        <a href="{% url 'home' %}">Home</a>
-    </p>
-    <p>
-    <h1>Sign Up</h1>
-    </p><br>
-    <div style="color: red;">
-        {% if messages %}
-        {% for message in messages %}
-        {{ message }}
-        {% endfor%}
-        {% endif %}
-    </div><br>
+{% extends 'base.html' %}
+{% block title %} Sign Up {% endblock %}
+{% block content %}
+{% load static %}
+<style>
+    #footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
+<br />
     <div>
+        <br>
         <form action="{% url 'sign_up' %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
@@ -36,6 +25,5 @@
         Do you have an account? <a href="{% url 'login_user' %}"> Login</a>
     </p>
 
-</body>
 
-</html>
+{% endblock %} 

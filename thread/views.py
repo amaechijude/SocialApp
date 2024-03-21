@@ -85,8 +85,8 @@ def logout_user(request):
 def details(request):
     user = request.user
     profile = user.profile
-    image_url = profile.profile_pics.url
-    context ={"profile": profile, "image_url": image_url}
+    posts = PostModel.objects.filter(author=profile)
+    context ={"profile": profile, "posts":posts}
     return render(request, 'details.html', context)
 
 @login_required(login_url='login_user')

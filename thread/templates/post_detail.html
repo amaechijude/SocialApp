@@ -10,18 +10,39 @@
         width: 100%;
     }
 </style>
-<div>
-    {% if post_object.image %}
-    <img src="{{ post_object.image.url }}" alt="Post Image" width="100" height="100">
-    {% endif %}
-    Author: {{ post_object.author }}
-    Title: {{ post_object.title }}
-    Content: {{ post_object.content }}
-    Posted at: {{ post_object.created_at}}
-
-    <p>
-        <a href="{% url 'home' %}">Home</a>
-        <a href="{% url 'delete_post' post_object.postID %}">Delete Post</a>
-    </p>
+{% if request.user.is_authenticated %} 
+<!-- hello -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="post-container">
+                <div class="post-header">
+                    <img src="{{ user.profile.profile_pics.url }}" alt="Avatar" class="post-avatar">
+                    <div>
+                        <p class="post-username">
+                            <a href="{% url 'profile' post_object.author.user.username %}">@{{ post_object.author.user.username }}</a>
+                        </p>
+                        <p class="text-muted">
+                            {{ post_object.created_at }}
+                        </p>
+                    </div>
+                </div>
+                <div class="post-content">
+                    <p>
+                        {{ post_object.content }}
+                    </p>
+                    {% if post_object.image %}
+                    <img src="{{ post_object.image.url }}" alt="Image" class="img-fluid" style="max-width: 100%;">
+                    {% endif %}
+                </div>
+                <div class="post-actions">
+                    <!--<a href="{% url 'like_post' post_object.postID %}"><button class="btn btn-primary">Like</button></a>-->
+                    <button class="btn btn-secondary">{{ post_object.num_of_likes }} Likes</button>
+                    <a href="{% url 'delete_post' post_object.postID %}"><button class="btn btn-info">Delete</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+{% endif %}
 {% endblock %}

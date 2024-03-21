@@ -1,16 +1,18 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block title %} Create Post {% endblock %}
 {% block content %}
 {% load static %}
- #footer {
-            position: fixed;
-            left: 0;
-            bottom: 0;
-            width: 100%;
-        }
-        
-    <form action="{% url 'create_post' %}" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+<style>
+    #footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+    }
+</style>
+
+<form action="{% url 'create_post' %}" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
     <div class="tweet-box">
         <textarea name="content" id="tweet-text" maxlength="280" placeholder="What's happening?"></textarea>
         <div class="image-upload">
@@ -24,5 +26,5 @@
         <button type="submit" id="tweet-btn">Post</button>
     </div>
     <script src="{% static 'script.js' %} "></script>
-    {% endblock %}d cd 
-<!--https://web.dev/articles/codelab-building-a-stories-component-->
+    {% endblock %}d
+    <!--https://web.dev/articles/codelab-building-a-stories-component-->

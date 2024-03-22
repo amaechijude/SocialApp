@@ -4,8 +4,9 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'styles/stories.css' %}">
+
 {% if user.is_authenticated %}
-<br>
 {% if stories %}
 {% for story in stories reversed %}
 {% if story.image %}
@@ -13,6 +14,8 @@
 {% endif %}
 {% endfor %}
 {% endif %}
+
+{% include 'stories.html' %}
 
 <div class="container">
     {% if all_post %}

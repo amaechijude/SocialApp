@@ -1,89 +1,41 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+<!--<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Story</title>-->
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Story</title>
-    <link rel="stylesheet" href="{% static 'styles/stories.css' %}">
+<div class="stories-container">
+    <div class="content">
+        <div class="previous-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
+            </svg>
+        </div>
 
-</head>
-
-<body>
-    <div class="stories-container">
-        <div class="content">
-            <div class="previous-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-                </svg>
+        <div class="stories">
+            {% if stories %}
+            {% for story in stories reversed %}
+            {% if story.image %}
+            <div class="story">
+                <img src="{{ story.image.url }}">
+                <div class="author">
+                    {{ story.author.user.username }}
+                </div>
             </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
 
-            <div class="stories">
+        </div>
 
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-                <div class="story">
-                    <img src="{% static 'images/story-1.jpg' %}">
-                    <div class="author">Author</div>
-                </div>
-
-            </div>
-
-            <div class="next-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                    stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-                </svg>
-            </div>
+        <div class="next-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-6 h-6">
+                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
+            </svg>
         </div>
     </div>
-    <div class="stories-full-view">
+</div>
+<!-- <div class="stories-full-view">
         <div class="close-btn">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-6 h-6">
@@ -112,4 +64,4 @@
     <script src="{% static 'story.js' %}"></script>
 </body>
 
-</html>
+</html>-->

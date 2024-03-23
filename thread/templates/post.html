@@ -2,21 +2,21 @@
 {% block title %} Create Post {% endblock %}
 {% block content %}
 {% load static %}
-<style>
+<link rel="stylesheet" href="{% static 'style.css' %}">
+<!--<style>
     #footer {
         position: fixed;
         left: 0;
         bottom: 0;
         width: 100%;
     }
-</style>
-
+</style>-->
 <form action="{% url 'create_post' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="tweet-box">
         <textarea name="content" id="tweet-text" maxlength="280" placeholder="What's happening?"></textarea>
         <div class="image-upload">
-            <label for="image-input"><img src="{% static 'images/icons8-upload-24.png' %}"></label>
+            <label for="image-input"><img src="{% static 'images/icons8-upload-24.png' %}" alt="image-preview" ></label>
             <input name="image" type="file" id="image-input" accept="image/*">
             <img id="image-preview" src="">
         </div>
@@ -26,33 +26,6 @@
         <button type="submit" id="tweet-btn">Post</button>
     </div>
 </form>
-
-<!--
-<form action="{% url 'story' %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="tweet-box">
-        <input name="caption" id="tweet-text" maxlength="280" placeholder="post story" />
-        <div class="image-upload">
-            <label for="image-input"><img src="{% static 'images/icons8-upload-24.png' %}"></label>
-            <input name="image" type="file" id="image-input" accept="image/*">
-            <img id="image-preview" src="">
-        </div>
-        <div class="char-count">
-            <span id="char-remaining">280</span> characters remaining
-        </div>
-        <button type="submit" id="tweet-btn">Post</button>
-    </div>
-</form>
-<form class="create-post" method="post" action="{% url 'story' %}" enctype="multipart/form-data">
-    {% csrf_token %}
-    <div class="profile-pic">
-        <img src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
-    </div>
-    <input type="text" name="caption" placeholder="{{ user.profile.first_name }}'s Story" id="create-post">
-    <label for="image"><img src="{% static 'images/icons8-upload-24.png' %}"><input type="file" name="image" id="image" style="display: none;"></label>
-    <input type="submit" value="Create" class="btn btn-primary">
-</form>
--->
 <script src="{% static 'script.js' %}"></script>
 {% endblock %}
 <!--https://web.dev/articles/codelab-building-a-stories-component-->

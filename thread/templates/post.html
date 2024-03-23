@@ -27,7 +27,7 @@
     </div>
 </form>
 
-
+<!--
 <form action="{% url 'story' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="tweet-box">
@@ -43,7 +43,7 @@
         <button type="submit" id="tweet-btn">Post</button>
     </div>
 </form>
-<!--<form class="create-post" method="post" action="{% url 'story' %}" enctype="multipart/form-data">
+<form class="create-post" method="post" action="{% url 'story' %}" enctype="multipart/form-data">
     {% csrf_token %}
     <div class="profile-pic">
         <img src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
@@ -53,6 +53,6 @@
     <input type="submit" value="Create" class="btn btn-primary">
 </form>
 -->
-<script src="{% static 'script.js' %} "></script>
+<script src="{% static 'script.js' %}"></script>
 {% endblock %}
 <!--https://web.dev/articles/codelab-building-a-stories-component-->

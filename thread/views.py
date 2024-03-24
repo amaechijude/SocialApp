@@ -101,27 +101,6 @@ def account_setting(request):
     form = UpdateProfile(instance=profile)
     return render(request, 'settings.html', {"form":form})
 
-"""
-@login_required(login_url='login_user')
-def create_post(request):
-    if request.method == 'POST':
-        form = PostForm(request.POST, request.FILES)
-        if form.is_valid():
-            author = request.user.profile
-            content = form.cleaned_data['content']
-            image = form.cleaned_data['image']
-
-            new_post = PostModel.objects.create(author=author, content=content, image=image)
-            new_post.save()
-            
-            messages.success(request, "Post created")
-            return redirect('home')
-        messages.info(request, "Post was not created")
-    form = PostForm()
-    context = {"form": form}
-    return render(request, 'post.html', context)
-"""
-
 @login_required(login_url='login_user')
 def create_post(request):
     if request.method == 'POST':
@@ -129,14 +108,17 @@ def create_post(request):
         content = request.POST['content']
         image = request.FILES.get('image')
 
-        if image != None:
-            new_post = PostModel.objects.create(author=author, content=content, image=image)
-            new_post.save()
+        if content != None:
+            if image != None or image == None:
+                new_post = PostModel.objects.create(author=author,
+                                                content=content,
+                                                image=image)
+                new_post.save()
             
-            messages.success(request, "Post created")
-            return redirect('home')
-        messages.info(request, "Post was not created")
-        return redirect('home')
+                messages.success(request, "Post created")
+                return redirect('home')
+        messages.info(request, "Text box should not be empty")
+        return redirect('create_post')
     return render(request, 'post.html')
     
 
@@ -211,10 +193,11 @@ def profile(request,pk):
 def follow(request):
     if request.method == 'POST':
         follower = request.user.username
-        user = str(request.POST['user'])
+        user = request.POST['user']
+        user = str(user)
 
         if follower == user:
-            return redirect('details')
+            return redirect('account_setting')
         else:
             if FollowerModel.objects.filter(follower=follower, user=user).first():
                 delete_follower = FollowerModel.objects.get(follower=follower, user=user)

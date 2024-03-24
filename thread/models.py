@@ -15,7 +15,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
-    profile_pics = ResizedImageField(quality=80,
+    profile_pics = ResizedImageField(quality=70,
                                      upload_to='profile_images',
                                      default='anon.png') 
     location_city = models.CharField(max_length=150, blank=True)
@@ -29,8 +29,8 @@ class Profile(models.Model):
 class PostModel(models.Model):
     postID = models.AutoField(primary_key=True)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    content = models.TextField(blank=True, max_length=300)
-    image = ResizedImageField(quality=80,
+    content = models.TextField(max_length=300)
+    image = ResizedImageField(blank=True,quality=70,
                               upload_to='profile_posts')
     created_at = models.DateTimeField(auto_now=True)
     num_of_likes = models.IntegerField(default=0)

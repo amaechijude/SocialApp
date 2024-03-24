@@ -8,6 +8,8 @@ allStories = {
 	}
 }
 const stories = document.querySelector(".stories");
+const storiesFullView = document.querySelector(".stories-full-view");
+const closeBtn = document.querySelector(".close-btn");
 
 const createStories = () {
 	allStories.forEach(s => {
@@ -23,9 +25,20 @@ const createStories = () {
 		story.appendChild(author);
 
 		stories.appendChild(story);
+
+		story.addEventListener("click", () => {
+			showFullView();
+		});
 	});
 };
 
 createstories();
 
-const showFull = () => {}
+const showFullFullView = () => {
+	storiesFullView.classList.add("active");
+};
+
+closeBtn.addEventListener("click", () => {
+	storiesFullView.classList.remove("active");
+
+});

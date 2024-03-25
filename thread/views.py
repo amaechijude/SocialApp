@@ -174,7 +174,9 @@ def profile(request,pk):
         follow_check = "Follow"
         
     fans = FollowerModel.objects.filter(user=pk)
+    followings = FollowerModel.objects.filter(follower=pk)
     fans_count = len(fans)
+    followings_count = len(followings)
     context = {
         "user_object": user_object,
         "user_profile": user_profile,
@@ -184,6 +186,8 @@ def profile(request,pk):
         "follow_check": follow_check,
         "fans_count": fans_count,
         "fans": fans,
+        "followings": followings,
+        "followings_count": followings_count,
 
         }
     return render(request, 'profile.html', context)

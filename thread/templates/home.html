@@ -9,10 +9,10 @@
 {% if user.is_authenticated %}
 
 {% include 'stories.html' %}
-
 <div class="container">
     {% if all_post %}
     {% for post in all_post reversed %}
+
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="post-container" style="border: 1px solid black; margin-bottom: 4px;">
@@ -36,8 +36,12 @@
                     {% endif %}
                 </div>
                 <div class="post-actions">
-                    <a href="{% url 'like_post' post.postID %}"><button class="btn btn-primary">Like</button></a>
-                    <button class="btn btn-secondary">{{ post.num_of_likes }} Likes</button>
+                    <a href="{% url 'like_post' post.postID %}">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-heart"></i> Like
+                        </button>
+                    </a>
+                    <!--<button class="btn btn-secondary">-->{{ post.num_of_likes }} Likes <!--</button>-->
                     <a href="{% url 'post_view' post.postID %}"><button class="btn btn-info">Post details</button></a>
                 </div>
             </div>

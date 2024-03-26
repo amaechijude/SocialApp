@@ -10,18 +10,20 @@ class UserForm(UserCreationForm):
 
 
 class UpdateProfile(forms.ModelForm):
+    first_name = forms.CharField(required=False, widget=forms.TextInput(attrs={"class": "form-control", "id": "firstName"}))
+    last_name = forms.CharField(required=False, widget=forms.TextInput(attrs={"class": "form-control", "id": "lastName"}))
+    bio = forms.CharField(required=False, widget=forms.Textarea(attrs={"class": "form-control", "id": "bio", "rows": "3"}))
+    profile_pics = forms.FileField(required=False, widget=forms.FileInput(attrs={"class": "form-control", "id": "profileImage"}))
+
     class Meta:
         model = Profile
-        fields = ('first_name',
-                  'last_name',
-                  'bio',
-                  'profile_pics',
-                  'location_city')
+        exclude = ('user', 'id_user')
+        #fields = ('first_name','last_name','bio','profile_pics','location_city')
 
 
 class PostForm(forms.ModelForm):
+    content = forms.CharField(required=False, widget=forms.widgets.Textarea(attrs={"id":"teet-text", "placeholder":"What's Happening"}), label="")
+    image = forms.FileField(required=True, widget=forms.widgets.Textarea(attrs={"id":"image-input"}), label="image-input")
     class Meta:
-        content = forms.CharField(required=False, widget=forms.widgets.Textarea(attrs={"id":"teet-text", "placeholder":"What's Happening"}), label="")
-        image = forms.FileField(required=True, widget=forms.widgets.Textarea(attrs={"id":"image-input"}), label="image-input")
         model = PostModel
         exclude = ('postID','created_at', 'author', 'num_of_likes')

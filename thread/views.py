@@ -86,7 +86,21 @@ def details(request):
     user = request.user
     profile = user.profile
     posts = PostModel.objects.filter(author=profile)
-    context ={"profile": profile, "posts":posts}
+    post_len = len(posts)
+    pk = str(user.username)
+    fans = FollowerModel.objects.filter(user=pk)
+    followings = FollowerModel.objects.filter(follower=pk)
+    fans_count = len(fans)
+    followings_count = len(followings)
+    context = {
+        "profile": profile,
+        "posts":posts,
+        "post_len": post_len,
+        "fans_count": fans_count,
+        "fans": fans,
+        "followings": followings,
+        "followings_count": followings_count,
+        }
     return render(request, 'details.html', context)
 
 @login_required(login_url='login_user')
@@ -97,9 +111,9 @@ def account_setting(request):
         form = UpdateProfile(request.POST or None, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-        return redirect('details')
+        return redirect('account_setting')
     form = UpdateProfile(instance=profile)
-    return render(request, 'settings.html', {"form":form})
+    return render(request, 'settings.html', {"form":form, "profile":profile})
 
 @login_required(login_url='login_user')
 def create_post(request):

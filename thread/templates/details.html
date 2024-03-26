@@ -1,9 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+{% block title %} {{ user.username }} {% endblock %}
+<hr style="color: aqua;">
 <style>
     #footer {
-                bottom: 0;
+        bottom: 0;
         width: 100%;
     }
     .profile-cover {
@@ -15,7 +17,6 @@
         align-items: center;
         justify-content: center;
     }
-
     .profile-avatar {
         width: 150px;
         height: 150px;
@@ -63,44 +64,91 @@
     <!-- Profile Information -->
     <div class="profile-info">
         <h1>@{{ profile.user.username }}</h1>
-        <p>{{ profile.user.email }}</p>
-        <p>{{ profile.first_name }} &nbsp;{{ profile.last_name }} </p>
-        <p>{{ profile.location_city }}</p>
+        <p>
+            {{ post_len }}&nbsp;Posts
+        </p>
+        <p>
+            {{ profile.user.email }}
+        </p>
+        <p>
+            {{ profile.first_name }} &nbsp;{{ profile.last_name }}
+        </p>
+        <p>
+            {{ profile.location_city }}
+        </p>
+        <blockquote>
+            {{ profile.bio }}
+        </blockquote>
+        <p>
+            <form action="{% url 'follow' %}" method="POST">
+                {% csrf_token %}
+                <input name="user" type="hidden" value="{{ user_profile.user.username }}">
+                {% if request.user.profile == profile %}
+                <input type="submit" value="Update Profile">
+                {% else %}
+                <input type="submit" value="{{ follow_check }}">
+                {% endif %}
+            </form>
+        </p>
     </div>
 
     <!-- Profile Tabs -->
     <ul class="nav nav-tabs profile-tabs">
-        <!--<li class="nav-item">
-            <a class="nav-link active" href="#posts" data-bs-toggle="tab">Posts</a>
-        </li>-->
         <li class="nav-item">
-            <a class="nav-link" href="#photos" data-bs-toggle="tab">Photos</a>
+            <a class="nav-link active" href="#photos" data-bs-toggle="tab">Photos</a>
         </li>
+	{% if fans %}
         <li class="nav-item">
-            <a class="nav-link" href="#friends" data-bs-toggle="tab">Friends</a>
+            <a class="nav-link" href="#friends" data-bs-toggle="tab">
+		    {% if fans_count > 1 %}
+		    {{ fans_count }} Followers
+		    {% else %}
+		    {{ fans_count }} Follower
+		    {% endif %}
+	    </a>
+        </li>
+	{% endif %}
+	<li class="nav-item">
+                <a class="nav-link" href="#posts" data-bs-toggle="tab">
+			{% if followings_count > 1 %}
+			{{ followings_count }} Followings
+			{% else %}
+			{{ followings_count }} Following
+			{% endif %}
+		</a>
         </li>
     </ul>
 
     <!-- Tab Content -->
     <div class="tab-content">
-       <!--<div class="tab-pane fade" id="posts">
-            <h3>Posts</h3>
-            <!-- Display user's posts here
-        </div>-->
         <div class="tab-pane fade show active" id="photos">
             <h3>Photos</h3>
-            {% for post in posts %} 
+            {% for post in posts reversed %}
             {% if post.image %}
             <a href="{% url 'post_view' post.postID %}">
-            <img src="{{ post.image.url }}">
-            </a> <br /> 
+                <img src="{{ post.image.url }}" width="150">
+            </a> <br />
             <!-- Display user's photos here -->
-            {% endif %} 
+            {% endif %}
             {% endfor %}
         </div>
+
         <div class="tab-pane fade" id="friends">
-            <h3>Friends</h3>
+            <h3>Followers</h3>
             <!-- Display user's friends here -->
+	    {% for fn in fans %}
+	    <p>
+                <a href="{% url 'profile' fn.follower %}">@{{ fn.follower }}</a>
+	    </p>
+	    {% endfor %}
+        </div>
+	<div class="tab-pane fade" id="posts">
+                <h3>Followings</h3>
+		{% for f in followings %}
+		<p>
+		<a href="{% url 'profile' f.user %}">@{{ f.user }}</a>
+		</p>
+		{% endfor %}
         </div>
     </div>
 </div>

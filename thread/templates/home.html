@@ -7,13 +7,6 @@
 <link rel="stylesheet" href="{% static 'styles/stories.css' %}">
 
 {% if user.is_authenticated %}
-{% if stories %}
-{% for story in stories reversed %}
-{% if story.image %}
-<!-- Stories goes here -->
-{% endif %}
-{% endfor %}
-{% endif %}
 
 {% include 'stories.html' %}
 
@@ -22,12 +15,12 @@
     {% for post in all_post reversed %}
     <div class="row">
         <div class="col-lg-8 mx-auto">
-            <div class="post-container">
+            <div class="post-container" style="border: 1px solid black; margin-bottom: 4px;">
                 <div class="post-header">
                     <img src="{{ post.author.profile_pics.url }}" alt="Avatar" class="post-avatar">
                     <div>
                         <p class="post-username">
-                            <a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username }}</a>
+                            {{ post.author.first_name }} &nbsp;{{ post.author.last_name }} &nbsp;<a href="{% url 'profile' post.author.user.username %}">@{{ post.author.user.username }}</a>
                         </p>
                         <p class="text-muted">
                             {{ post.created_at }}
@@ -53,7 +46,5 @@
     {% endfor %}
     {% endif %}
 </div>
-<br>
-<br>
 {% endif %}
 {% endblock %}

@@ -64,32 +64,31 @@
 </head>
 <body>
     {% include 'navbar.html' %}
-    <div>
-        {% if user.is_authenticated %}
-        <form method="post" action="{% url 'account_setting' %}" enctype="multipart/form-data">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <input type="submit" value="Update">
-        </form>
-        {% endif %}
-    </div>
-
     <!-- Profile Cover -->
     <div class="profile-cover">
         <!-- Profile Avatar -->
-        <img src="https://via.placeholder.com/150" alt="Avatar" class="profile-avatar">
+        <img src="{{ profile.profile_pics.url }}" alt="Avatar" class="profile-avatar">
     </div>
 
     <div class="container">
         <!-- Profile Information -->
         <div class="profile-info">
-            <h1>User Name</h1>
+            <h1>{{ profile.user.username }}</h1>
             <p>
-                Email: user@example.com
+                {{ profile.user.email }}
             </p>
         </div>
-
-        <!-- Update Profile Form -->
+    <div>
+        {% if user.is_authenticated %}
+        <form method="post" action="{% url 'account_setting' %}" enctype="multipart/form-data" class="update-profile-form">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-primary">Update Profile</button>
+        </form>
+        {% endif %}
+    </div>
+<br>
+        <!-- Update Profile Form 
         <form class="update-profile-form">
             <div class="row mb-3">
                 <div class="col-md-6">
@@ -123,7 +122,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Update Profile</button>
         </form>
-    </div>
+    </div>-->
 
     <!-- Bootstrap JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

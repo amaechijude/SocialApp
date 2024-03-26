@@ -2,11 +2,6 @@
 {% block content %}
 {% load static %}
 {% block title %} {{ user_profile.user.username }} {% endblock %}
-{% if fans_count > 1 %}
-{{ fans_count }} followers
-{% else %}
-{{ fans_count }} follower
-{% endif %}
 <hr style="color: aqua;">
 <style>
     #footer {
@@ -131,7 +126,7 @@
             {% for post in user_post reversed %}
             {% if post.image %}
             <a href="{% url 'post_view' post.postID %}">
-                <img src="{{ post.image.url }}">
+                <img src="{{ post.image.url }}" height="100" width="150">
             </a> <br />
             <!-- Display user's photos here -->
             {% endif %}

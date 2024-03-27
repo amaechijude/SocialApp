@@ -78,15 +78,7 @@
             {{ profile.bio }}
         </blockquote>
         <p>
-            <form action="{% url 'follow' %}" method="POST">
-                {% csrf_token %}
-                <input name="user" type="hidden" value="{{ user_profile.user.username }}">
-                {% if request.user.profile == profile %}
-                <input type="submit" value="Update Profile">
-                {% else %}
-                <input type="submit" value="{{ follow_check }}">
-                {% endif %}
-            </form>
+            <a href="{% url 'account_setting' %}">Update Profile</a>
         </p>
     </div>
 
@@ -142,11 +134,15 @@
         </div>
 	<div class="tab-pane fade" id="posts">
                 <h3>Followings</h3>
+                {% if followings %}
 		{% for f in followings %}
 		<p>
+		    {% if f.user %} 
 		<a href="{% url 'profile' f.user %}">@{{ f.user }}</a>
+		{% endif %} 
 		</p>
 		{% endfor %}
+		{% endif %}
         </div>
     </div>
 </div>

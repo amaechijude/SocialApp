@@ -73,9 +73,12 @@
     <div class="container">
         <!-- Profile Information -->
         <div class="profile-info">
-            <h1>{{ profile.user.username }}</h1>
+            <h1>@{{ profile.user.username }}</h1>
             <p>
                 {{ profile.user.email }}
+            </p>
+            <p>
+                {{ profile.first_name }} &nbsp;{{ profile.last_name }}
             </p>
         </div>
     <div>
@@ -88,41 +91,7 @@
         {% endif %}
     </div>
 <br>
-        <!-- Update Profile Form 
-        <form class="update-profile-form">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label for="firstName" class="form-label">First Name</label>
-                    <input type="text" class="form-control" id="firstName" name="firstName" placeholder="Enter your first name">
-                </div>
-                <div class="col-md-6">
-                    <label for="lastName" class="form-label">Last Name</label>
-                    <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Enter your last name">
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
-            </div>
-            <div class="mb-3">
-                <label for="bio" class="form-label">Bio</label>
-                <textarea class="form-control" id="bio" name="bio" rows="3" placeholder="Write a short bio"></textarea>
-            </div>
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text" class="form-control" id="location" name="location" placeholder="Enter your location">
-            </div>
-            <div class="mb-3">
-                <label for="profileImage" class="form-label">Profile Image</label>
-                <input type="file" class="form-control" id="profileImage" name="profileImage">
-            </div>
-            <button type="submit" class="btn btn-primary">Update Profile</button>
-        </form>
-    </div>-->
+
 
     <!-- Bootstrap JavaScript Bundle with Popper -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>

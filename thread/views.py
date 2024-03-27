@@ -48,10 +48,9 @@ def sign_up(request):
             new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
             return redirect('home')
         
-        form = UserForm()
-        content = {"form":form}
+  
         messages.info(request, "{Error: Could not sign up}")
-        return render(request, 'signup.html', content)    
+        return redirect('sign_up')    
 
     form = UserForm()
     content = {"form":form}
@@ -210,7 +209,7 @@ def profile(request,pk):
 @login_required(login_url='login_user')
 def follow(request):
     if request.method == 'POST':
-        follower = request.user.username
+        follower = str(request.user.username)
         user = request.POST['user']
         user = str(user)
 

@@ -30,7 +30,7 @@ DEBUG = config('DEBUG', cast=bool)
 #DEBUG = False
 
 #Change allowed hosts in production
-ALLOWED_HOSTS = ["*onrender.com"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -56,6 +56,9 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 ROOT_URLCONF = 'SocialApp.urls'
 

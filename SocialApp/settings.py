@@ -30,7 +30,7 @@ DEBUG = config('DEBUG', cast=bool)
 #DEBUG = False
 
 #Change allowed hosts in production
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ["*onrender.com"]
 
 
 # Application definition

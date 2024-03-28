@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from .models import Profile, PostModel, LikePost, FollowerModel, Story
+from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
 from .forms import UserForm, UpdateProfile, PostForm
 
 # Create your views here
@@ -138,8 +138,25 @@ def create_post(request):
 @login_required(login_url='login_user')
 def post_view(request, pk):
     post_object = PostModel.objects.get(postID=pk)
-    return render(request, 'post_detail.html', {"post_object": post_object})
+    comments = CommentModel.objects.filter(post=post_object)
+    context = {
+            "post_object":post_object,
+            "comments":comments,
+            }
+    return render(request, 'post_detail.html', context)
 
+@login_required(login_url='login_user')
+def comment(request):
+    if request.method == POST:
+        author = request.user.profile
+        postID = request.POST['postID']
+        post = PostModel.objects.get(postID=postID)
+        content = request.POST['content']
+
+        new_comment = CommentModel.objects.create(author=author, post=post,content=content)
+        new_comment.save()
+        messages.success(request,"Comment added")
+        return redirect(f'post_view/+{postID}')
 @login_required(login_url='login_user')
 def delete_post(request, pk):
     user = request.user.profile

@@ -24,7 +24,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return (f"{self.user.username}")
-    
+
 
 class PostModel(models.Model):
     postID = models.AutoField(primary_key=True)
@@ -36,7 +36,18 @@ class PostModel(models.Model):
     num_of_likes = models.IntegerField(default=0)
 
     def __str__(self):
-        return (f"{self.title}")
+        return (f"{self.content}")
+
+
+class CommentModel(models.Model):
+    post = models.ForeignKey('PostModel', on_delete=models.CASCADE)
+    author = models.ForeignKey('Profile', on_delete=models.CASCADE)
+    content = models.TextField(max_length=500)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return (f"{self.author.user.username}")
+
 
 class LikePost(models.Model):
     postID = models.IntegerField()

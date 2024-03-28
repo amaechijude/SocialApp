@@ -17,4 +17,5 @@ urlpatterns = [
     path('delete_post/<int:pk>', views.delete_post, name='delete_post'),
     path('story', views.story, name='story'),
     path('stories', views.stories, name='stories'),
+    path('comment', views.comment, name='comment'),
 ]

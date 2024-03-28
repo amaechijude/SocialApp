@@ -49,4 +49,4 @@ class PostForm(forms.ModelForm):
     image = forms.FileField(required=True, widget=forms.widgets.Textarea(attrs={"id":"image-input"}), label="image-input")
     class Meta:
         model = PostModel
-        exclude = ('postID','created_at', 'author', 'num_of_likes')
+        exclude = ('postID','created_at', 'author', 'num_of_likes', 'num_of_comments')

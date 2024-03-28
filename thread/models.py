@@ -34,6 +34,7 @@ class PostModel(models.Model):
                               upload_to='profile_posts')
     created_at = models.DateTimeField(auto_now=True)
     num_of_likes = models.IntegerField(default=0)
+    num_of_comments = models.IntegerField(default=0)
 
     def __str__(self):
         return (f"{self.content}")

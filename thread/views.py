@@ -155,8 +155,12 @@ def comment(request):
 
         new_comment = CommentModel.objects.create(author=author, post=post,content=content)
         new_comment.save()
+        post.num_of_comments += 1
         messages.success(request,"Comment added")
         return redirect(f'post_view/+{postID}')
+    return render(request, 'comment.html')
+
+
 @login_required(login_url='login_user')
 def delete_post(request, pk):
     user = request.user.profile

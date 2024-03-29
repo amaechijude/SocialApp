@@ -2,15 +2,56 @@
 {% block title %} Post Detail {% endblock %}
 
 {% block content %}
+{% if request.user.is_authenticated %}
 <style>
-    #footer {
-        position: fixed;
-        left: 0;
-        bottom: 0;
+    /* Custom styles for Facebook stories */
+    .stories-container {
+        background-color: #f0f2f5;
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .story-card {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background-color: #fff;
+    }
+
+    .story-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .story-info {
+        flex-grow: 1;
+    }
+
+    .progress-bar-wrapper {
         width: 100%;
+        position: relative;
+        margin-top: 5px;
+    }
+
+    .progress-bar {
+        height: 5px;
+        background-color: #ddd;
+        border-radius: 2px;
+    }
+
+    .progress {
+        height: 100%;
+        background-color: #0d6efd;
+        border-radius: 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
     }
 </style>
-{% if request.user.is_authenticated %} 
 <!-- hello -->
 <div class="container">
     <div class="row">
@@ -23,8 +64,10 @@
                             {{ post.author.first_name }} &nbsp;{{ post.author.last_name }} &nbsp;<a href="{% url 'profile' post_object.author.user.username %}">@{{ post_object.author.user.username }}</a>
                         </p>
                         <p class="text-muted">
-                            {{ post_object.created_at }}
+                            {{ post_object.created_at }}<strong> utc</strong>
                         </p>
+                        <p id="local-time"></p>
+
                     </div>
                 </div>
                 <div class="post-content">
@@ -37,12 +80,70 @@
                 </div>
                 <div class="post-actions">
                     <!--<a href="{% url 'like_post' post_object.postID %}"><button class="btn btn-primary">Like</button></a>-->
-                    <button class="btn btn-secondary">{{ post_object.num_of_likes }} Likes</button>
-                    <a href="{% url 'delete_post' post_object.postID %}"><button class="btn btn-info">Delete</button></a>
+                    {{ post_object.num_of_likes }} Likes
+                    <a style="color:red;" href="{% url 'delete_post' post_object.postID %}"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                        <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                    </svg> Delete</a>
                 </div>
+            </div>
+            <div class="col-lg-12" style="border:2px solid black ">
+                <h3>Comments</h3>
+                {% for comment in comments reversed %}
+                <div class="story-card" style="border:solid black; margin:2px;">
+                    <img src="{{ comment.author.profile_pics.url }}" alt="Avatar" class="story-avatar">
+                    <div class="story-info">
+
+                        <a href="{% url 'profile' comment.author.user.username %}"><h6>@{{ comment.author.user.username }}</h6></a>&nbsp;{{ comment.created_at }}<strong> utc</strong>
+                        <div class="progress-bar-wrapper">
+
+                            <div class="progress-bar" style="width: 90%;"></div>
+                        </div>
+                        <p>
+                            {{ comment.content }}
+                        </p>
+                    </div>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
+    <!--<div class="container-fluid stories-container">
+                                <div class="row">
+
+                                </div>
+                            </div>-->
+    <div>
+
+    </div>
 </div>
+<div>
+    <form class="create-post" method="post" action="{% url 'comment' %}">
+        {% csrf_token %}
+        <input type="text" name="content" placeholder="post your comment" id="create-post">
+        <input type="hidden" name="postID" value="{{ post_object.postID }}"><br>
+        <button type="submit">Comment</button>
+    </form>
+</div>
+
+<script>
+    const utcString = '{{ iso_format }}';
+    const localDate = new Date(Date.parse(utcString));
+
+    // Format the date and time in 12-hour format with AM/PM
+    const options = {
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric', 
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+    };
+    const formattedTime = localDate.toLocaleString('en-US', options);
+
+    // Display the formatted time
+    document.getElementById('local-time').textContent = formattedTime;
+
+</script>
+
 {% endif %}
 {% endblock %}

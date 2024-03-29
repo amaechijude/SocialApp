@@ -7,6 +7,8 @@ from django.contrib import messages
 from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
 from .forms import UserForm, UpdateProfile, PostForm
 
+from datetime import datetime, timezone 
+
 # Create your views here
 
 User = get_user_model()
@@ -110,7 +112,7 @@ def account_setting(request):
         form = UpdateProfile(request.POST or None, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
-        return redirect('account_setting')
+        return redirect('details')
     form = UpdateProfile(instance=profile)
     return render(request, 'settings.html', {"form":form, "profile":profile})
 
@@ -139,15 +141,18 @@ def create_post(request):
 def post_view(request, pk):
     post_object = PostModel.objects.get(postID=pk)
     comments = CommentModel.objects.filter(post=post_object)
+    utc_time = post_object.created_at 
+    iso_format = utc_time.isoformat()
     context = {
             "post_object":post_object,
             "comments":comments,
+            "iso_format": iso_format, 
             }
     return render(request, 'post_detail.html', context)
 
 @login_required(login_url='login_user')
 def comment(request):
-    if request.method == POST:
+    if request.method == 'POST':
         author = request.user.profile
         postID = request.POST['postID']
         post = PostModel.objects.get(postID=postID)
@@ -157,8 +162,8 @@ def comment(request):
         new_comment.save()
         post.num_of_comments += 1
         messages.success(request,"Comment added")
-        return redirect(f'post_view/+{postID}')
-    return render(request, 'comment.html')
+        url = 'post_view/'
+        return redirect(f"{url}{postID}")
 
 
 @login_required(login_url='login_user')
@@ -188,7 +193,7 @@ def like_post(request, pk):
         like_check.delete()
         post.num_of_likes -= 1
         post.save()
-    return redirect('home')
+    return redirect(f'home')
 
 
 def profile(request,pk):

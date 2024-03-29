@@ -15,17 +15,17 @@ def stories(request):
 
 def home(request):
     if request.user.is_authenticated:
-        #user = request.user
+        username = request.user.username
         #following = FollowerModel.objects.filter(follower=user)
         all_post = PostModel.objects.all()
-        #unique_likes = LikePost.objects.all()
+        likes = LikePost.objects.filter(username=username)
         #all_profile = Profile.objects.all()
         stories = Story.objects.all()
         context = {
             "all_post": all_post,
             "stories": stories,
             #"user": user,
-            #"unique_likes": unique_likes,
+            "likes": likes,
             #"following": following,
             #"all_profile": all_profile,
             }

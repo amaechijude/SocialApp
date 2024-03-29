@@ -27,11 +27,11 @@ SECRET_KEY = config('SECRET_KEY')
 #SECRET_KEY =django-insecure-ob#0#_*$kyc*!i2l^o+&)r)q+9e3y02u1yk^##(uy3f$05ddm5
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG', cast=bool)
-#DEBUG = False
+#DEBUG = config('DEBUG', cast=bool)
+DEBUG = True
 
 #Change allowed hosts in production
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -93,17 +93,17 @@ WSGI_APPLICATION = 'SocialApp.wsgi.application'
         'PASSWORD': config('DATABASE_PASSWORD'),
         'HOST': config('DATABASE_HOST')
     }
-}
+}"""
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3.db',
     }
-}"""
-
-DATABASES = {
-    "default": dj_database_url.parse(config("DATABASE_URL")),
 }
+
+'''DATABASES = {
+    "default": dj_database_url.parse(config("DATABASE_URL")),
+}'''
 
 
 # Password validation
@@ -144,7 +144,7 @@ STATIC_ROOT = BASE_DIR/'staticfiles'
 STATIC_URL = 'static/'
 
 # White noise file storage
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+#STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

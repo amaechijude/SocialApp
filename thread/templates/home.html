@@ -36,19 +36,24 @@
                     {% endif %}
                 </div>
                 <div class="post-actions">
-                    <a href="{% url 'like_post' post.postID %}">
-                        <button class="btn btn-primary">
-                            <i class="fas fa-heart"></i> Like
-                        </button>
+                    <a style="color:red;" href="{% url 'like_post' post.postID %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                        </svg>like
                     </a>
-                    <!--<button class="btn btn-secondary">-->{{ post.num_of_likes }} Likes <!--</button>-->
-                    <a href="{% url 'post_view' post.postID %}"><button class="btn btn-info">Post details</button></a>
+                    <!--<button class="btn btn-secondary">-->
+                    {% if post.num_of_likes < 2 %}
+                        {{ post.num_of_likes }} Like
+                        {% else %}
+                        {{ post.num_of_likes }} Likes
+                        {% endif %} <!--</button>-->
+                        <a href="{% url 'post_view' post.postID %}"><button class="btn btn-info">Post details</button></a>
+                    </div>
                 </div>
             </div>
         </div>
+        {% endfor %}
+        {% endif %}
     </div>
-    {% endfor %}
     {% endif %}
-</div>
-{% endif %}
-{% endblock %}
+    {% endblock %}

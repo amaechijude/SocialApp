@@ -67,7 +67,7 @@ class FollowerModel(models.Model):
 
 class Story(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    caption = models.CharField(blank=True, max_length=250)
+    #caption = models.CharField(blank=True, max_length=250)
     image = ResizedImageField(blank=False,quality=70, upload_to='stories')
     #created_at = models.DateTimeField(default=datetime.now)
     def __str__(self):

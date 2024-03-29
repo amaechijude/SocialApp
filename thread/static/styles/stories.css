@@ -22,6 +22,19 @@
     cursor: pointer;
 }
 
+.stories-container .previous-btn, 
+.stories-container .next-btn {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 400ms ease;
+}
+
+.stories-container .previous-btn.active,
+.stories-container .next-btn.active{
+    opacity: 1;
+    pointer-events: auto;
+}
+
 .stories-container .previous-btn,
 .stories-full-view .previous-btn {
     left: 8px;
@@ -54,7 +67,8 @@
 
 .stories-container .content {
     overflow-x: scroll;
-    scrollbar-width: none
+    scrollbar-width: none;
+    scroll-behavior: smooth;
 }
 
 .stories-container .content::-webkit-scrollbar {
@@ -97,6 +111,7 @@
     border-radius: 50%;
     padding: 10px;
     display: flex;
+    z-index: 20;
     cursor: pointer;
 }
 

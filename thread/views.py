@@ -6,14 +6,21 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
 from .forms import UserForm, UpdateProfile, PostForm
+from datetime import datetime, timezone
 
-from datetime import datetime, timezone 
+from rest_framework.parsers import JSONParser
+from django.http.response import JsonResponse
+from .serializers import StorySerializer
 
 # Create your views here
 
 User = get_user_model()
+
 def stories(request):
-    return render(request,'stories.html')
+    stories = Story.objects.all()
+    storiesSerializer = StorySerializer(stories, many=True).data
+    context = {"data": storiesSerializer,}  
+    return JsonResponse(storiesSerializer, safe=False)
 
 def home(request):
     if request.user.is_authenticated:
@@ -21,15 +28,15 @@ def home(request):
         #following = FollowerModel.objects.filter(follower=user)
         all_post = PostModel.objects.all()
         likes = LikePost.objects.filter(username=username)
-        #all_profile = Profile.objects.all()
         stories = Story.objects.all()
+        #all_profile = Profile.objects.all()
         context = {
             "all_post": all_post,
-            "stories": stories,
             #"user": user,
             "likes": likes,
             #"following": following,
             #"all_profile": all_profile,
+            "stories": stories,
             }
         return render(request, 'home.html', context)
     else:

@@ -1,27 +1,42 @@
 {% load static %}
+<link rel="stylesheet" href="{% static 'styles/stories.css' %}">
 <div class="stories-container">
     <div class="content">
-        <div class="previous-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5" />
-            </svg>
-        </div>
 
         <div class="stories">
-            <div class="story">
-                <img src="{% static 'images/story-1.jpg' %}" alt="">
-                <div class="author">
-                    Author
+            {% if stories %}
+            {% for story in stories reversed %}
+            {% if story.image %}
+            <div class="story" style="background: url('{{ story.image.url }}'); no-repeat center center/cover;">
+                <!--<div class="profile-pic">
+                                                                                                            <img src="{{ story.author.profile_pics.url }}" alt="">
+                                                                                                        </div>
+                                                                                                <img src="{{ story.image.url }}" alt="Story Image">-->
+                <div class="profile-pic">
+                    <img src="{{ story.author.profile_pics.url }}" alt="">
+                </div>
+                <p class="name" style="color:white; font-weight:bold; ">
+                    {{ story.author.user.username }}
+                </p>
+                <div class="author" style="color:white;">
+                    {{ story.caption }}
                 </div>
             </div>
-        </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
 
-        <div class="next-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="m8.25 4.5 7.5 7.5-7.5 7.5" />
-            </svg>
         </div>
     </div>
+</div>
+<div class="middle">
+    <form class="create-post" method="post" action="{% url 'story' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="profile-pic">
+            <img src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
+        </div>
+        {{ form.caption }}
+        {{ form.image }}
+        <input type="submit" value="Create" class="btn btn-primary">
+    </form>
 </div>

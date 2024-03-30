@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
-from .forms import UserForm, UpdateProfile, PostForm
+from .forms import UserForm, UpdateProfile, PostForm, StoryForm
 from datetime import datetime, timezone
 
 from rest_framework.parsers import JSONParser
@@ -31,6 +31,7 @@ def home(request):
         likes = LikePost.objects.filter(username=username)
         stories = Story.objects.all()
         #all_profile = Profile.objects.all()
+        form = StoryForm()
         context = {
             "all_post": all_post,
             #"user": user,
@@ -38,6 +39,7 @@ def home(request):
             #"following": following,
             #"all_profile": all_profile,
             "stories": stories,
+            "form": form,
             }
         return render(request, 'home.html', context)
     else:
@@ -265,14 +267,18 @@ def follow(request):
 @login_required(login_url='login_user')
 def story(request):
     if request.method == 'POST':
-        author = request.user.profile
-        caption = request.POST['caption']
-        image = request.FILES.get('image')
+        form = StoryForm(request.POST, request.FILES)
+        if form.is_valid():
+            author = request.user.profile
+            caption = form.cleaned_data['caption']
+            image = form.cleaned_data['image']
 
-        new_story = Story.objects.create(author=author,caption=caption,image=image,)
-        new_story.save()
-        messages.success(request, "Story created")
+            new_story = Story.objects.create(author=author,caption=caption,image=image,)
+            new_story.save()
+            messages.success(request, "Story created")
 
+            return redirect('home')
+        messages.info(request, "Error, Add Image")
         return redirect('home')
     else:
-        return render(request, 'story.html')
+        return render(request, 'home.html')

@@ -4,16 +4,56 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="{% static 'styles/index.css' %}">
 <link rel="stylesheet" href="{% static 'styles/stories.css' %}">
 
 {% if user.is_authenticated %}
-{% include 'index.html' %}
 
-<div class="container">
+<div class="container" style="margin-bottom:0px;">
+
+    <div class="stories-container">
+        <div class="content">
+
+            <div class="stories">
+                {% if stories %}
+                {% for story in stories reversed %}
+                {% if story.image %}
+                <div class="story" style="background: url('{{ story.image.url }}'); background-size: cover;background-repeat: no-repeat; background-position: center cover;">
+                    <!---->
+                    <div class="profile-pic">
+                        <img src="{{ story.author.profile_pics.url }}" alt="">
+                    </div>
+                    <p class="name" style="background-color: rgba(255, 0, 0, 0.5);color:white;">
+                        {{ story.author.user.username }}
+                    </p>
+                    <div class="author" style="color:black; font:bold;">
+                        {{ story.caption }}
+                    </div>
+                </div>
+                {% endif %}
+                {% endfor %}
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    <div class="middle" style="margin-top:1px;">
+        <form class="create-post" method="post" action="{% url 'story' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="profile-pic">
+                <img class="profile-pic" src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
+            </div>
+            {{ form.caption }}
+            {{ form.image }}
+            <input type="submit" value="Create" class="btn">
+        </form>
+    </div>
+    
+    
     {% if all_post %}
     {% for post in all_post reversed %}
 
-    <div class="row">
+    <div class="row" style="margin-top:4px;">
         <div class="col-lg-8 mx-auto">
             <div class="post-container" style="border: 1px solid black; margin-bottom: 4px;">
                 <div class="post-header">

@@ -1,7 +1,7 @@
 from django import forms
 from PIL import Image, ImageFile, ImageOps, ExifTags
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, PostModel
+from .models import Profile, PostModel, Story
 from django.contrib.auth.models import User
 
 class UserForm(UserCreationForm):
@@ -50,3 +50,11 @@ class PostForm(forms.ModelForm):
     class Meta:
         model = PostModel
         exclude = ('postID','created_at', 'author', 'num_of_likes', 'num_of_comments')
+
+class StoryForm(forms.ModelForm):
+    caption = forms.CharField(required=False, widget=forms.widgets.TextInput(attrs={"id":"create-post", "placeholder":"Add Story", "class":"image_file"}), label="")
+    image = forms.FileField(required=True, widget=forms.widgets.FileInput(attrs={"id":"image"}), label="for-image")
+    
+    class Meta:
+        model = Story
+        exclude = ('author', 'created_at')

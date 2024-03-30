@@ -7,8 +7,8 @@
 <link rel="stylesheet" href="{% static 'styles/stories.css' %}">
 
 {% if user.is_authenticated %}
+{% include 'index.html' %}
 
-{% include 'stories.html' %}
 <div class="container">
     {% if all_post %}
     {% for post in all_post reversed %}

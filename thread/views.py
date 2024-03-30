@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from .serializers import StorySerializer
-
+import json
 # Create your views here
 
 User = get_user_model()
@@ -19,8 +19,9 @@ User = get_user_model()
 def stories(request):
     stories = Story.objects.all()
     storiesSerializer = StorySerializer(stories, many=True).data
-    context = {"data": storiesSerializer,}  
-    return JsonResponse(storiesSerializer, safe=False)
+    context = {"data": json.dumps(storiesSerializer), "stories":stories,}
+    return render(request,'stories.html',context)
+    #return JsonResponse(storiesSerializer, safe=False)
 
 def home(request):
     if request.user.is_authenticated:

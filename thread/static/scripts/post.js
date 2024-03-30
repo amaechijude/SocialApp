@@ -4,8 +4,9 @@ const imageInput = document.getElementById('image-input');
 const imagePreview = document.getElementById('image-preview');
 
 tweetText.addEventListener('keyup', () => {
+  const charFull = 300;
   const textLength = tweetText.value.length;
-  const remainingChars = 280 - textLength;
+  const remainingChars = charFull - textLength;
 
   charRemaining.textContent = remainingChars;
 

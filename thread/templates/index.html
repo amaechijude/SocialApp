@@ -1,330 +1,45 @@
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width= , initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css" />
+<link rel="stylesheet" href="{% static 'styles/index.css' %}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
-<head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width= , initial-scale=1.0" />
-    <title>Amaechi social</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v2.1.6/css/unicons.css" />
-    <link rel="stylesheet" href="{% static 'styles.css' %}" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-</head>
+<div class="middle stories-container">
 
-<body>
-    <nav>
-        <div class="container">
-            <h2 class="logo"> Amaechi Social </h2>
-            <div class="search-bar">
-                <i class="uil uil-search"></i>
-                <input type="search" placeholder="Search for creators, inspirations and projects" />
-            </div>
-            <div class="create">
-<<<<<<< HEAD
-                <label class="btn btn-primary" for="create-post"><a href="{% url 'create_post' %}">Add Post</a></label>
-=======
-                <label class="btn btn-primary" for="create-post">Create</label>
->>>>>>> e9daf27590e8913ec233e24eb49331947c4950bb
+    <div class="content">
+        <div class="stories">
+            {% if stories %}
+            {% for story in stories reversed %}
+            {% if story.image %}
+            <div class="story" style="background: url('{{ story.image.url }}'); no-repeat center center/cover;">
                 <div class="profile-pic">
-                    <img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50" />
+                    <img src="{{ story.author.profile_pics.url }}" alt="">
                 </div>
+                <p class="name">
+                    {{ story.caption }}
+                </p>
             </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
         </div>
-    </nav>
+    </div>
 
-    <main>
-        <div class="container">
-            <div class="left">
-                <a class="profile">
-                    <div class="profile-pic">
-                        <img src="{{ request.user.profile.profile_pics.url }}" width="50" height="50">
-                    </div>
-                    <div class="handle">
-                        <h4>{{ request.user.profile.first_name }}</h4>
-                        <p class="text-muted">
-                            @{{ request.user.username }}
-                        </p>
-                    </div>
-                </a>
-                <div class="sidebar">
-                    <a class="menu-item active">
-                        <span><i class="uil uil-home"></i></span>
-                        <h3>Home</h3>
-                    </a>
-                    <!--<a class="menu-item " href="{% url 'create_post' %}" target="_blank">
-                        <span><i class="uil uil-compass"></i></span>
-                        <h3>Create Post</h3>
-                    </a>-->
-                    <a class="menu-item" id="notifications">
-                        <span><i class="uil uil-bell"><small class="notification-count"></small></i></span>
-                        <h3>Notifications</h3>
-                        <div class="notifications-popup">
-                            <div>
-                                <div class="profile-pic">
-                                    <img src="{% static './images/profile-10.jpg' %}">
-                                </div>
-                                <div class="notification-body">
-                                    <b>Abigail Willey</b> accepted your friend request
-                                    <small class="text-muted">2 DAYS AGO</small>
-                                </div>
-                            </div>
-                            <!--<div>
-                                <div class="profile-pic">
-                                    <img src="{% static './images/profile-11.jpg' %}">
-                                </div>
-                                <div class="notification-body">
-                                    <b>Varun Nair</b> commented on your post
-                                    <small class="text-muted">1 HOUR AGO</small>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="profile-pic">
-                                    <img src="{% static './images/profile-12.jpg' %}">
-                                </div>
-                                <div class="notification-body">
-                                    <b>Marry Opmong</b> and 210 other liked your post
-                                    <small class="text-muted">4 MINUTES AGO</small>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="profile-pic">
-                                    <img src="{% static './images/profile-13.jpg' %}">
-                                </div>
-                                <div class="notification-body">
-                                    <b>Wilson Fisk</b> started following you
-                                    <small class="text-muted"> 11 HOURS AGO</small>
-                                </div>
-                            </div>-->
-                        </div>
-                    </a>
-                    <!--<a class="menu-item" id="messages-notifications">
-                        <i class="uil uil-envelope"><small class="notification-count">6</small></i></span>
-                        <h3>Messages</h3>
-                    </a>-->
-                    <a class="menu-item " href="{% url 'details' %}" target="_blank">
-                        <span><i class="uil uil-setting"></i></span>
-                        <h3>Settings</h3>
-                    </a>
-                    <label class="btn btn-primary" for="create-post">Post</label>
-                </div>
-            </div>
-            <div class="middle">
-                <div class="stories">
-                    {% if stories %}
-                    {% for story in stories reversed %}
-                    {% if story.image %}
-                    <div class="story" style="background: url('{{ story.image.url }}');
-                    no-repeat center center/cover;">
-                        <div class="profile-pic">
-                            <img src="{{ story.author.profile_pics.url }}" alt="">
-                        </div>
-                        <p class="name">
-                            {{ story.caption }}
-                        </p>
-                    </div>
-                    {% endif %}
-                    {% endfor %}
-                    {% endif %}
-                </div>
-
-                <form class="create-post" method="post" action="{% url 'story' %}" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="profile-pic">
-                        <img src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
-                    </div>
-                    <input type="text" name="caption" placeholder="{{ user.profile.first_name }}'s Story" id="create-post">
-		    <label for="image"><img src="{% static 'images/icons8-upload-24.png' %}"><input type="file" name="image" id="image" style="display: none;"></label>
-                    <input type="submit" value="Create" class="btn btn-primary">
-                </form>
-                {% if all_post %}
-                {% for post in all_post reversed %}
-                <div class="feeds">
-                    <div class="feed">
-                        <div class="head">
-
-                        </div>
-                        <div class="user">
-                            <div class="profile-pic">
-                                <img src="{{ user.profile.profile_pics.url }}" alt="" width="50" height="50">
-                            </div>
-                            <div class="info">
-                                <a href="{% url 'profile' post.author.user.username %}" target="_blank">
-                                    <h3>@{{ post.author.user.username }}</h3>
-                                </a>
-                                <small>{{ post.created_at }}</small>
-                            </div>
-                            <SPAN class="edit"><i class="uil uil-ellipsis-h"></i></SPAN>
-                        </div>
-                        {% if post.image %}
-                        <div class="photo">
-                            <img src="{{ post.image.url }}" alt="">
-                        </div>
-                        {% endif %}
-                        <div class="caption">
-                            <p>
-                                <span>{{ post.content }}</span>
-                            </p>
-                        </div>
-                        <div class="action-button">
-                            <div class="interaction-button">
-                                <a href="{% url 'like_post' post.postID %}"><span><i class="uil uil-thumbs-up"></i></span></a>&nbsp;
-                                <span>{{ post.num_of_likes }} Likes</span>
-                            </div>
-                            <div class="bookmark">
-                                <a href="{% url 'post_view' post.postID %}"><span><i class="uil uil-bookmark"></i></span></a>
-                            </div>
-                        </div>
-                        <div class="liked-by">
-                            {% if unique_likes %}
-                            Liked by&nbsp;{% for u in unique_likes %} {% if post.postID == u.postID %}
-                            <b><a href="{% url 'profile' u.username %}" target="_blank">@{{ u.username}}</a>, &nbsp;</b>
-                            {% endif %}
-                            {% endfor %} {% endif %}
-                        </div>
-                        <!--<div class="comments text-muted">
-                            View all 130 comments
-                        </div>-->
-                    </div>
-                    {% endfor %}
-                    {% endif %}
-                </div>
-
-            </div>
-
-            <div class="right">
-                <!--<div class="messages">
-                    <div class="heading">
-                        <h4>Messages</h4>
-                        <span><i class="uil uil-edit"></i></span>
-                    </div>
-
-                    <div class="search-bar">
-                        <span><i class="uil uil-search"></i></span>
-                        <input type="search" placeholder="Search Messages" id="message-search">
-                    </div>
-
-                    <div class="category">
-                        <h6 class="active">Primary</h6>
-                        <h6>General</h6>
-                        <h6 class="message-requests">Requests(7)</h6>
-                    </div>
-                    <div class="message">
-                        <div class="profile-pic">
-                            <img src="{% static 'images/profile-17.jpg' %}">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h5>Kareena Joshua</h5>
-                            <p class="text-muted">
-                                Just woke up bruh..
-                            </p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-pic">
-                            <img src="{% static 'images/profile-18.jpg' %}">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h5>Dan Smith</h5>
-                            <p class="text-bold">
-                                2 New Messages
-                            </p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-pic">
-                            <img src="{% static 'images/profile-15.jpg' %}">
-                        </div>
-                        <div class="message-body">
-                            <h5>Chris Brown</h5>
-                            <p class="text-muted">
-                                Lol u right
-                            </p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-pic">
-                            <img src="{% static 'images/profile-14.jpg' %}">
-                        </div>
-                        <div class="message-body">
-                            <h5>Lana Rose</h5>
-                            <p class="text-bold">
-                                Birthday tomorrow!!
-                            </p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-pic">
-                            <img src="{% static 'images/profile-11.jpg' %}">
-                        </div>
-                        <div class="message-body">
-                            <h5>Varun Nair</h5>
-                            <p class="text-muted">
-                                Ssup?
-                            </p>
-                        </div>
-                    </div>
-                    <div class="message">
-                        <div class="profile-pic">
-                            <img src="{% static 'images/profile-1.jpg' %}">
-                            <div class="active"></div>
-                        </div>
-                        <div class="message-body">
-                            <h5>Jahnvi Doifode</h5>
-                            <p class="text-bold">
-                                3 New Messages
-                            </p>
-                        </div>
-                    </div>
-                </div>-->
-                <div class="friend-requests">
-                    <h4>Requests</h4>
-                    <div class="request">
-                        <div class="info">
-                            <div class="profile-pic">
-                                <img src="{% static 'images/profile-13.jpg' %}">
-                            </div>
-                            <div>
-                                <h5>Wilson Fisk</h5>
-                                <p class="text-muted">
-                                    8 mutual friends
-                                </p>
-
-                            </div>
-                        </div>
-                        <div class="action">
-                            <button class="btn btn-primary">Accept</button>
-                        </div>
-                    </div>
-                    <div class="request">
-                        <div class="info">
-                            <div class="profile-pic">
-                                <img src="{% static 'images/profile-20.jpg' %}">
-                            </div>
-                            <div>
-                                <h5>Srishti Tirkey</h5>
-                                <p class="text-muted">
-                                    2 mutual friends
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-
-
-            </div>
+    <form class="create-post" method="post" action="{% url 'story' %}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="profile-pic">
+            <img src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
         </div>
-    </main>
-
-    <script src="{% static 'index.js' %}"></script>
-</body>
-
-</html>
+        <input type="text" name="caption" placeholder="Add Story" id="create-post">
+        <label for="image"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
+            <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+            <input type="file" name="image" id="image" style="display: none;"></label>
+        <input type="submit" value="Create" class="btn">
+    </form>
+</div>
+<br>

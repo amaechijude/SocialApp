@@ -1,5 +1,6 @@
 from django.db import models
 from datetime import datetime
+from django.core.validators import URLValidator
 
 from django_resized import ResizedImageField # Compreess image
 
@@ -18,7 +19,8 @@ class Profile(models.Model):
     profile_pics = ResizedImageField(quality=70,
                                      upload_to='profile_images',
                                      default='anon.png') 
-    location_city = models.CharField(max_length=150, blank=True)
+    github_url = models.URLField(validators=[URLValidator()], max_length=300, blank=True)
+    linkedin_url = models.URLField(validators=[URLValidator()], max_length=300, blank=True)
 
     USERNAME_FIELD = 'user.username'
 

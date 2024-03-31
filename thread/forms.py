@@ -41,7 +41,7 @@ class UpdateProfile(forms.ModelForm):
     class Meta:
         model = Profile
         exclude = ('user', 'id_user')
-        #fields = ('first_name','last_name','bio','profile_pics','location_city')
+        #fields = ('first_name','last_name','bio','profile_pics','github_url')
 
 
 class PostForm(forms.ModelForm):

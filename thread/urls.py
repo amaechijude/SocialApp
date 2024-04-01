@@ -16,6 +16,6 @@ urlpatterns = [
     path('post_view/<int:pk>', views.post_view, name='post_view'),
     path('delete_post/<int:pk>', views.delete_post, name='delete_post'),
     path('story', views.story, name='story'),
-    path('stories', views.stories, name='stories'),
+    #path('stories', views.stories, name='stories'),
     path('comment', views.comment, name='comment'),
 ]

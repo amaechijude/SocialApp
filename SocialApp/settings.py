@@ -14,7 +14,9 @@ from pathlib import Path
 from decouple import config
 import os
 import dj_database_url
-
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'thread',
     'gunicorn',
+    'django_unused_media',
 ]
 
 MIDDLEWARE = [
@@ -90,7 +93,7 @@ WSGI_APPLICATION = 'SocialApp.wsgi.application'
 
 """DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': config('DATABASE_ENGINE'),
         'NAME': config('DATABASE_NAME'),
         'USER': config('DATABASE_USER'),
         'PASSWORD': config('DATABASE_PASSWORD'),
@@ -162,4 +165,12 @@ CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config('CLOUD_NAME'),
     'API_KEY': config('CLOUD_API_KEY'),
     'API_SECRET': config('API_SECRET'),
-}""" 
+}
+cloudinary.config( 
+  cloud_name = config('CLOUD_NAME'), 
+  api_key = config('CLOUD_API_KEY'), 
+  api_secret = config('API_SECRET'),
+  secure = config('CLOUD_SECURE', cast=bool)
+)
+
+""" 

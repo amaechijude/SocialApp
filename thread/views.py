@@ -16,17 +16,11 @@ import json
 
 User = get_user_model()
 
-def stories(request):
-    stories = Story.objects.all()
-    storiesSerializer = StorySerializer(stories, many=True).data
-    context = {"data": json.dumps(storiesSerializer), "stories":stories,}
-    return render(request,'stories.html',context)
-    #return JsonResponse(storiesSerializer, safe=False)
 
 def home(request):
     if request.user.is_authenticated:
         username = request.user.username
-        #following = FollowerModel.objects.filter(follower=user)
+        #following = FollowerModel.objects.filter(follower=username)
         all_post = PostModel.objects.all()
         likes = LikePost.objects.filter(username=username)
         stories = Story.objects.all()
@@ -34,10 +28,7 @@ def home(request):
         form = StoryForm()
         context = {
             "all_post": all_post,
-            #"user": user,
             "likes": likes,
-            #"following": following,
-            #"all_profile": all_profile,
             "stories": stories,
             "form": form,
             }
@@ -151,11 +142,13 @@ def create_post(request):
 def post_view(request, pk):
     post_object = PostModel.objects.get(postID=pk)
     comments = CommentModel.objects.filter(post=post_object)
+    comment_num = len(comments)
     utc_time = post_object.created_at 
     iso_format = utc_time.isoformat()
     context = {
             "post_object":post_object,
             "comments":comments,
+            "comment_num":comment_num, 
             "iso_format": iso_format, 
             }
     return render(request, 'post_detail.html', context)

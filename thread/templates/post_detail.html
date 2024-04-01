@@ -52,7 +52,8 @@
         left: 0;
     }
 </style>
-<!-- hello -->
+<br>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-8 mx-auto">
@@ -63,11 +64,9 @@
                         <p class="post-username">
                             {{ post.author.first_name }} &nbsp;{{ post.author.last_name }} &nbsp;<a href="{% url 'profile' post_object.author.user.username %}">@{{ post_object.author.user.username }}</a>
                         </p>
-                        <p class="text-muted">
+                        <p class="text-muted" style="margin-top: -15px;">
                             {{ post_object.created_at }}<strong> utc</strong>
                         </p>
-                        <p id="local-time"></p>
-
                     </div>
                 </div>
                 <div class="post-content">
@@ -92,6 +91,12 @@
                     {% endif %} 
                 </div>
             </div>
+            <form class="create-post" method="post" action="{% url 'comment' %}"  style="max-width: 100%;width: 100%;margin-bottom: 5px; display: flex;justify-content: center;align-items: center; border: 2px solid blueviolet;">
+                {% csrf_token %}
+                <input type="text" name="content" placeholder="post your comment" id="create-post">
+                <input type="hidden" name="postID" value="{{ post_object.postID }}">
+                &nbsp;&nbsp;<button type="submit" class="btn btn-primary">Comment</button>
+            </form>
             <div class="col-lg-12" style="border:2px solid black ">
                 <h3>Comments</h3>
                 {% for comment in comments reversed %}
@@ -118,17 +123,9 @@
 
     </div>
 </div>
-<div style="align-self:center">
-    <form class="create-post" method="post" action="{% url 'comment' %}">
-        {% csrf_token %}
-        <input type="text" name="content" placeholder="post your comment" id="create-post"><br>
-        <input type="hidden" name="postID" value="{{ post_object.postID }}">
-        <button type="submit" class="btn btn-primary">Comment</button>
-    </form>
-</div>
 
 <script>
-    const utcString = '{{ iso_format }}';
+    /**const utcString = '{{ iso_format }}';
     const localDate = new Date(Date.parse(utcString));
 
     // Format the date and time in 12-hour format with AM/PM
@@ -144,7 +141,7 @@
 
     // Display the formatted time
     document.getElementById('local-time').textContent = formattedTime;
-
+**/
 </script>
 
 {% endif %}

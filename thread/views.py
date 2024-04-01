@@ -124,18 +124,17 @@ def create_post(request):
         content = request.POST['content']
         image = request.FILES.get('image')
 
-        if content != None:
-            if image != None or image == None:
-                new_post = PostModel.objects.create(author=author,
-                                                content=content,
-                                                image=image)
-                new_post.save()
-            
-                messages.success(request, "Post created")
-                return redirect('home')
-        messages.info(request, "Text box should not be empty")
+        if image != None:
+            new_post = PostModel.objects.create(author=author,content=content,image=image)
+            new_post.save()
+        
+            messages.success(request, "Post created")
+            return redirect('home')
+        messages.info(request, "Attach image")
         return redirect('create_post')
-    return render(request, 'post.html')
+    form = PostForm()
+    context = {"form":form}
+    return render(request, 'post.html', context)
     
 
 @login_required(login_url='login_user')

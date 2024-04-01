@@ -32,8 +32,7 @@ class PostModel(models.Model):
     postID = models.AutoField(primary_key=True)
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     content = models.TextField(max_length=300)
-    image = ResizedImageField(blank=True,quality=70,
-                              upload_to='profile_posts')
+    image = ResizedImageField(blank=True,quality=70,upload_to='profile_posts')
     created_at = models.DateTimeField(auto_now=True)
     num_of_likes = models.IntegerField(default=0)
     num_of_comments = models.IntegerField(default=0)

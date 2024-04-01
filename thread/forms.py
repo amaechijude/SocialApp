@@ -45,8 +45,8 @@ class UpdateProfile(forms.ModelForm):
 
 
 class PostForm(forms.ModelForm):
-    content = forms.CharField(required=False, widget=forms.widgets.Textarea(attrs={"id":"teet-text", "placeholder":"What's Happening"}), label="")
-    image = forms.FileField(required=True, widget=forms.widgets.Textarea(attrs={"id":"image-input"}), label="image-input")
+    content = forms.CharField(required=True, widget=forms.Textarea(attrs={"maxlength":"300", "id": "tweet-text", "placeholder":"What's happening?"}))
+    image = forms.FileField(required=False, widget=forms.FileInput(attrs={"accept":"image/*", "id": "image-input"}))
     class Meta:
         model = PostModel
         exclude = ('postID','created_at', 'author', 'num_of_likes', 'num_of_comments')

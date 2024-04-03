@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+<link rel="stylesheet" href="{%}" title="" type="" />
+<br>
+<section>
+      <center>
+        <h1 style="font-size: 36px;">Heading Should be  Here</h1>
+        <p style="font-size: 18px;font-weight: 300">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta, dolorum.</p>
+        
+      </center>
+      <div class="swiper-container swiper-full-mobile swiper-container-initialized swiper-container-horizontal">
+         <div class="swiper-wrapper" >
+
+           <div class="swiper-slide">
+            <img src="http://md-aqil.github.io/images/adolescent-beautiful-beauty-247878.jpg" alt="">
+           </div>
+            <div class="swiper-slide">
+            <img src="http://md-aqil.github.io/images/beautiful-beauty-face-2657838.jpg" alt="">
+           </div>
+            <div class="swiper-slide">
+            <img src="http://md-aqil.github.io/images/bikini-body-female-881583.jpg" alt="">
+           </div>
+           <div class="swiper-slide">
+            <img src="http://md-aqil.github.io/images/attractive-beautiful-beauty-1986684.jpg" alt="">
+           </div>
+           <div class="swiper-slide">
+            <img src="http://md-aqil.github.io/images/abstract-expressionism-abstract-painting-acrylic-1690351.jpg" alt="">
+           </div>
+       
+          <div class="swiper-slide">
+            <img src="http://md-aqil.github.io/images/beautiful-bikini-daylight-745767.jpg" alt="">
+           </div>
+          <div class="swiper-slide">
+            <img src="http://md-aqil.github.io/images/adult-beautiful-bikini-1308228.jpg" alt="">
+           </div>
+          <div class="swiper-slide">
+            <img src="http://md-aqil.github.io/images/afro-afro-hair-attractive-2603391.jpg" alt="">
+          </div>
+
+     </div>
+
+       <!-- Add Pagination -->
+       <div class="swiper-pagination"></div>
+       <!-- Add Arrows -->
+       <div class="swiper-button-next"></div>
+       <div class="swiper-button-prev"></div>
+</section>
+<br />
+<div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        {% for slide in story reversed %}
+        {% if slide.image %}
+        <div class="carousel-item active" data-bs-interval="300">
+            <img src="{{ slide.image.url }}" class="d-block w-100" alt="...">
+        </div>
+        {% endif %}
+        {% endfor %}
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+{% endblock %}

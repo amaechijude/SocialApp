@@ -16,7 +16,7 @@ urlpatterns = [
     path('post_view/<int:pk>', views.post_view, name='post_view'),
     path('delete_post/<int:pk>', views.delete_post, name='delete_post'),
     path('story', views.story, name='story'),
-    #path('stories', views.stories, name='stories'),
+    path('slider', views.slider, name='slider'),
     path('comment', views.comment, name='comment'),
     path('del_account',views.del_account, name='del_account',)
 ]

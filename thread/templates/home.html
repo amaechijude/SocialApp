@@ -45,7 +45,7 @@
                 </div>
                 {{ form.caption }}
                 {{ form.image }}
-                <input type="submit" value="Create" class="btn">
+                <input onclick="story()" type="submit" value="Create" class="btn">
             </form>
         </div>
     </div>
@@ -78,18 +78,18 @@
                         {{ post.content }}
                     </p>
                     {% if post.image %}
-                    <a href="{% url 'post_view' post.postID %}">
+                    <a href="{% url 'post_view' post.postID %}" style="height: 100px;width: 100px;">
                         <img src="{{ post.image.url }}" alt="Image" class="img-fluid" style="max-width: 100%;">
                     </a>
                     {% endif %}
                 </div>
                 <div class="post-actions">
-                    <a style="color:red;" href="{% url 'like_post' post.postID %}">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="24" fill="currentColor"
+                    <a href="{% url 'like_post' post.postID %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="red"
                             class="bi bi-heart-fill" viewBox="0 0 16 16">
                             <path fill-rule="evenodd"
                                 d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
-                        </svg>like
+                        </svg>
                     </a>
                     <!--<button class="btn btn-secondary">-->
                     {% if post.num_of_likes < 2 %} {{ post.num_of_likes }} Like {% else %} {{ post.num_of_likes }} Likes
@@ -97,8 +97,7 @@
                         <a href="{% url 'post_view' post.postID %}">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                <path
-                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
                             </svg>Comment</a>
                 </div>
             </div>
@@ -107,5 +106,10 @@
     {% endfor %}
     {% endif %}
 </div>
+<script>
+    function story() {
+        alert('Confirm')
+        }
+</script>
 {% endif %}
 {% endblock %}

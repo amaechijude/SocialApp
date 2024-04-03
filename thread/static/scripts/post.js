@@ -30,3 +30,7 @@ imageInput.addEventListener('change', function () {
     reader.readAsDataURL(this.files[0]);
   }
 });
+
+function post() {
+  alert("Confirm Post")
+}

@@ -83,6 +83,18 @@ def logout_user(request):
     logout(request)
     return redirect('login_user')
 
+#delete account
+@login_required(login_url='login_user')
+def del_account(request):
+    user = request.user
+    if user.is_staff:
+        messages.info(request,"Can't delete admin account")
+        return redirect('home')
+    else:
+        user.delete()
+        messages.info(request, "Account Deleted")
+        return redirect('sign_up')
+
 @login_required(login_url='login_user')
 def details(request):
     user = request.user

@@ -18,4 +18,5 @@ urlpatterns = [
     path('story', views.story, name='story'),
     #path('stories', views.stories, name='stories'),
     path('comment', views.comment, name='comment'),
+    path('del_account',views.del_account, name='del_account',)
 ]

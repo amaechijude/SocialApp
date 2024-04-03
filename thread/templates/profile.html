@@ -104,6 +104,13 @@
                 <p>
                     <a href="{% url 'account_setting' %}">Update Profile</a>
                 </p>
+                {% if user_profile.user.is_staff %}
+                <p>
+                    <a onclick="del()" style="color:red;" href="{% url 'del_account' %}">
+                        Delete Profile
+                    </a>
+                </p>
+                {% endif %}
                 {% else %}
                 <input type="submit" value="{{ follow_check }}">
                 {% endif %}
@@ -186,5 +193,9 @@
         </div>
     </div>
 </div>
-
+<script>
+    function del () {
+        alert('This action! cannot be reversed !')
+    }
+</script>
 {% endblock %}

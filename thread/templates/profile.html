@@ -104,7 +104,7 @@
                 <p>
                     <a href="{% url 'account_setting' %}">Update Profile</a>
                 </p>
-                {% if user_profile.user.is_staff %}
+                {% if user_profile.user.is_staff == False %}
                 <p>
                     <a onclick="del()" style="color:red;" href="{% url 'del_account' %}">
                         Delete Profile

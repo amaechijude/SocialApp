@@ -17,6 +17,7 @@ import dj_database_url
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
+import cloudinary_storage
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,8 +30,8 @@ SECRET_KEY = config('SECRET_KEY')
 #SECRET_KEY =django-insecure-ob#0#_*$kyc*!i2l^o+&)r)q+9e3y02u1yk^##(uy3f$05ddm5
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = config('DEBUG', cast=bool)
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
+
 
 #Change allowed hosts in production
 ALLOWED_HOSTS = []
@@ -91,7 +92,7 @@ WSGI_APPLICATION = 'SocialApp.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-"""DATABASES = {
+DATABASES = {
     'default': {
         'ENGINE': config('DATABASE_ENGINE'),
         'NAME': config('DATABASE_NAME'),
@@ -99,17 +100,17 @@ WSGI_APPLICATION = 'SocialApp.wsgi.application'
         'PASSWORD': config('DATABASE_PASSWORD'),
         'HOST': config('DATABASE_HOST')
     }
-}"""
-DATABASES = {
+}
+"""DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3.db',
     }
 }
 
-'''DATABASES = {
+DATABASES = {
     "default": dj_database_url.parse(config("DATABASE_URL")),
-}'''
+}"""
 
 
 # Password validation
@@ -158,8 +159,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-"""DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+#MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': config('CLOUD_NAME'),
@@ -172,5 +174,3 @@ cloudinary.config(
   api_secret = config('API_SECRET'),
   secure = config('CLOUD_SECURE', cast=bool)
 )
-
-""" 

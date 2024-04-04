@@ -16,9 +16,9 @@ import json
 
 User = get_user_model()
 
-def slider(request):
+'''def slider(request):
     story = Story.objects.all()
-    return render(request, 'slider.html', {"story":story,})
+    return render(request, 'slider.html', {"story":story,})'''
 
 def home(request):
     if request.user.is_authenticated:

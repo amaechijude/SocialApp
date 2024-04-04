@@ -45,7 +45,7 @@
                 </div>
                 {{ form.caption }}
                 {{ form.image }}
-                <input onclick="story()" type="submit" value="Create" class="btn">
+                <input type="submit" value="Create" class="btn">
             </form>
         </div>
     </div>
@@ -106,10 +106,5 @@
     {% endfor %}
     {% endif %}
 </div>
-<script>
-    function story() {
-        alert('Confirm')
-        }
-</script>
 {% endif %}
 {% endblock %}

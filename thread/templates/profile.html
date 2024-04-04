@@ -106,7 +106,7 @@
                 </p>
                 {% if user_profile.user.is_staff == False %}
                 <p>
-                    <a onclick="del()" style="color:red;" href="{% url 'del_account' %}">
+                    <a style="color:red;" href="{% url 'del_account' %}">
                         Delete Profile
                     </a>
                 </p>
@@ -193,9 +193,4 @@
         </div>
     </div>
 </div>
-<script>
-    function del () {
-        alert('This action! cannot be reversed !')
-    }
-</script>
 {% endblock %}

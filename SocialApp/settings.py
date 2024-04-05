@@ -34,7 +34,7 @@ DEBUG = config('DEBUG', cast=bool)
 
 
 #Change allowed hosts in production
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["*onrender.com","*railway.app"]
 
 
 # Application definition
@@ -67,7 +67,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-
+CORS_ALLOW_ALL_ORIGINS = ["https://socialapp-production-fb7c.up.railway.app","https://socialapp-p587.onrender.com" ] 
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 

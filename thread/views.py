@@ -46,14 +46,19 @@ def sign_up(request):
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
             password2 = form.cleaned_data['password2']
+            user_check = User.objects.filter(username=username).exists()
             if password == password2:
-                form.save()
-                #Authenticate and login
-                new_user = authenticate(username=username, password=password)
-                login(request, new_user)
-                user_model = User.objects.get(username=username)
-                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
-                return redirect('home')
+                if user_check == False:
+                    form.save()
+                    
+                    #Authenticate and login
+                    new_user = authenticate(username=username, password=password)
+                    login(request, new_user)
+                    user_model = User.objects.get(username=username)
+                    new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+                    return redirect('home')
+                messages.info(request, "{Error: Username taken}")
+                return redirect('sign_up')
             
             messages.info(request, "{Error: password mismatch}")
             return redirect('sign_up')

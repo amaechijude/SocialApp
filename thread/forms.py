@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile, PostModel, Story
 from django.contrib.auth.models import User
 
+'''
 class UserForm(forms.ModelForm):
     username = forms.CharField(required=True, max_length=150, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'username', 'id':'username'}))
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address', 'id':'email'}))
@@ -14,7 +15,7 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password1', 'password2')
         
 
-    '''def __init__(self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super(UserForm, self).__init__(*args, **kwargs)
         self.fields['username'].widget.attrs['class'] = 'form-control'
         self.fields['username'].widget.attrs['placeholder'] = 'User Name'

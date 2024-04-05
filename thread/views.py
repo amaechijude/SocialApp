@@ -41,34 +41,31 @@ def home(request):
 
 def sign_up(request):
     if request.method == 'POST':
-        form = UserForm(request.POST)
-        if form.is_valid:
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password1']
-            password2 = form.cleaned_data['password2']
-            user_check = User.objects.filter(username=username).exists()
-            if password == password2:
-                if user_check == False:
-                    form.save()
-                    
-                    #Authenticate and login
-                    new_user = authenticate(username=username, password=password)
-                    login(request, new_user)
-                    user_model = User.objects.get(username=username)
-                    new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
-                    return redirect('home')
-                messages.info(request, "{Error: Username taken}")
-                return redirect('sign_up')
-            
-            messages.info(request, "{Error: password mismatch}")
-            return redirect('sign_up')
-  
-        messages.info(request, "{Error: Could not sign up}")
-        return redirect('sign_up')    
+        username = request.POST['username']
+        password = request.POST['password1']
+        password2 = request.POST['password2']
+        email = request.POST['email']
 
-    form = UserForm()
-    content = {"form":form}
-    return render(request, 'signup.html', content)
+        user_check = User.objects.filter(username=username).exists()
+        if password == password2:
+            if user_check == False:
+                #create user
+                user = User.objects.create(username=username,email=email,password=password)
+                user.save()
+                    
+                #Authenticate and login
+                new_user = authenticate(username=username, password=password)
+                login(request, new_user)
+                user_model = User.objects.get(username=username)
+                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+                return redirect('home')
+            messages.info(request, "{Error: Username taken}")
+            return redirect('sign_up')
+            
+        messages.info(request, "{Error: password mismatch}")
+        return redirect('sign_up')
+  
+    return render(request, 'signup.html')
 
 #login view
 def login_user(request):

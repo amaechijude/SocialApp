@@ -34,7 +34,7 @@ DEBUG = config('DEBUG', cast=bool)
 
 
 #Change allowed hosts in production
-ALLOWED_HOSTS = ["*onrender.com","*railway.app"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition

@@ -104,13 +104,13 @@
                 <p>
                     <a href="{% url 'account_setting' %}">Update Profile</a>
                 </p>
-                {% if user_profile.user.is_staff == False %}
+                <!--{% if user_profile.user.is_staff == False %}
                 <p>
                     <a style="color:red;" href="{% url 'del_account' %}">
                         Delete Profile
                     </a>
                 </p>
-                {% endif %}
+                {% endif %}-->
                 {% else %}
                 <input type="submit" value="{{ follow_check }}">
                 {% endif %}

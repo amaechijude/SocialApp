@@ -65,6 +65,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CSRF_TRUSTED_ORIGINS = ['https://socialapp-production-fb7c.up.railway.app*']
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
@@ -149,6 +150,7 @@ USE_TZ = True
 
 STATIC_ROOT = BASE_DIR/'staticfiles'
 STATIC_URL = 'static/'
+STATICFILE_DIRS = [os.path.join(BASE_DIR, 'static'),]
 
 # White noise file storage
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

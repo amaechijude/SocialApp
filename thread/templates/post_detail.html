@@ -58,7 +58,7 @@
         <div class="col-lg-8 mx-auto">
             <div class="post-container">
                 <div class="post-header">
-                    <img src="{{ user.profile.profile_pics.url }}" alt="Avatar" class="post-avatar">
+                    <img src="{{ post.author.profile_pics.url }}" alt="Avatar" class="post-avatar">
                     <div>
                         <p class="post-username">
                             {{ post.author.first_name }} &nbsp;{{ post.author.last_name }} &nbsp;<a href="{% url 'profile' post_object.author.user.username %}">@{{ post_object.author.user.username }}</a>

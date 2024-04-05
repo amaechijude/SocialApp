@@ -4,11 +4,11 @@ from django.core.validators import URLValidator
 
 from django_resized import ResizedImageField # Compreess image
 
-from django.contrib.auth.mdjango.contrib.auth.models import User
 # Create your models here
 
 #get current user
-#User = get_user_model()
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -16,9 +16,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
-    profile_pics = ResizedImageField(quality=70,
-                                     upload_to='profile_images',
-                                     default='anon.png') 
+    profile_pics = ResizedImageField(quality=70,upload_to='profile_images',default='anon.png') 
     github_url = models.URLField(validators=[URLValidator()], max_length=300, blank=True)
     linkedin_url = models.URLField(validators=[URLValidator()], max_length=300, blank=True)
 
@@ -69,7 +67,11 @@ class FollowerModel(models.Model):
 class Story(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     caption = models.CharField(blank=True, max_length=250)
-    image = ResizedImageField(blank=False,size=[400,800], quality=70, upload_to='stories')
+    image = ResizedImageField(blank=False, quality=70, upload_to='stories')
     created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        verbose_name_plural ="Stories"
+    
     def __str__(self):
         return f"{self.author.user.username} ---  {self.caption}"

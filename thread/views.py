@@ -1,22 +1,19 @@
 from django.shortcuts import render, redirect
 
-from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
 from .forms import UpdateProfile, PostForm, StoryForm
 from datetime import datetime, timezone
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, auth
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from .serializers import StorySerializer
 import json
+
 # Create your views here
 
-'''def slider(request):
-    story = Story.objects.all()
-    return render(request, 'slider.html', {"story":story,})'''
 
 def home(request):
     if request.user.is_authenticated:
@@ -44,26 +41,31 @@ def sign_up(request):
         password2 = request.POST['password2']
         email = request.POST['email']
 
-        user_check = User.objects.filter(username=username).exists()
         if password == password2:
-            if user_check == False:
-                #create user
-                user = User.objects.create(username=username,email=email,password=password)
+            if User.objects.filter(username=username).exists():
+                messages.info(request, "Username taken")
+                return redirect('sign_up')
+            elif User.objects.filter(email=email).exists():
+                messages.info(request, "Error: email taken")
+                return redirect('sign_up')
+            else:
+                user = User.objects.create_user(username=username,email=email,password=password)
                 user.save()
-                    
+
+                #create profile
+                user_model = User.objects.get(username=username)
+                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+                new_profile.save()
                 #Authenticate and login
                 new_user = authenticate(username=username, password=password)
                 login(request, new_user)
-                user_model = User.objects.get(username=username)
-                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
-                return redirect('home')
-            messages.info(request, "{Error: Username taken}")
-            return redirect('sign_up')
+                return redirect('details')
             
-        messages.info(request, "{Error: password mismatch}")
-        return redirect('sign_up')
-  
-    return render(request, 'signup.html')
+        else:   
+            messages.info(request, "Password mismatch")
+            return redirect('sign_up')
+    else:
+        return render(request, 'signup.html')
 
 #login view
 def login_user(request):

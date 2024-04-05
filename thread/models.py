@@ -4,11 +4,11 @@ from django.core.validators import URLValidator
 
 from django_resized import ResizedImageField # Compreess image
 
-from django.contrib.auth import get_user_model
+from django.contrib.auth.mdjango.contrib.auth.models import User
 # Create your models here
 
 #get current user
-User = get_user_model()
+#User = get_user_model()
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)

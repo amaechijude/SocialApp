@@ -7,14 +7,12 @@ from django.contrib import messages
 from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
 from .forms import UpdateProfile, PostForm, StoryForm
 from datetime import datetime, timezone
-
+from django.contrib.auth.models import User
 from rest_framework.parsers import JSONParser
 from django.http.response import JsonResponse
 from .serializers import StorySerializer
 import json
 # Create your views here
-
-User = get_user_model()
 
 '''def slider(request):
     story = Story.objects.all()

@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
-from .forms import UserForm, UpdateProfile, PostForm, StoryForm
+from .forms import UpdateProfile, PostForm, StoryForm
 from datetime import datetime, timezone
 
 from rest_framework.parsers import JSONParser

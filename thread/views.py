@@ -43,17 +43,20 @@ def sign_up(request):
     if request.method == 'POST':
         form = UserForm(request.POST)
         if form.is_valid:
-            form.save()
-            #Authenticate and login
             username = form.cleaned_data['username']
             password = form.cleaned_data['password1']
+            password2 = form.cleaned_data['password2']
+            if password == password2:
+                form.save()
+                #Authenticate and login
+                new_user = authenticate(username=username, password=password)
+                login(request, new_user)
+                user_model = User.objects.get(username=username)
+                new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
+                return redirect('home')
             
-            new_user = authenticate(username=username, password=password)
-            login(request, new_user)
-            user_model = User.objects.get(username=username)
-            new_profile = Profile.objects.create(user=user_model, id_user=user_model.id)
-            return redirect('home')
-        
+            messages.info(request, "{Error: password mismatch}")
+            return redirect('sign_up')
   
         messages.info(request, "{Error: Could not sign up}")
         return redirect('sign_up')    

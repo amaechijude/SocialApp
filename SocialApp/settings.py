@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders'
     'cloudinary_storage',
     'cloudinary',
     'rest_framework',
@@ -55,6 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -65,7 +67,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CSRF_TRUSTED_ORIGINS = ['https://socialapp-production-fb7c.up.railway.app*']
+CORS_ORIGIN_ALLOW_ALL = False
+CORS_ORIGIN_WHITELIST = (
+  'http://localhost:8000',
+  'https://socialapp-production-fb7c.up.railway.app', 
+)
+CSRF_TRUSTED_ORIGINS = [
+'https://*.railway.app',
+'http://*.railway.app',
+'https://socialapp-production-fb7c.up.railway.app',
+]
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 

@@ -103,7 +103,11 @@
                     style="background: url('{{ story.image.url }}'); background-size: cover;background-repeat: no-repeat; background-position: center cover;">
                     <!---->
                     <div class="profile-pic">
+			    {% if story.author.profile_pics %}
                         <img src="{{ story.author.profile_pics.url }}" alt="">
+			{% else %}
+			<img src="{% static 'images/anon.jpeg' %}" alt="Avatar"class="story-avatar">
+			{% endif %}
                     </div>
                     <p class="name" style="background-color: rgba(2, 0, 0, 0.425);color:white;">
                         {{ story.author.user.username }}
@@ -139,7 +143,11 @@
             <a href="{% url 'profile' p.user.username %}">
 
                 <div class="story-card" style="border:solid black;">
+			{% if p.profile_pics %}
                     <img src="{{ p.profile_pics.url }}" alt="Avatar" class="story-avatar">
+		    {% else %}
+		    <img src="{% static 'images/anon.jpeg' %}" alt="Avatar" class="story-avatar">
+		    {% endif %}
                     <div class="story-info">
 
                         <h6>@{{ p.user.username }}</h6>
@@ -161,8 +169,12 @@
     <div class="row" style="margin-top:4px;">
         <div class="col-lg-8 mx-auto">
             <div class="post-container" style="border: 1px solid black; margin-bottom: 4px;">
-                <div class="post-header">
+		    <div class="post-header">
+			    {% if post.author.profile_pics %}
                     <img src="{{ post.author.profile_pics.url }}" alt="Avatar" class="post-avatar">
+		    {% else %}
+		    <img src="{% static 'images/anon.jpeg' %}" alt="Avatar" class="post-avatar">
+		    {% endif %}
                     <div>
                         <p class="post-username">
                             {{ post.author.first_name }} &nbsp;{{ post.author.last_name }}&nbsp;
@@ -182,9 +194,7 @@
                         {{ post.content }}
                     </p>
                     {% if post.image %}
-                    <a href="{% url 'post_view' post.postID %}" style="height: 100px;width: 100px;">
                         <img src="{{ post.image.url }}" alt="Image" class="img-fluid" style="max-width: 100%;">
-                    </a>
                     {% endif %}
                 </div>
                 <div class="post-actions">

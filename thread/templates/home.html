@@ -8,11 +8,126 @@
 
 {% if user.is_authenticated %}
 {% include 'index.html' %}
+<br>
+<style>
+    .stories-container {
+        background-color: #f0f2f5;
+        padding: 20px;
+        border-bottom: 1px solid #ddd;
+    }
 
+    .story-card {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+        background-color: #fff;
+    }
+
+    .story-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+
+    .story-info {
+        flex-grow: 1;
+    }
+
+    .progress-bar-wrapper {
+        width: 100%;
+        position: relative;
+        margin-top: 5px;
+    }
+
+    .progress-bar {
+        height: 5px;
+        background-color: #ddd;
+        border-radius: 2px;
+    }
+
+    .progress {
+        height: 100%;
+        background-color: #0d6efd;
+        border-radius: 2px;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    /* Dropdown Button */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f9f9f9;
+        min-width: 160px;
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown-content a:hover {
+        background-color: #f1f1f1;
+    }
+
+    .show {
+        display: block;
+    }
+</style>
+
+
+<div class="dropdown">
+    <button onclick="toggleDropdown()" class="dropbtn btn btn-secondary dropdown-toggle">Users to follow</button>
+    <div id="myDropdown" class="dropdown-content">
+
+        {% for p in all_profile %}
+        {% if not p == request.user.profile %}
+        <a href="{% url 'profile' p.user.username %}">
+
+            <div class="story-card" style="border:solid black; margin:2px;">
+                <img src="{{ p.profile_pics.url }}" alt="Avatar" class="story-avatar">
+                <div class="story-info">
+
+                    <h6>@{{ p.user.username }}</h6>
+                    <div class="progress-bar-wrapper">
+
+                        <div class="progress-bar" style="width: 90%;"></div>
+                    </div>
+                </div>
+            </div>
+        </a>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+<br />
+<br />
 <div class="container">
     {% if all_post %}
     {% for post in all_post reversed %}
-
+    {% for f in following %} 
+    {% if post.author.user.username == f.user %}
     <div class="row">
         <div class="col-lg-8 mx-auto">
             <div class="post-container" style="border: 1px solid black; margin-bottom: 4px;">
@@ -55,8 +170,30 @@
                 </div>
             </div>
         </div>
+        {% endif %}
+        {% endfor %}
         {% endfor %}
         {% endif %}
     </div>
     {% endif %}
+    <script>
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+
     {% endblock %}

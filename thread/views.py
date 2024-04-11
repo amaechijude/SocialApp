@@ -26,17 +26,17 @@ def stories(request):
 def home(request):
     if request.user.is_authenticated:
         username = request.user.username
-        #following = FollowerModel.objects.filter(follower=user)
+        following = FollowerModel.objects.filter(follower=username)
         all_post = PostModel.objects.all()
         likes = LikePost.objects.filter(username=username)
         stories = Story.objects.all()
-        #all_profile = Profile.objects.all()
+        all_profile = Profile.objects.all()
         context = {
             "all_post": all_post,
             #"user": user,
             "likes": likes,
-            #"following": following,
-            #"all_profile": all_profile,
+            "following": following,
+            "all_profile": all_profile,
             "stories": stories,
             }
         return render(request, 'home.html', context)
@@ -243,9 +243,9 @@ def profile(request,pk):
 @login_required(login_url='login_user')
 def follow(request):
     if request.method == 'POST':
-        follower = str(request.user.username)
+        follower = request.user.username
         user = request.POST['user']
-        user = str(user)
+        user = user
 
         if follower == user:
             return redirect('account_setting')

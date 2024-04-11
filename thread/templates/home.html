@@ -7,12 +7,6 @@
 <link rel="stylesheet" href="{% static 'styles/index.css' %}">
 <link rel="stylesheet" href="{% static 'styles/stories.css' %}">
 <style>
-    .stories-container {
-        background-color: #f0f2f5;
-        padding: 20px;
-        border-bottom: 1px solid #ddd;
-    }
-
     .story-card {
         display: flex;
         align-items: center;
@@ -94,7 +88,6 @@
 </style>
 
 
-
 {% if user.is_authenticated %}
 
 <div class="container" style="margin-bottom:0px;">
@@ -137,15 +130,15 @@
             </form>
         </div>
     </div>
-    <div class="dropdown" style="margin-bottom:10px;margin-top:10px">
-        <button onclick="toggleDropdown()" class="dropbtn btn btn-secondary dropdown-toggle">Users</button>
+    <div class="dropdown">
+        <button onclick="toggleDropdown()" class="dropbtn btn btn-secondary dropdown-toggle">Users to follow</button>
         <div id="myDropdown" class="dropdown-content">
 
-            {% for p in all_profile reversed %}
-            {% if p != request.user.profile %}
+            {% for p in all_profile %}
+            {% if not p == request.user.profile %}
             <a href="{% url 'profile' p.user.username %}">
 
-                <div class="story-card" style="border:solid black; margin:2px;">
+                <div class="story-card" style="border:solid black;">
                     <img src="{{ p.profile_pics.url }}" alt="Avatar" class="story-avatar">
                     <div class="story-info">
 
@@ -161,8 +154,6 @@
             {% endfor %}
         </div>
     </div>
-    <br />
-
 
     {% if all_post %}
     {% for post in all_post reversed %}
@@ -219,6 +210,25 @@
         {% endfor %}
         {% endif %}
     </div>
-</div>
-{% endif %}
-{% endblock %}
+
+    {% endif %}
+    <script>
+        function toggleDropdown() {
+            document.getElementById("myDropdown").classList.toggle("show");
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+    {% endblock %}

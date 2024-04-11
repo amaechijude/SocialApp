@@ -22,13 +22,14 @@ def home(request):
         all_post = PostModel.objects.all()
         likes = LikePost.objects.filter(username=username)
         stories = Story.objects.all()
-        #all_profile = Profile.objects.all()
+        all_profile = Profile.objects.all()
         form = StoryForm()
         context = {
             "all_post": all_post,
             "likes": likes,
             "stories": stories,
             "form": form,
+            "all_profile": all_profile,
             }
         return render(request, 'home.html', context)
     else:

@@ -16,7 +16,7 @@ class Profile(models.Model):
     first_name = models.CharField(max_length=150, blank=True)
     last_name = models.CharField(max_length=150, blank=True)
     bio = models.TextField(max_length=1000, blank=True)
-    profile_pics = ResizedImageField(quality=70,upload_to='profile_images',default='anon.png') 
+    profile_pics = ResizedImageField(quality=70,upload_to='profile_images') 
     github_url = models.URLField(validators=[URLValidator()], max_length=300, blank=True)
     linkedin_url = models.URLField(validators=[URLValidator()], max_length=300, blank=True)
 

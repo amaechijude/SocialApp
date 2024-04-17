@@ -1,0 +1,48 @@
+#footer {
+    bottom: 0;
+    width: 100%;
+}
+.profile-cover {
+    height: 300px;
+    background-color: #007bff;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.profile-avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 5px solid #fff;
+    margin-bottom: -75px;
+}
+
+.profile-info {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.profile-info h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.profile-info p {
+    font-size: 18px;
+    color: #6c757d;
+}
+
+.profile-tabs {
+    margin-top: 30px;
+}
+
+.nav-tabs .nav-link {
+    color: #495057;
+}
+
+.nav-tabs .nav-link.active {
+    color: #007bff;
+    border-bottom-color: #007bff;
+}

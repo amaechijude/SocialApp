@@ -9,8 +9,6 @@
 <link rel="stylesheet" href="{% static 'styles/home.css' %}" >
 
 
-{% if user.is_authenticated %}
-
 <div class="container" style="margin-bottom:0px;">
 
     <div class="stories-container">
@@ -142,7 +140,6 @@
         {% endif %}
     </div>
 
-    {% endif %}
     <script>
         function toggleDropdown() {
             document.getElementById("myDropdown").classList.toggle("show");

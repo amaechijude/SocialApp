@@ -181,7 +181,7 @@ def create_post(request):
     return redirect('login_user')
     
 
-@login_required(login_url='login_user')
+#@login_required(login_url='login_user')
 def post_view(request, pk):
     #if request.user.is_authenticated:
     post_object = PostModel.objects.get(postID=pk)

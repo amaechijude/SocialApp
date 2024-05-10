@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile, PostModel, Story
 from django.contrib.auth.models import User
 
-'''
+
 class UserForm(forms.ModelForm):
     username = forms.CharField(required=True, max_length=150, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'username', 'id':'username'}))
     email = forms.EmailField(required=True, widget=forms.TextInput(attrs={'class':'form-control', 'placeholder':'Email Address', 'id':'email'}))
@@ -29,7 +29,7 @@ class UserForm(forms.ModelForm):
         self.fields['password2'].widget.attrs['placeholder'] = 'Confirm Password'
         self.fields['password2'].label = ''
         self.fields['password2'].help_text = '<span class="form-text text-muted"><small>Enter the same password as before, for verification.</small></span>'	
-'''
+
  
 
 

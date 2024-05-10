@@ -183,20 +183,20 @@ def create_post(request):
 
 @login_required(login_url='login_user')
 def post_view(request, pk):
-    if request.user.is_authenticated:
-        post_object = PostModel.objects.get(postID=pk)
-        comments = CommentModel.objects.filter(post=post_object)
-        comment_num = len(comments)
-        utc_time = post_object.created_at 
-        iso_format = utc_time.isoformat()
-        context = {
-                "post_object":post_object,
-                "comments":comments,
-                "comment_num":comment_num, 
-                "iso_format": iso_format, 
-                }
-        return render(request, 'post_detail.html', context)
-    return redirect('login_user')
+    #if request.user.is_authenticated:
+    post_object = PostModel.objects.get(postID=pk)
+    comments = CommentModel.objects.filter(post=post_object)
+    comment_num = len(comments)
+    utc_time = post_object.created_at 
+    iso_format = utc_time.isoformat()
+    context = {
+        "post_object":post_object,
+        "comments":comments,
+        "comment_num":comment_num, 
+        "iso_format": iso_format, 
+            }
+    return render(request, 'post_detail.html', context)
+    #return redirect('login_user')
 
 @login_required(login_url='login_user')
 def comment(request):
@@ -213,6 +213,7 @@ def comment(request):
             messages.success(request,"Comment added")
             url = 'post_view/'
             return redirect(f"{url}{postID}")
+    messages.info(request, "Signup / Login for full experience")
     return redirect('login_user')
 
 
@@ -247,6 +248,7 @@ def like_post(request, pk):
             post.num_of_likes -= 1
             post.save()
         return redirect(f'home')
+    messages.info(request, "Signup / Login for full experience")
     return redirect('login_user')
 
 
@@ -285,7 +287,35 @@ def profile(request,pk):
 
             }
         return render(request, 'profile.html', context)
-    return redirect('login_user')
+    else:
+        pk = str(pk)
+        user_object = User.objects.get(username=pk)
+        user_profile = Profile.objects.get(user=user_object)
+        user_post = PostModel.objects.filter(author=user_profile)
+        user_post_len = len(user_post)
+        image_url = user_profile.profile_pics.url
+
+        fans = FollowerModel.objects.filter(user=pk)
+        followings = FollowerModel.objects.filter(follower=pk)
+        fans_count = len(fans)
+        followings_count = len(followings)
+        context = {
+            "user_object": user_object,
+            "user_profile": user_profile,
+            "user_post": user_post,
+            "user_post_len": user_post_len,
+            "image_url": image_url,
+            #"follow_check": follow_check,
+            "fans_count": fans_count,
+            "fans": fans,
+            "followings": followings,
+            "followings_count": followings_count,
+            }
+        messages.info(request, "Signup / Login for full experience")
+        return render(request, 'profile.html', context)
+
+
+    #return redirect('login_user')
 
 @login_required(login_url='login_user')
 def follow(request):
@@ -308,6 +338,7 @@ def follow(request):
                     return redirect('profile/'+user)
         else:
             return redirect('home')
+    messages.info(request, "Signup / Login for full experience")
     return redirect('login_user')
 
 
@@ -330,4 +361,5 @@ def story(request):
             return redirect('home')
         else:
             return render(request, 'home.html')
+    messages.info(request, "Signup / Login for full experience")
     return redirect('login_user')

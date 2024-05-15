@@ -365,8 +365,8 @@ def story(request):
     return redirect('login_user')
 
 
-def tag_list(request, tag_slug):
-    tag = Tag.objects.get(slug=tag_slug)
+def tag_list(request, pk):
+    tag = Tag.objects.get(slug=pk)
     objects = tag.tagged_objects.all()
 
     context = {

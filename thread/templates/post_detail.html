@@ -2,7 +2,6 @@
 {% block title %} Post Detail {% endblock %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
 <style>
     .stories-container {
         background-color: #f0f2f5;
@@ -130,5 +129,6 @@
    }
 </script>
 
+{% if request.user.is_authenticated %}
 {% endif %}
 {% endblock %}

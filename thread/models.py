@@ -35,7 +35,7 @@ class PostModel(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     num_of_likes = models.IntegerField(default=0)
     num_of_comments = models.IntegerField(default=0)
-    slug = models.SlugField(unique=True)
+    #slug = models.SlugField(unique=True,)
     tags = TaggableManager()
 
     def __str__(self):

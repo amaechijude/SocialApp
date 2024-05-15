@@ -363,3 +363,15 @@ def story(request):
             return render(request, 'home.html')
     messages.info(request, "Signup / Login for full experience")
     return redirect('login_user')
+
+
+def tag_list(request, tag_slug):
+    tag = Tag.objects.get(slug=tag_slug)
+    objects = tag.tagged_objects.all()
+
+    context = {
+            'tag': tag,
+            'object_list': objects,
+            }
+
+    return None #render(request, "tagged_object_list.html", context)

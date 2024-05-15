@@ -18,5 +18,7 @@ urlpatterns = [
     path('story', views.story, name='story'),
     #path('slider', views.slider, name='slider'),
     path('comment', views.comment, name='comment'),
-    path('del_account',views.del_account, name='del_account',)
+    path('del_account',views.del_account, name='del_account'),
+    path('tag_list',views.tag_list, name='tag_list'),
+
 ]

@@ -53,6 +53,8 @@ INSTALLED_APPS = [
     'thread',
     'gunicorn',
     'django_unused_media',
+    #tag
+    'taggit',
 ]
 
 MIDDLEWARE = [

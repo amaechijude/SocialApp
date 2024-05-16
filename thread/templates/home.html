@@ -110,12 +110,12 @@
 
                 <div class="post-content">
                     <p>
-                       <a href="{% url 'post_view' post.postID %}">
 			       {{ post.content }}
-		       </a>
                     </p>
                     {% if post.image %}
                         <img src="{{ post.image.url }}" alt="Image" class="img-fluid" style="max-width: 100%;">
+                       
+                          
                     {% endif %}
                 </div>
                 <div class="post-actions">

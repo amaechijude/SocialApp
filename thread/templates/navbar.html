@@ -18,7 +18,7 @@
                     <a class="nav-link active" aria-current="page" href="{% url 'create_post' %}">Create-Post</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'details' %}">Profile</a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'profile' request.user.username %}">Profile</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'logout_user' %}">Log out</a>

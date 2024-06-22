@@ -3,7 +3,6 @@ from datetime import datetime
 from django.core.validators import URLValidator
 
 from django_resized import ResizedImageField # Compreess image
-from taggit.managers import TaggableManager
 
 # Create your models here
 
@@ -36,7 +35,7 @@ class PostModel(models.Model):
     num_of_likes = models.IntegerField(default=0)
     num_of_comments = models.IntegerField(default=0)
     #slug = models.SlugField(unique=True,)
-    tags = TaggableManager()
+    # tags = TaggableManager()
 
     def __str__(self):
         return (f"{self.content}")

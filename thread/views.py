@@ -5,8 +5,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
 from .forms import UpdateProfile, PostForm, StoryForm, UserForm
-from datetime import datetime, timezone
-from django.contrib.auth.models import User, auth
+# from datetime import datetime, timezone
+from django.contrib.auth.models import User
 # # from rest_framework.parsers import JSONParser
 # from django.http.response import JsonResponse
 # from .serializers import StorySerializer

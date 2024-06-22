@@ -19,6 +19,5 @@ urlpatterns = [
     #path('slider', views.slider, name='slider'),
     path('comment', views.comment, name='comment'),
     path('del_account',views.del_account, name='del_account'),
-    path('tag_list/<str:pk>',views.tag_list, name='tag_list'),
 
 ]

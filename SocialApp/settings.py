@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from decouple import config
 import os
-import dj_database_url
+# import dj_database_url
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
@@ -49,12 +49,10 @@ INSTALLED_APPS = [
     'corsheaders',
     'cloudinary_storage',
     'cloudinary',
-    'rest_framework',
+    # 'rest_framework',
     'thread',
     'gunicorn',
     'django_unused_media',
-    #tag
-    'taggit',
 ]
 
 MIDDLEWARE = [
@@ -70,15 +68,20 @@ MIDDLEWARE = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = False
+
 CORS_ORIGIN_WHITELIST = (
-  'http://localhost:8000',
-  'https://socialapp-production-fb7c.up.railway.app', 
-)
+    'http://localhost:8000',
+    'https://socialapp-production-fb7c.up.railway.app',
+    'https://socialapp-p587*.onrender.com'
+    )
+
 CSRF_TRUSTED_ORIGINS = [
-'https://*.railway.app',
-'http://*.railway.app',
-'https://socialapp-production-fb7c.up.railway.app',
-]
+    'https://*.railway.app',
+    'http://*.railway.app',
+    'https://socialapp-production-fb7c.up.railway.app',
+    'https://socialapp-p587*.onrender.com',
+    ]
+
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 

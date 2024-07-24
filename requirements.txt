@@ -6,6 +6,7 @@ dj-database-url==2.2.0
 Django==5.0.6
 django-cloudinary-storage==0.3.0
 django-cors-headers==4.3.1
+django-htmx==1.18.0
 django-resized==1.0.2
 django-taggit==5.0.1
 django-unused-media==0.2.2

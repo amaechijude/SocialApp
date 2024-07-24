@@ -206,20 +206,21 @@ def delete_post(request, pk):
 # Like a post
 @login_required(login_url='login_user')    
 def like_post(request, pk):
-    username = request.user.username
-    post = PostModel.objects.get(postID=pk)
+    if request.htmx:
+        username = request.user.username
+        post = PostModel.objects.get(postID=pk)
 
-    like_check = LikePost.objects.filter(username=username, postID=pk).first()
-    if like_check == None:
-        new_like = LikePost.objects.create(username=username, postID=pk)
-        new_like.save()
-        post.num_of_likes += 1
-        post.save()
-    else:
-        like_check.delete()
-        post.num_of_likes -= 1
-        post.save()
-    return redirect(f'home')
+        like_check = LikePost.objects.filter(username=username, postID=pk).first()
+        if like_check == None:
+            new_like = LikePost.objects.create(username=username, postID=pk)
+            new_like.save()
+            post.num_of_likes += 1
+            post.save()
+        else:
+            like_check.delete()
+            post.num_of_likes -= 1
+            post.save()
+        return render(request, 'like.html')
 
 
 

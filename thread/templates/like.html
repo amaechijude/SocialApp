@@ -1,18 +1,24 @@
 <div id="post-actions" class="post-actions">
-	<svg
+	<form 
 	hx-post="{% url 'like_post' post.postID %}"
 	hx-target="#post-actions"
 	hx-swap="outerHTML"
+	>
+	{% csrf_token %}
+	<button type="submit">
+	<svg
 	xmlns="http://www.w3.org/2000/svg"
 	width="30" height="40" fill="red"
 	class="bi bi-heart-fill" viewBox="0 0 16 16">
 	<path fill-rule="evenodd"
 	d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
         </svg>
+	</button>
+	</form>
 
 	{% if post.num_of_likes < 2 %}
 	{{ post.num_of_likes }} Like
-	{% else %
+	{% else %}
 	{{ post.num_of_likes }} Likes
 	{% endif %}
 

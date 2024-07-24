@@ -170,6 +170,18 @@ def post_view(request, pk):
         "comment_num":comment_num, 
         "iso_format": iso_format, 
             }
+    # if request.method == 'POST':
+    if request.htmx:
+        author = request.user.profile
+        postID = request.POST['postID']
+        post = PostModel.objects.get(postID=postID)
+        content = request.POST['content']
+
+        new_comment = CommentModel.objects.create(author=author, post=post,content=content)
+        new_comment.save()
+        post.num_of_comments += 1
+        messages.success(request,"Comment added")
+        return render(request, 'partial/comment.html', context)
     return render(request, 'post_detail.html', context)
 
 # comment on a post

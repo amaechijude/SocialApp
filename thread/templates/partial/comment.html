@@ -1,21 +1,16 @@
-<div id="comment" class="col-lg-12" style="border:2px solid black ">
-	<h3>Comments</h3>
-	{% for comment in comments reversed %}
-	<div class="story-card" style="border:solid black; margin:2px;">
-		<img src="{{ comment.author.profile_pics.url }}" alt="Avatar" class="story-avatar">
-		<div class="story-info">
+<div id="comment" class="story-card" style="border:solid black; margin:2px;">
+	<img src="{{ comment.author.profile_pics.url }}" alt="Avatar" class="story-avatar">
+	<div class="story-info">
 
-			<a href="{% url 'profile' comment.author.user.username %}">
-				<h6>@{{ comment.author.user.username }}</h6>
-			</a>&nbsp;{{ comment.created_at }}<strong> utc</strong>
-			<div class="progress-bar-wrapper">
+		<a href="{% url 'profile' comment.author.user.username %}">
+			<h6>@{{ comment.author.user.username }}</h6>
+		</a>&nbsp;{{ comment.created_at }}<strong> utc</strong>
+		<div class="progress-bar-wrapper">
 
-				<div class="progress-bar" style="width: 90%;"></div>
-			</div>
-			<p>
-				{{ comment.content }}
-			</p>
+			<div class="progress-bar" style="width: 90%;"></div>
 		</div>
+		<p>
+			{{ comment.content }}
+		</p>
 	</div>
-	{% endfor %}
 </div>

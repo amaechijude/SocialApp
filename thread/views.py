@@ -170,8 +170,8 @@ def post_view(request, pk):
         "comment_num":comment_num, 
         "iso_format": iso_format, 
             }
-    # if request.method == 'POST':
-    if request.htmx:
+    if request.method == 'POST':
+    # if request.htmx:
         author = request.user.profile
         postID = request.POST['postID']
         post = PostModel.objects.get(postID=postID)

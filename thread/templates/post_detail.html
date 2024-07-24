@@ -57,12 +57,13 @@
         <div class="col-lg-8 mx-auto">
             <div class="post-container">
                 <div class="post-header">
-                    <img src="{{ post.author.profile_pics.url }}" alt="Avatar" class="post-avatar">
+                    <img src="{{ post_object.author.profile_pics.url }}" alt="Avatar" class="post-avatar">
                     <div>
                         <p class="post-username">
-                            {{ post.author.first_name }} &nbsp;{{ post.author.last_name }} &nbsp;<a
-                                href="{% url 'profile' post_object.author.user.username %}">@{{
-                                post_object.author.user.username }}</a>
+                            {{ post_object.author.first_name }} &nbsp;{{ post_object.author.last_name }} &nbsp;
+                            <a href="{% url 'profile' post_object.author.user.username %}">
+                                @{{ post_object.author.user.username }}
+                            </a>
                         </p>
                         <p class="text-muted" style="margin-top: -15px;">
                             {{ post_object.created_at }}<strong> utc</strong>
@@ -99,13 +100,14 @@
                 hx-post="{% url 'post_view' post_object.postID %}"
                 hx-target="#comment"
                 hx-swap="outerHTML"
-                style="max-width: 100%;width: 100%;margin-bottom: 5px; display: flex;justify-content: center;align-items: center; border: 2px solid blueviolet;">
+                style="max-width: 100%;width: 100%;margin-bottom: 5px; display: flex;justify-content: center;align-items: center; border: 2px solid blueviolet;"
+                >
                 {% csrf_token %}
                 <input type="text" name="content" placeholder="post your comment" id="create-post">
                 <input type="hidden" name="postID" value="{{ post_object.postID }}">
                 &nbsp;&nbsp;<button type="submit" class="btn btn-primary">Comment</button>
             </form>
-           {% include 'partial/comment.html' %}
+            {% include 'partial/comment.html' %}
         </div>
     </div>
 

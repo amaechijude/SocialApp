@@ -6,7 +6,7 @@
 
 <link rel="stylesheet" href="{% static 'styles/index.css' %}">
 <link rel="stylesheet" href="{% static 'styles/stories.css' %}">
-<link rel="stylesheet" href="{% static 'styles/home.css' %}" >
+<link rel="stylesheet" href="{% static 'styles/home.css' %}">
 
 
 <div class="container" style="margin-bottom:0px;">
@@ -14,35 +14,14 @@
     <div class="stories-container">
         <div class="content">
 
-            <div class="stories">
-                {% if stories %}
-                {% for story in stories reversed %}
-                {% if story.image %}
-                <div class="story"
-                    style="background: url('{{ story.image.url }}'); background-size: cover;background-repeat: no-repeat; background-position: center cover;">
-                    <!---->
-                    <div class="profile-pic">
-			    {% if story.author.profile_pics %}
-                        <img src="{{ story.author.profile_pics.url }}" alt="">
-			{% else %}
-			<img src="{% static 'images/anon.jpeg' %}" alt="Avatar"class="story-avatar">
-			{% endif %}
-                    </div>
-                    <p class="name" style="background-color: rgba(2, 0, 0, 0.425);color:white;">
-                        {{ story.author.user.username }}
-                    </p>
-                    <div class="author" style="color:black; font:bold;">
-                        {{ story.caption }}
-                    </div>
-                </div>
-                {% endif %}
-                {% endfor %}
-                {% endif %}
+            {% include 'partial/story.html' %}
 
-            </div>
         </div>
         <div class="middle" style="margin-top:1px;">
-            <form class="create-post" method="post" action="{% url 'story' %}" enctype="multipart/form-data">
+            <form class="create-post" enctype="multipart/form-data"
+                hx-post="{% url 'story' %}"
+                hx-target="#status"
+                hx-swap="outerHTML">
                 {% csrf_token %}
                 <div class="profile-pic">
                     <img class="profile-pic" src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
@@ -62,11 +41,11 @@
             <a href="{% url 'profile' p.user.username %}">
 
                 <div class="story-card" style="border:solid black;">
-			{% if p.profile_pics %}
+                    {% if p.profile_pics %}
                     <img src="{{ p.profile_pics.url }}" alt="Avatar" class="story-avatar">
-		    {% else %}
-		    <img src="{% static 'images/anon.jpeg' %}" alt="Avatar" class="story-avatar">
-		    {% endif %}
+                    {% else %}
+                    <img src="{% static 'images/anon.jpeg' %}" alt="Avatar" class="story-avatar">
+                    {% endif %}
                     <div class="story-info">
 
                         <h6>@{{ p.user.username }}</h6>
@@ -88,12 +67,12 @@
     <div class="row" style="margin-top:4px;">
         <div class="col-lg-8 mx-auto">
             <div class="post-container" style="border: 1px solid black; margin-bottom: 4px;">
-		    <div class="post-header">
-			    {% if post.author.profile_pics %}
+                <div class="post-header">
+                    {% if post.author.profile_pics %}
                     <img src="{{ post.author.profile_pics.url }}" alt="Avatar" class="post-avatar">
-		    {% else %}
-		    <img src="{% static 'images/anon.jpeg' %}" alt="Avatar" class="post-avatar">
-		    {% endif %}
+                    {% else %}
+                    <img src="{% static 'images/anon.jpeg' %}" alt="Avatar" class="post-avatar">
+                    {% endif %}
                     <div>
                         <p class="post-username">
                             {{ post.author.first_name }} &nbsp;{{ post.author.last_name }}&nbsp;
@@ -110,63 +89,56 @@
 
                 <div class="post-content">
                     <p>
-			       {{ post.content }}
+                        {{ post.content }}
                     </p>
                     {% if post.image %}
-                        <img src="{{ post.image.url }}" alt="Image" class="img-fluid" style="max-width: 100%;">
-                       
-                          
+                    <img src="{{ post.image.url }}" alt="Image" class="img-fluid" style="max-width: 100%;">
+
+
                     {% endif %}
                 </div>
-		<div id="post-actions" class="post-actions">
-        <a href="{% url 'like_post' post.postID %}">
-        <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="30" height="40" fill="red"
-        class="bi bi-heart-fill" viewBox="0 0 16 16">
-        <path fill-rule="evenodd"
-        d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
-        </svg>
-        </a>
+                <div id="post-actions" class="post-actions">
+                    <a href="{% url 'like_post' post.postID %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="red"
+                            class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                        </svg>
+                    </a>
 
-        {% if post.num_of_likes < 2 %}
-        {{ post.num_of_likes }} Like
-        {% else %}
-        {{ post.num_of_likes }} Likes
-        {% endif %}
-
-        <a href="{% url 'post_view' post.postID %}">
-                <svg xmlns="http://www.w3.org/2000/svg"
-                width="16" height="16" fill="currentColor"
-                class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                </svg>Comment
-        </a>
-</div>
+                    {% if post.num_of_likes < 2 %} {{ post.num_of_likes }} Like {% else %} {{ post.num_of_likes }} Likes
+                        {% endif %} <a href="{% url 'post_view' post.postID %}">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                            <path
+                                d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                        </svg>Comment
+                        </a>
                 </div>
             </div>
         </div>
-        {% endfor %}
-        {% endif %}
     </div>
+    {% endfor %}
+    {% endif %}
+</div>
 
-    <script>
-        function toggleDropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
+<script>
+    function toggleDropdown() {
+        document.getElementById("myDropdown").classList.toggle("show");
+    }
 
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
+    // Close the dropdown if the user clicks outside of it
+    window.onclick = function (event) {
+        if (!event.target.matches('.dropbtn')) {
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
                 }
             }
         }
-    </script>
-    {% endblock %}
+    }
+</script>
+{% endblock %}

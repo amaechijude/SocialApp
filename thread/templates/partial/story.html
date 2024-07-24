@@ -1,0 +1,26 @@
+<div id="status" class="stories">
+    {% if stories %}
+    {% for story in stories reversed %}
+    {% if story.image %}
+    <div class="story"
+        style="background: url('{{ story.image.url }}'); background-size: cover;background-repeat: no-repeat; background-position: center cover;">
+        <!---->
+        <div class="profile-pic">
+            {% if story.author.profile_pics %}
+            <img src="{{ story.author.profile_pics.url }}" alt="">
+            {% else %}
+            <img src="{% static 'images/anon.jpeg' %}" alt="Avatar" class="story-avatar">
+            {% endif %}
+        </div>
+        <p class="name" style="background-color: rgba(2, 0, 0, 0.425);color:white;">
+            {{ story.author.user.username }}
+        </p>
+        <div class="author" style="color:black; font:bold;">
+            {{ story.caption }}
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endif %}
+
+</div>

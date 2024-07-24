@@ -301,7 +301,8 @@ def follow(request):
 
 @login_required(login_url='login_user')
 def story(request):
-    if request.method == 'POST':
+    if request.htmx:
+    # if request.method == 'POST':
         form = StoryForm(request.POST, request.FILES)
         if form.is_valid():
             author = request.user.profile
@@ -314,7 +315,10 @@ def story(request):
 
             return redirect('home')
         messages.info(request, "Error, Add Image")
-        return redirect('home')
+
+        # return redirect('home')
+        stories = Story.objects.all()
+        return render(request, 'partial/story.html', {"stories": stories})
     else:
         return render(request, 'home.html')
 

@@ -21,7 +21,8 @@
             <form class="create-post" enctype="multipart/form-data"
                 hx-post="{% url 'story' %}"
                 hx-target="#status"
-                hx-swap="outerHTML">
+                hx-swap="outerHTML"
+                _="on htmx:afterRequest reset() me">
                 {% csrf_token %}
                 <div class="profile-pic">
                     <img class="profile-pic" src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">

@@ -1,0 +1,46 @@
+.stories-container {
+    background-color: #f0f2f5;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.story-card {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    background-color: #fff;
+}
+
+.story-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.story-info {
+    flex-grow: 1;
+}
+
+.progress-bar-wrapper {
+    width: 100%;
+    position: relative;
+    margin-top: 5px;
+}
+
+.progress-bar {
+    height: 5px;
+    background-color: #ddd;
+    border-radius: 2px;
+}
+
+.progress {
+    height: 100%;
+    background-color: #0d6efd;
+    border-radius: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

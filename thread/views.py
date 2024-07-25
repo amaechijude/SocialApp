@@ -319,7 +319,7 @@ def story(request):
         # return redirect('home')
         stories = Story.objects.all()
         return render(request, 'partial/story.html', {"stories": stories})
-    else:
-        return render(request, 'home.html')
+    # else:
+    #     return render(request, 'home.html')
 
 

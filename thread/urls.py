@@ -17,7 +17,7 @@ urlpatterns = [
     path('delete_post/<int:pk>', views.delete_post, name='delete_post'),
     path('story', views.story, name='story'),
     #path('slider', views.slider, name='slider'),
-    path('comment', views.comment, name='comment'),
+    path('comment/<int:pk>', views.comment, name='comment'),
     path('del_account',views.del_account, name='del_account'),
 
 ]

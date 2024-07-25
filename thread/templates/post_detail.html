@@ -4,6 +4,8 @@
 {% block content %}
 {%load static %}
 <link rel="stylesheet" href="{% static 'styles/comment.css' %}">
+
+<script src="https://unpkg.com/hyperscript.org@0.9.12"></script>
 <br>
 
 <div class="container">
@@ -51,21 +53,23 @@
                     {% endif %}
                 </div>
             </div>
-            <form class="create-post" hx-post="{% url 'post_view' post_object.postID %}" hx-target="#comment"
-                hx-swap="outerHTML"
-                _="on htmx:afterRequest reset() me"
-                style="max-width: 100%;width: 100%;margin-bottom: 5px; display: flex;justify-content: center;align-items: center; border: 2px solid blueviolet;">
+            <form class="create-post" 
+                style="max-width: 100%;width: 100%;
+                margin-bottom: 5px; display: flex;
+                justify-content: center;align-items: center;
+                border: 2px solid blueviolet;"
+    
+                hx-post="{% url 'comment' post_object.postID %}"
+                hx-target="#comment"
+                hx-swap="innerHTML"
+                _="on htmx:afterRequest reset() me">
                 {% csrf_token %}
                 <input type="text" name="content" placeholder="post your comment" id="create-post">
-                <input type="hidden" name="postID" value="{{ post_object.postID }}">
                 &nbsp;&nbsp;<button type="submit" class="btn btn-primary">Comment</button>
             </form>
-            <div class="col-lg-12" style="border:2px solid black ">
-                <h3>Comments</h3>
-                {% for comment in comments reversed %}
+           
                 {% include 'partial/comment.html' %}
-                {% endfor %}
-            </div>
+                
         </div>
     </div>
 

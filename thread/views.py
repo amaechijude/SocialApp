@@ -12,12 +12,16 @@ from django.contrib.auth.models import User
 # from .serializers import StorySerializer
 # import json
 
+from django.core.paginator import Paginator
 # Create your views here
 
 # @login_required(login_url='/login')
 def home(request):
     username = request.user.username
-    all_post = PostModel.objects.all()
+    post = PostModel.objects.all()#.order_by('created_at')
+    page_number = request.GET.get('page', 1)
+    paginator = Paginator(post, 5)
+    all_post = paginator.get_page(page_number)
     likes = LikePost.objects.filter(username=username)
     stories = Story.objects.all()
     all_profile = Profile.objects.all()
@@ -170,35 +174,32 @@ def post_view(request, pk):
         "comment_num":comment_num, 
         "iso_format": iso_format, 
             }
-    if request.method == 'POST':
-    # if request.htmx:
-        author = request.user.profile
-        postID = request.POST['postID']
-        post = PostModel.objects.get(postID=postID)
-        content = request.POST['content']
-
-        new_comment = CommentModel.objects.create(author=author, post=post,content=content)
-        new_comment.save()
-        post.num_of_comments += 1
-        messages.success(request,"Comment added")
-        return render(request, 'partial/comment.html', context)
+    
     return render(request, 'post_detail.html', context)
 
 # comment on a post
 @login_required(login_url='login_user')
-def comment(request):
-    if request.method == 'POST':
+def comment(request, pk):
+    if request.htmx:
+    # if request.method == 'POST':
         author = request.user.profile
-        postID = request.POST['postID']
+        postID = pk
         post = PostModel.objects.get(postID=postID)
         content = request.POST['content']
 
         new_comment = CommentModel.objects.create(author=author, post=post,content=content)
         new_comment.save()
         post.num_of_comments += 1
-        messages.success(request,"Comment added")
-        url = 'post_view/'
-        return redirect(f"{url}{postID}")
+        
+        comments = CommentModel.objects.filter(post=post)
+        context = {
+            "comments":comments,
+        }
+        return render(request, 'partial/comment.html', context)
+
+        # messages.success(request,"Comment added")
+        # url = 'post_view/'
+        # return redirect(f"{url}{postID}")
     
 
 # delete a post
@@ -311,14 +312,17 @@ def story(request):
 
             new_story = Story.objects.create(author=author,caption=caption,image=image,)
             new_story.save()
-            messages.success(request, "Story created")
 
-            return redirect('home')
-        messages.info(request, "Error, Add Image")
+            stories = Story.objects.all()
+            return render(request, 'partial/story.html', {"stories": stories})
+            # messages.success(request, "Story created")
 
-        # return redirect('home')
-        stories = Story.objects.all()
-        return render(request, 'partial/story.html', {"stories": stories})
+            # return redirect('home')
+        # messages.info(request, "Error, Add Image")
+
+        # # return redirect('home')
+        # stories = Story.objects.all()
+        # return render(request, 'partial/story.html', {"stories": stories})
     # else:
     #     return render(request, 'home.html')
 

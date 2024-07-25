@@ -6,7 +6,11 @@
 <!-- Profile Cover -->
 <div class="profile-cover">
     <!-- Profile Avatar -->
+    {% if user_profile.profile_pics %}
     <img src="{{ image_url }}" alt="Avatar" class="profile-avatar">
+    {% else %}
+    <img src="{% static 'images/anon.jpeg' %}" alt="Avatar" class="story-avatar">
+    {% endif %}
 </div>
 
 <div class="container">

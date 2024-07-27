@@ -18,13 +18,20 @@ from django.core.paginator import Paginator
 # @login_required(login_url='/login')
 def home(request):
     username = request.user.username
-    post = PostModel.objects.all().order_by('created_at')
+    post = PostModel.objects.all().order_by('-created_at')
     page_number = request.GET.get('page', 1)
     paginator = Paginator(post, 5)
     all_post = paginator.get_page(page_number)
     likes = LikePost.objects.filter(username=username)
-    stories = Story.objects.all()
+
+    #story
+    story = Story.objects.all().order_by('-created_at')
+    spage_number = request.GET.get('page',1)
+    spaginator = Paginator(story, 5)
+    stories = spaginator.get_page(spage_number)
+
     all_profile = Profile.objects.all()
+
     form = StoryForm()
     context = {
         "all_post": all_post,
@@ -181,7 +188,6 @@ def post_view(request, pk):
 @login_required(login_url='login_user')
 def comment(request, pk):
     if request.htmx:
-    # if request.method == 'POST':
         author = request.user.profile
         postID = pk
         post = PostModel.objects.get(postID=postID)
@@ -190,16 +196,13 @@ def comment(request, pk):
         new_comment = CommentModel.objects.create(author=author, post=post,content=content)
         new_comment.save()
         post.num_of_comments += 1
-        
+
         comments = CommentModel.objects.filter(post=post)
         context = {
-            "comments":comments,
-        }
+                "comments":comments,
+                }
         return render(request, 'partial/comment.html', context)
 
-        # messages.success(request,"Comment added")
-        # url = 'post_view/'
-        # return redirect(f"{url}{postID}")
     
 
 # delete a post
@@ -276,7 +279,7 @@ def profile(request,pk):
 
 
 
-    #return redirect('login_user')
+#Follow / unfollow
 
 @login_required(login_url='login_user')
 def follow(request):
@@ -303,31 +306,20 @@ def follow(request):
 @login_required(login_url='login_user')
 def story(request):
     if request.htmx:
-    # if request.method == 'POST':
         form = StoryForm(request.POST, request.FILES)
         if form.is_valid():
+            new_story = form.save(commit=False)
             author = request.user.profile
-            caption = form.cleaned_data['caption']
-            image = form.cleaned_data['image']
-
-            new_story = Story.objects.create(author=author,caption=caption,image=image,)
+            new_story.author = author
             new_story.save()
 
-            # story = Story.objects.all().order_by('created_at')
-            # spage_number = request.GET.get('page',1)
-            # spaginator = Paginator(story, 5)
-            # stories = spaginator.get_page(spage_number)
-            stories = Story.objects.all()
+            story = Story.objects.all().order_by('-created_at')
+            spage_number = request.GET.get('page',1)
+            spaginator = Paginator(story, 5)
+            stories = spaginator.get_page(spage_number)
             return render(request, 'partial/story.html', {"stories": stories})
-            # messages.success(request, "Story created")
 
-            # return redirect('home')
-        # messages.info(request, "Error, Add Image")
-
-        # # return redirect('home')
-        # stories = Story.objects.all()
-        # return render(request, 'partial/story.html', {"stories": stories})
-    # else:
-    #     return render(request, 'home.html')
+        messages.info(request, "Invalid request, Refesh your page.")
+        return redirect('home')
 
 

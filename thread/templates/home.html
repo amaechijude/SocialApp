@@ -19,7 +19,7 @@
         </div>
         <div class="middle" style="margin-top:1px;">
             <form class="create-post" enctype="multipart/form-data" hx-post="{% url 'story' %}" hx-target="#status"
-                hx-swap="innerHTML" _="on htmx:afterRequest reset() me">
+                hx-swap="outerHTML" _="on htmx:afterRequest reset() me">
                 {% csrf_token %}
                 <div class="profile-pic">
                     <img class="profile-pic" src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
@@ -60,7 +60,7 @@
     </div>
     <div id="all_post">
         {% if all_post %}
-        {% for post in all_post reversed %}
+        {% for post in all_post %}
 
         <div id="in_post" class="row" style="margin-top:4px;">
             <div class="col-lg-8 mx-auto">

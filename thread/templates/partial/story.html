@@ -1,7 +1,7 @@
 {% load static %}
 <div id="status" class="stories">
     {% if stories %}
-    {% for story in stories reversed %}
+    {% for story in stories %}
     {% if story.image %}
     <div class="story"
         style="background: url('{{ story.image.url }}'); background-size: cover;background-repeat: no-repeat; background-position: center cover;">

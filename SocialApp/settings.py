@@ -30,8 +30,8 @@ SECRET_KEY = config('SECRET_KEY')
 #SECRET_KEY =django-insecure-ob#0#_*$kyc*!i2l^o+&)r)q+9e3y02u1yk^##(uy3f$05ddm5
 
 # SECURITY WARNING: don't run with debug turned on in production!
-#DEBUG = config('DEBUG', cast=bool)
-DEBUG = True
+DEBUG = config('DEBUG', cast=bool)
+# DEBUG = True
 
 #Change allowed hosts in production
 ALLOWED_HOSTS = ["*"]
@@ -55,7 +55,7 @@ INSTALLED_APPS = [
     'thread',
     
     #third party 
-    #'gunicorn',
+    'gunicorn',
     'django_unused_media',
     "django_htmx",
 ]
@@ -76,7 +76,7 @@ MIDDLEWARE = [
     
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
 
 CORS_ORIGIN_WHITELIST = (
     'http://localhost:8000',

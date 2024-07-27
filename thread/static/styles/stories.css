@@ -71,9 +71,9 @@
     scroll-behavior: smooth;
 }
 
-.stories-container .content::-webkit-scrollbar {
+/* .stories-container .content::-webkit-scrollbar {
     display: none;
-}
+} */
 
 .stories-container .profile-pic img {
     width: 3rem;

@@ -18,7 +18,7 @@ from django.core.paginator import Paginator
 # @login_required(login_url='/login')
 def home(request):
     username = request.user.username
-    post = PostModel.objects.all()#.order_by('created_at')
+    post = PostModel.objects.all().order_by('created_at')
     page_number = request.GET.get('page', 1)
     paginator = Paginator(post, 5)
     all_post = paginator.get_page(page_number)
@@ -313,6 +313,10 @@ def story(request):
             new_story = Story.objects.create(author=author,caption=caption,image=image,)
             new_story.save()
 
+            # story = Story.objects.all().order_by('created_at')
+            # spage_number = request.GET.get('page',1)
+            # spaginator = Paginator(story, 5)
+            # stories = spaginator.get_page(spage_number)
             stories = Story.objects.all()
             return render(request, 'partial/story.html', {"stories": stories})
             # messages.success(request, "Story created")

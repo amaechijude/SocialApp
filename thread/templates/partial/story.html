@@ -19,6 +19,15 @@
         <div class="author" style="color:black; font:bold;">
             {{ story.caption }}
         </div>
+        {% if stories.has_next and forloop.last %}
+            <span
+                hx-get="{% url 'home' %}?page={{ all_post.next_page_number }}"
+                hx-swap="beforeend"
+                hx-target="#all_post"
+                hx-select="in_post"
+                hx-trigger="revealed"
+                ></span>
+	    {% endif %}
     </div>
     {% endif %}
     {% endfor %}

@@ -1,4 +1,5 @@
-from django.shortcuts import render, redirect
+from django.http import JsonResponse
+from django.shortcuts import get_object_or_404, render, redirect
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -8,7 +9,6 @@ from .forms import UpdateProfile, PostForm, StoryForm, UserForm
 # from datetime import datetime, timezone
 from django.contrib.auth.models import User
 # # from rest_framework.parsers import JSONParser
-# from django.http.response import JsonResponse
 # from .serializers import StorySerializer
 # import json
 
@@ -221,21 +221,25 @@ def delete_post(request, pk):
 
 # Like a post
 @login_required(login_url='login_user')    
-def like_post(request, pk):
-    username = request.user.username
-    post = PostModel.objects.get(postID=pk)
+def like_post(request, postID):
+    if request.method == 'POST':
+        username = request.user.username
+        post = get_object_or_404(PostModel, postID=postID)
 
-    like_check = LikePost.objects.filter(username=username, postID=pk).first()
-    if like_check == None:
-        new_like = LikePost.objects.create(username=username, postID=pk)
-        new_like.save()
-        post.num_of_likes += 1
-        post.save()
-    else:
-        like_check.delete()
-        post.num_of_likes -= 1
-        post.save()
-    return redirect('home')
+        like_check = LikePost.objects.filter(username=username, postID=postID).first()
+        if like_check == None:
+            new_like = LikePost.objects.create(username=username, postID=postID)
+            new_like.save()
+            post.num_of_likes += 1
+            post.save()
+        else:
+            like_check.delete()
+            post.num_of_likes -= 1
+            post.save()
+
+        return JsonResponse({'num_of_likes': post.num_of_likes})
+
+    #return redirect('home')
 
 
 

@@ -221,9 +221,10 @@ def delete_post(request, pk):
 
 # Like a post
 @login_required(login_url='login_user')    
-def like_post(request, postID):
-    if request.method == 'POST':
+def like_post(request):
+    if request.method == 'GET':
         username = request.user.username
+        postID = request.GET.get('postID')
         post = get_object_or_404(PostModel, postID=postID)
 
         like_check = LikePost.objects.filter(username=username, postID=postID).first()
@@ -237,9 +238,8 @@ def like_post(request, postID):
             post.num_of_likes -= 1
             post.save()
 
-        return JsonResponse({'num_of_likes': post.num_of_likes})
-
-    #return redirect('home')
+        return JsonResponse({"message": "Success", "postID": postID})
+    return JsonResponse({"error": "Invalid request"}, status=400)
 
 
 
@@ -284,7 +284,6 @@ def profile(request,pk):
 
 
 #Follow / unfollow
-
 @login_required(login_url='login_user')
 def follow(request):
     if request.method == 'POST':

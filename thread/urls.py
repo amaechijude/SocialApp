@@ -10,6 +10,7 @@ urlpatterns = [
     path('details', views.details, name='details'),
     path('account_setting', views.account_setting, name='account_setting'),
     path('create_post', views.create_post, name='create_post'),
+    # path('like_post', views.like_post, name='like_post'),
     path('like_post/<int:postID>', views.like_post, name='like_post'),
     path('profile/<str:pk>', views.profile, name='profile'),
     path('follow', views.follow, name='follow'),

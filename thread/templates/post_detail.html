@@ -35,7 +35,9 @@
                     {% endif %}
                 </div>
                 <div class="post-actions">
-                    <!--<a href="{% url 'like_post' post_object.postID %}"><button class="btn btn-primary">Like</button></a>-->
+                    <input type="text" value="{{post.postID}}" id="postID" hidden>
+                    <button type="submit" id="like-button-btn">Like</button>
+
                     {{ post_object.num_of_likes }} Likes
 
                     <span>{{ comment_num }} Comments</span>

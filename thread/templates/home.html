@@ -4,6 +4,7 @@
 
 {% block content %}
 
+<script src="{% static 'scripts/jquery-3.7.1.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'styles/index.css' %}">
 <link rel="stylesheet" href="{% static 'styles/stories.css' %}">
 <link rel="stylesheet" href="{% static 'styles/home.css' %}">
@@ -96,48 +97,49 @@
                         {% endif %}
                     </div>
                     <div id="post-actions" class="post-actions">
-			    <!-- Like button mod -->
-		<svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="red"
-                class="bi bi-heart-fill" viewBox="0 0 16 16">
-        	<path fill-rule="evenodd"
-		d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
-        	</svg>
-			<!-- End like button mod -->
+                        <!-- Like button mod -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="red"
+                            class="bi bi-heart-fill" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd"
+                                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                        </svg>
+                        <i onclick="myFunction(this)" class="fa fa-thumbs-up"></i>
+                        <input type="text" value="{{post.postID}}" id="postID" hidden>
+                        <button type="submit" id="like-button-btn">Like</button>
 
+                        <!-- End like button mod -->
                         {% if post.num_of_likes < 2 %}
-			<span id="like-count">{{ post.num_of_likes }}</span>
-			{% else %}
-			<span id="like-count">{{ post.num_of_likes }}</span>
-			{% endif %}
-			<span>
-		<a href="{% url 'post_view' post.postID %}">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-			fill="currentColor"class="bi bi-three-dots-vertical"
-			viewBox="0 0 16 16"><path
-			d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                            </svg>Comment
+                        <span id="like-count">{{ post.num_of_likes }}</span> Likes
+                            {% else %}
+                        <span id="like-count">{{ post.num_of_likes }}</span> Likes
+                            {% endif %}
+                        <span>
+                            <a href="{% url 'post_view' post.postID %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-three-dots-vertical" viewBox="0 0 16 16"> <path
+                                    d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                </svg>Comment
                             </a>
-			</span>
+                        </span>
                     </div>
                 </div>
             </div>
             {% if all_post.has_next and forloop.last %}
-            <span
-                hx-get="{% url 'home' %}?page={{ all_post.next_page_number }}"
-                hx-swap="beforeend"
-                hx-target="#all_post"
-                hx-select="in_post"
-                hx-trigger="revealed"
-                ></span>
-	    {% endif %}
+            <span hx-get="{% url 'home' %}?page={{ all_post.next_page_number }}" hx-swap="beforeend"
+                hx-target="#all_post" hx-select="in_post" hx-trigger="revealed"></span>
+            {% endif %}
         </div>
         {% endfor %}
         {% endif %}
     </div>
 </div>
 
-</script>
+<script src="{% static 'scripts/like.js' %}"></script>
 <script>
+      function myFunction(x) {
+	x.classList.toggle("fa-thumbs-down");
+  }
+
     function toggleDropdown() {
         document.getElementById("myDropdown").classList.toggle("show");
     }

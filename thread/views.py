@@ -221,11 +221,12 @@ def delete_post(request, pk):
 
 # Like a post
 @login_required(login_url='login_user')    
-def like_post(request):
+def like_post(request, postID):
     if request.method == 'GET':
         username = request.user.username
-        postID = request.GET.get('postID')
+        # postID = request.GET.get('postID')
         post = get_object_or_404(PostModel, postID=postID)
+        print(f"Before:-> {post.num_of_likes}")
 
         like_check = LikePost.objects.filter(username=username, postID=postID).first()
         if like_check == None:
@@ -238,7 +239,13 @@ def like_post(request):
             post.num_of_likes -= 1
             post.save()
 
-        return JsonResponse({"message": "Success", "postID": postID})
+        print(f"After:-> {post.num_of_likes}")
+        data = {
+            "num_of_likes": post.num_of_likes,
+            "message": "Success",
+            "postID": postID
+            }
+        return JsonResponse(data)
     return JsonResponse({"error": "Invalid request"}, status=400)
 
 

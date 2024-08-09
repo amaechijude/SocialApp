@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .redd {
+            background-color: red;
+        }
+
+        .bluee {
+            background-color: blue;
+        }
+    </style>
+</head>
+
+<body>
+    <center>
+        <input id="name" type="text" value="Amaechi" hidden>
+    <button id="btn" class="redd" onclick="myFunc()">loj</button>
+</center>
+</body>
+<script>
+    async function myFunc() {
+        const btn = document.getElementById("btn");
+        let name = document.getElementById("name").value;
+
+        if (btn.className == 'redd') {
+            btn.className = 'bluee';
+            console.log(name);
+        } else {
+            btn.className = 'redd';
+            console.log(name);
+        }
+    }
+</script>
+
+</html>

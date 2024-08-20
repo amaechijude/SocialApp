@@ -35,10 +35,14 @@
                     {% endif %}
                 </div>
                 <div class="post-actions">
-                    <input type="text" value="{{post.postID}}" id="postID" hidden>
-                    <button type="submit" id="like-button-btn">Like</button>
-
-                    {{ post_object.num_of_likes }} Likes
+                    <svg onclick="likePost('{{ post_object.postID }}')" id="like-button-btn_{{ post_object.postID }}"
+                            xmlns="http://www.w3.org/2000/svg" width="30" height="40" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" class="like-class_{{ post.postID }}" fill="red"
+                                d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
+                    </svg>
+                    <span id="like-count_{{ post_object.postID }}">
+                        {{ post_object.num_of_likes }}
+                    </span> likes
 
                     <span>{{ comment_num }} Comments</span>
                     {% if post_object.author == request.user.profile %}
@@ -55,6 +59,7 @@
                     {% endif %}
                 </div>
             </div>
+            {% if request.user.is_authenticated %}
             <form class="create-post" 
                 style="max-width: 100%;width: 100%;
                 margin-bottom: 5px; display: flex;
@@ -69,6 +74,16 @@
                 <input type="text" name="content" placeholder="post your comment" id="create-post">
                 &nbsp;&nbsp;<button type="submit" class="btn btn-primary">Comment</button>
             </form>
+            {% else %}
+            <div class="create_post"
+            style="max-width: 100%;width: 100%;
+            margin-bottom: 5px; display: flex;
+            justify-content: center;align-items: center;
+            border: 2px solid blueviolet;"
+            >
+                Login to comment
+            </div>
+            {% endif %}
            
                 {% include 'partial/comment.html' %}
                 
@@ -79,5 +94,23 @@
 
     </div>
 </div>
+<script>
+    async function likePost(pid) {
+        const response = await fetch(`/like_post/${pid}`);
+        const data = await response.json();
+        // console.log(data);
+        const firstKey = Object.keys(data)[0];
 
+        if (firstKey == 'num_of_likes') {
+            const ibns = data.num_of_likes;
+            // console.log(ibns);
+            const spanLike = document.getElementById(`like-count_${pid}`);
+            spanLike.textContent = ibns;
+        } else if (firstKey == 'err') {
+            const err = data.err;
+            alert(err);
+        }
+
+    }
+</script>
 {% endblock %}

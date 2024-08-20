@@ -31,14 +31,14 @@ class PostModel(models.Model):
     author = models.ForeignKey(Profile, on_delete=models.CASCADE)
     content = models.TextField(max_length=300)
     image = ResizedImageField(blank=True,quality=70,upload_to='profile_posts')
-    created_at = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     num_of_likes = models.IntegerField(default=0)
     num_of_comments = models.IntegerField(default=0)
     #slug = models.SlugField(unique=True,)
     # tags = TaggableManager()
 
     def __str__(self):
-        return (f"{self.content}")
+        return (f"{self.postID}")
 
 
 class CommentModel(models.Model):
@@ -48,7 +48,7 @@ class CommentModel(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return (f"{self.author.user.username}")
+        return (f"{self.author.user.username} --- commented on post{self.post.postID}")
 
 
 class LikePost(models.Model):
@@ -56,7 +56,7 @@ class LikePost(models.Model):
     username = models.CharField(max_length=100)
 
     def __str__(self):
-        return (f"{self.username}")
+        return (f"{self.username} -- liked post{self.postID}")
 
 
 class FollowerModel(models.Model):

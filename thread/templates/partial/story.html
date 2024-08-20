@@ -1,7 +1,7 @@
 {% load static %}
 <div id="status" class="stories">
     {% if stories %}
-    {% for story in stories %}
+    {% for story in stories reversed %}
     {% if story.image %}
     <div class="story"
         style="background: url('{{ story.image.url }}'); background-size: cover;background-repeat: no-repeat; background-position: center cover;">
@@ -19,15 +19,6 @@
         <div class="author" style="color:black; font:bold;">
             {{ story.caption }}
         </div>
-        {% if stories.has_next and forloop.last %}
-            <span
-                hx-get="{% url 'home' %}?page={{ all_post.next_page_number }}"
-                hx-swap="beforeend"
-                hx-target="#all_post"
-                hx-select="in_post"
-                hx-trigger="revealed"
-                ></span>
-	    {% endif %}
     </div>
     {% endif %}
     {% endfor %}

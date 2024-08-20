@@ -20,25 +20,18 @@ def home(request):
     username = request.user.username
     post = PostModel.objects.all().order_by('-created_at')
     page_number = request.GET.get('page', 1)
-    paginator = Paginator(post, 5)
+    paginator = Paginator(post, 20)
     all_post = paginator.get_page(page_number)
     likes = LikePost.objects.filter(username=username)
 
     #story
-    story = Story.objects.all().order_by('-created_at')
-    spage_number = request.GET.get('page',1)
-    spaginator = Paginator(story, 5)
-    stories = spaginator.get_page(spage_number)
-
+    stories = Story.objects.all()[:5]
     all_profile = Profile.objects.all()
 
     form = StoryForm()
     context = {
-        "all_post": all_post,
-        "likes": likes,
-        "stories": stories,
-        "form": form,
-        "all_profile": all_profile,
+        "all_post": all_post, "likes": likes, "stories": stories,
+        "form": form, "all_profile": all_profile,
         }
     return render(request, 'home.html', context)
 
@@ -85,11 +78,8 @@ def login_user(request):
 #log out
 @login_required(login_url='login_user')    
 def logout_user(request):
-    if request.user.is_authenticated:
-        logout(request)
-        return redirect('login_user')
+    logout(request)
     return redirect('login_user')
-
 
 #delete account
 @login_required(login_url='login_user')
@@ -99,38 +89,28 @@ def del_account(request):
         if user.is_staff:
             messages.info(request,"Can't delete admin account")
             return redirect('home')
-        else:
-            user.delete()
-            messages.info(request, "Account Deleted")
-            return redirect('sign_up')
+        
+        user.is_active = False
+        messages.info(request, "Account Set inactive")
+        return redirect('sign_up')
     return redirect('login_user')
 
 
 # Logged in user deatails
 @login_required(login_url='login_user')
 def details(request):
-    if request.user.is_authenticated:
-        user = request.user
-        profile = user.profile
-        posts = PostModel.objects.filter(author=profile)
-        post_len = len(posts)
-        pk = str(user.username)
-        fans = FollowerModel.objects.filter(user=pk)
-        followings = FollowerModel.objects.filter(follower=pk)
-        fans_count = len(fans)
-        followings_count = len(followings)
-        context = {
-            "profile": profile,
-            "posts":posts,
-            "post_len": post_len,
-            "fans_count": fans_count,
-            "fans": fans,
-            "followings": followings,
-            "followings_count": followings_count,
-            }
-        return render(request, 'details.html', context)
-    return redirect('login_user')
-
+    user = request.user; profile = user.profile
+    posts = PostModel.objects.filter(author=profile)
+    post_len = len(posts); pk = str(user.username)
+    fans = FollowerModel.objects.filter(user=pk)
+    followings = FollowerModel.objects.filter(follower=pk)
+    fans_count = len(fans); followings_count = len(followings)
+    context = {
+        "profile": profile, "posts":posts, "post_len": post_len,
+        "fans_count": fans_count, "fans": fans, "followings": followings,
+        "followings_count": followings_count,
+        }
+    return render(request, 'details.html', context)
 
 # Account/ profile settings
 @login_required(login_url='login_user')
@@ -219,34 +199,26 @@ def delete_post(request, pk):
         return redirect('home')
     
 
-# Like a post
-@login_required(login_url='login_user')    
+# # Like a post   
 def like_post(request, postID):
-    if request.method == 'GET':
+    if request.user.is_authenticated:
         username = request.user.username
-        # postID = request.GET.get('postID')
         post = get_object_or_404(PostModel, postID=postID)
-        print(f"Before:-> {post.num_of_likes}")
 
         like_check = LikePost.objects.filter(username=username, postID=postID).first()
+
         if like_check == None:
             new_like = LikePost.objects.create(username=username, postID=postID)
             new_like.save()
-            post.num_of_likes += 1
-            post.save()
-        else:
-            like_check.delete()
-            post.num_of_likes -= 1
-            post.save()
-
-        print(f"After:-> {post.num_of_likes}")
-        data = {
-            "num_of_likes": post.num_of_likes,
-            "message": "Success",
-            "postID": postID
-            }
+            post.num_of_likes += 1; post.save()
+            data = {"num_of_likes": post.num_of_likes,"message": "Liked", "postID": postID}
+            return JsonResponse(data)
+        
+        like_check.delete()
+        post.num_of_likes -= 1; post.save()
+        data = {"num_of_likes": post.num_of_likes,"message": "Unlike", "postID": postID}
         return JsonResponse(data)
-    return JsonResponse({"error": "Invalid request"}, status=400)
+    return JsonResponse({"err": "You need to log in"})
 
 
 

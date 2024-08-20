@@ -92,32 +92,26 @@
                         </p>
                         {% if post.image %}
                         <img src="{{ post.image.url }}" alt="Image" class="img-fluid" style="max-width: 100%;">
-
-
                         {% endif %}
                     </div>
                     <div id="post-actions" class="post-actions">
-                        <!-- Like button mod -->
-                        <input type="text" value="{{post.postID}}" id="postIDValue" hidden>
-                        <button onclick="getData()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="40" fill="red"
-                            class="bi bi-heart-fill" viewBox="0 0 16 16">
-                            <path fill-rule="evenodd"
+
+                        <svg onclick="likePost('{{ post.postID }}')" id="like-button-btn_{{ post.postID }}"
+                            xmlns="http://www.w3.org/2000/svg" width="30" height="40" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" class="like-class_{{ post.postID }}" fill="red"
                                 d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
                         </svg>
-                        </button>
-
-                        <!-- End like button mod -->
-                        <span id="like-count">{{ post.num_of_likes }}</span> likes
-                            <span>
-                                <a href="{% url 'post_view' post.postID %}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
-                                        <path
-                                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                                    </svg>Comment
-                                </a>
-                            </span>
+                        
+                        <span id="like-count_{{ post.postID }}">{{ post.num_of_likes }}</span> likes
+                        <span>
+                            <a href="{% url 'post_view' post.postID %}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                    <path
+                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                </svg>Comment
+                            </a>
+                        </span>
                     </div>
                 </div>
             </div>
@@ -132,26 +126,24 @@
 </div>
 
 <script>
-    async function getData() {
-        let postID = document.getElementById("postIDValue").value;
-        const url = `/like_post/${parseInt(postID)}`;
-        try {
-            const response = await fetch(url);
-            if (!response.ok) {
-                throw new Error(`Response status: ${response.status}`);
-            }
+    async function likePost(pid) {
+        const response = await fetch(`/like_post/${pid}`);
+        const data = await response.json();
+        // console.log(data);
+        const firstKey = Object.keys(data)[0];
 
-            const data = await response.json();
-            const num_of_likes = data.num_of_likes;
-            let spann = document.getElementById("like-count");
-            spann.innerHTML = num_of_likes;
-            console.log(num_of_likes);
-        } catch (error) {
-            console.error(error.message);
+        if (firstKey == 'num_of_likes') {
+            const ibns = data.num_of_likes;
+            // console.log(ibns);
+            const spanLike = document.getElementById(`like-count_${pid}`);
+            spanLike.textContent = ibns;
+        } else if (firstKey == 'err') {
+            const err = data.err;
+            alert(err);
         }
+
     }
-
-
+    
     function toggleDropdown() {
         document.getElementById("myDropdown").classList.toggle("show");
     }

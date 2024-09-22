@@ -25,7 +25,7 @@ def home(request):
     likes = LikePost.objects.filter(username=username)
 
     #story
-    stories = Story.objects.all()[:5]
+    stories = Story.objects.all().order_by('-created_at')
     all_profile = Profile.objects.all()
 
     form = StoryForm()
@@ -182,8 +182,7 @@ def comment(request, pk):
                 "comments":comments,
                 }
         return render(request, 'partial/comment.html', context)
-
-    
+ 
 
 # delete a post
 @login_required(login_url='login_user')
@@ -285,23 +284,25 @@ def follow(request):
         return redirect('home')
 
 
-@login_required(login_url='login_user')
 def story(request):
-    if request.htmx:
-        form = StoryForm(request.POST, request.FILES)
-        if form.is_valid():
-            new_story = form.save(commit=False)
-            author = request.user.profile
-            new_story.author = author
-            new_story.save()
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            form = StoryForm(request.POST, request.FILES or None)
+            if form.is_valid():
+                new_story = form.save(commit=False)
+                author = request.user.profile
+                new_story.author = author
+                new_story.save()
 
-            story = Story.objects.all().order_by('-created_at')
-            spage_number = request.GET.get('page',1)
-            spaginator = Paginator(story, 5)
-            stories = spaginator.get_page(spage_number)
-            return render(request, 'partial/story.html', {"stories": stories})
-
-        messages.info(request, "Invalid request, Refesh your page.")
-        return redirect('home')
+                context = {
+                    'authorImage': new_story.author.profile_pics.url,
+                    'authorUsername': new_story.author.user.username,
+                    'storyCaption': new_story.caption,
+                    'storyImage': new_story.image
+                }
+                return JsonResponse(context, status=201)
+            return JsonResponse(form.errors, status=400)
+        return JsonResponse({"method": "Method not allowed"}, status=406)
+    return JsonResponse({"err": "You need to login"}, status=401)
 
 

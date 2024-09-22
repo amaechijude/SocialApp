@@ -19,8 +19,7 @@
 
         </div>
         <div class="middle" style="margin-top:1px;">
-            <form class="create-post" enctype="multipart/form-data" hx-post="{% url 'story' %}" hx-target="#status"
-                hx-swap="outerHTML" _="on htmx:afterRequest reset() me">
+            <form id="storyform" class="create-post" enctype="multipart/form-data" action="{% url 'story' %}">
                 {% csrf_token %}
                 <div class="profile-pic">
                     <img class="profile-pic" src="{{ user.profile.profile_pics.url }}" width="150" height="150" alt="">
@@ -101,7 +100,7 @@
                             <path fill-rule="evenodd" class="like-class_{{ post.postID }}" fill="red"
                                 d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
                         </svg>
-                        
+
                         <span id="like-count_{{ post.postID }}">{{ post.num_of_likes }}</span> likes
                         <span>
                             <a href="{% url 'post_view' post.postID %}">
@@ -126,6 +125,7 @@
 </div>
 
 <script>
+    // Like or unlike a post 
     async function likePost(pid) {
         const response = await fetch(`/like_post/${pid}`);
         const data = await response.json();
@@ -143,7 +143,74 @@
         }
 
     }
-    
+
+    // Post a new story 
+    const storyForm = document.getElementById('storyform');
+
+    storyForm.addEventListener("submit", async (event) => {
+        event.preventDefault; // Prevents default form submission
+
+        const formData = new FormData(storyForm); // construcs form data
+
+        try {
+            const response =  await fetch('/story', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            const key = Object.keys(data);
+            // handle responses
+            if (key[0] == 'authorImage') {
+                const parentDiv = document.getElementById("statusDiv"); // story parent div
+
+                //new child div to house the new story
+                const childDIv = document.createElement("div");
+                childDIv.className = "story";
+                childDIv.style.background = `url('${data.storyImage}')`;
+                childDIv.style.backgroundSize = "cover";
+                childDIv.style.backgroundRepeat= "no-repeat";
+                childDIv.style.backgroundPosition = "center cover";
+                
+                // div for the story author profile
+                const profilePicsDiv =  document.createElement("div");
+                profilePicsDiv.className = "profile-pics";
+                const profileImage = document.createElement("img");
+                profileImage.alt = "ProfilePics";
+                profileImage.src = `${data.authorImage}`;
+                profilePicsDiv.appendChild(profileImage); // add above image to the div
+
+                // Author username Paragraph
+                const authorUsername = document.createElement("p");
+                authorUsername.className = "name";
+                authorUsername.style.backgroundColor = "black";
+                authorUsername.style.color = "white";
+                authorUsername.textContent = `${data.authorUsername}`;
+
+                // Story Caption div 
+                const captionDiv = document.createElement("div");
+                captionDiv.className = "author";
+                captionDiv.style.color = "black";
+                captionDiv.style.font = "bold";
+                captionDiv.textContent = `${data.storyCaption}`;
+
+                // Add all the above to the childDIv
+                childDIv.appendChild(profilePicsDiv);
+                childDIv.appendChild(authorUsername);
+                childDIv.appendChild(captionDiv);
+
+                //Apend childdiv at the beginning of the parentDiv
+                parentDiv.prepend(childDIv);
+
+            }
+            
+        } catch (error) {
+            alert('Sever error');
+        }
+
+        storyForm.reset();
+    });
+
+
     function toggleDropdown() {
         document.getElementById("myDropdown").classList.toggle("show");
     }

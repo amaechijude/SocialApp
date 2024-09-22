@@ -6,16 +6,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import Profile, PostModel, LikePost, CommentModel, FollowerModel, Story
 from .forms import UpdateProfile, PostForm, StoryForm, UserForm
-# from datetime import datetime, timezone
 from django.contrib.auth.models import User
-# # from rest_framework.parsers import JSONParser
-# from .serializers import StorySerializer
-# import json
+from rest_framework import status as st
+
 
 from django.core.paginator import Paginator
 # Create your views here
 
-# @login_required(login_url='/login')
 def home(request):
     username = request.user.username
     post = PostModel.objects.all().order_by('-created_at')
@@ -97,8 +94,8 @@ def del_account(request):
 
 
 # Logged in user deatails
-@login_required(login_url='login_user')
-def details(request):
+# @login_required(login_url='login_user')
+# def details(request):
     user = request.user; profile = user.profile
     posts = PostModel.objects.filter(author=profile)
     post_len = len(posts); pk = str(user.username)
@@ -118,10 +115,14 @@ def account_setting(request):
     user = request.user
     profile = user.profile
     if request.method == 'POST':
-        form = UpdateProfile(request.POST or None, request.FILES, instance=profile)
+        form = UpdateProfile(request.POST, request.FILES or None, instance=profile)
         if form.is_valid():
             form.save()
-        return redirect('details')
+            messages.success(request, "Profile updated")
+            return redirect('profile', pk=request.user.username)
+        
+        messages.error(request, f"{form.errors}")
+        return redirect('home')
     form = UpdateProfile(instance=profile)
     return render(request, 'settings.html', {"form":form, "profile":profile})
 
@@ -284,25 +285,42 @@ def follow(request):
         return redirect('home')
 
 
+@login_required(login_url='login_user')
 def story(request):
-    if request.user.is_authenticated:
-        if request.method == 'POST':
-            form = StoryForm(request.POST, request.FILES or None)
-            if form.is_valid():
-                new_story = form.save(commit=False)
-                author = request.user.profile
-                new_story.author = author
-                new_story.save()
+    if request.method == 'POST':
+        form = StoryForm(request.POST, request.FILES or None)
+        if form.is_valid():
+            new_story = form.save(commit=False)
+            author = request.user.profile
+            new_story.author = author
+            new_story.save()
+            messages.success(request, "Story Created")
+            return redirect('home')
+        messages.error(request, f"{form.errors}")
+        return redirect('home')
+    messages.info(request, "Method not allowed")
+    return redirect('home')
 
-                context = {
-                    'authorImage': new_story.author.profile_pics.url,
-                    'authorUsername': new_story.author.user.username,
-                    'storyCaption': new_story.caption,
-                    'storyImage': new_story.image
-                }
-                return JsonResponse(context, status=201)
-            return JsonResponse(form.errors, status=400)
-        return JsonResponse({"method": "Method not allowed"}, status=406)
-    return JsonResponse({"err": "You need to login"}, status=401)
 
+
+# def story(request):
+#     if request.user.is_authenticated:
+#         if request.method == 'POST':
+#             form = StoryForm(request.POST, request.FILES or None)
+#             if form.is_valid():
+#                 new_story = form.save(commit=False)
+#                 author = request.user.profile
+#                 new_story.author = author
+#                 new_story.save()
+
+#                 context = {
+#                     'authorImage': f"{new_story.author.profile_pics.url}",
+#                     'authorUsername': f"{new_story.author.user.username}",
+#                     'storyCaption': f"{new_story.caption}",
+#                     'storyImage': f"{new_story.image.url}"
+#                 }
+#                 return JsonResponse(context, status=st.HTTP_201_CREATED)
+#             return JsonResponse(form.errors, status=st.HTTP_400_BAD_REQUEST)
+#         return JsonResponse({"method": "Method not allowed"}, status=st.HTTP_405_METHOD_NOT_ALLOWED)
+#     return JsonResponse({"err": "You need to login"}, status=st.HTTP_401_UNAUTHORIZED)
 

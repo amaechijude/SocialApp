@@ -46,18 +46,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #third party 
+    'gunicorn',
     'corsheaders',
     'cloudinary_storage',
     'cloudinary',
-    # 'rest_framework',
+    'rest_framework',
     
     #custom app 
     'thread',
-    
-    #third party 
-    'gunicorn',
-    'django_unused_media',
-    "django_htmx",
 ]
 
 MIDDLEWARE = [
@@ -70,10 +68,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-    #htmx middleware
-    "django_htmx.middleware.HtmxMiddleware",
-    
 ]
 
 CORS_ORIGIN_ALLOW_ALL = False
